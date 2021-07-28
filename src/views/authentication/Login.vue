@@ -67,6 +67,7 @@
         <div class="new-account-types d-flex justify-content-between">
           <router-link to="/agent" tag="button" class="btn-blue w-50 me-3">Agent Area</router-link>
           <router-link to="/customer" tag="button" class="btn-yellow w-50">Customer Area</router-link>
+          <router-link to="/dashboard" tag="button" class="btn-yellow w-50">Goto Dashboard</router-link>
         </div>
       </div>
     </div>
