@@ -37,8 +37,7 @@
         </div>
       </div>
       <div class="col-md-7 right-side">
-        <router-view class="authentication-view" name="authentication">
-        </router-view>
+        <RouterView class="authentication-view" name="authentication"></RouterView>
       </div>
     </div>
   </div>

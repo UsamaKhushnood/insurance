@@ -1,0 +1,63 @@
+<template >
+  <div class="secodary-header row">
+    <div class="col-md-3">
+      <h4 class="c-blue d-flex align-items-baseline">
+        Hello,
+        <h5>Welcome Back Janet!</h5>
+      </h4>
+    </div>
+    <div class="col-md-7 d-flex justify-content-evenly">
+      <router-link to="licence" tag="button" class="box-shadow sh-btn">check licence status</router-link>
+      <router-link to="forum" tag="button" class="box-shadow sh-btn">Join forum</router-link>
+      <router-link to="learn-at-nagia" tag="button" class="box-shadow sh-btn">learn at NAGIA</router-link>
+    </div>
+    <div class="col-md-2 last-col">
+      <h5 class="breadcrumb">
+        Home <span class="router-name ms-2"> - {{ $route.name }} </span>
+      </h5>
+    </div>
+  </div>
+</template>
+<script>
+export default {};
+</script>
+<style lang="scss">
+.secodary-header {
+  height: 75px;
+  align-items: center;
+  padding: 15px;
+  h5 {
+    margin-bottom: 0;
+  }
+  h4 {
+    margin-bottom: 0;
+  }
+  h5.breadcrumb {
+    font-weight: 700;
+    color: var(--grey);
+    span.router-name {
+      color: var(--blue);
+    }
+  }
+
+  button.sh-btn {
+    border: 1px solid var(--blue);
+    padding: 7px;
+    border-radius: 10px;
+    width: 30%;
+    color: var(--blue);
+    text-transform: capitalize;
+    font-weight: 500;
+    transition: 0.2s all ease;
+    &:hover, &.router-link-active {
+      border-color: #fff;
+      background: var(--yellow);
+    }
+  }
+
+  .last-col {
+    display: flex;
+    place-content: flex-end;
+  }
+}
+</style>

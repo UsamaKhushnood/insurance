@@ -1,17 +1,29 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import TheContainer from "@/components/main/TheContainer";
-import Dashboard from "@/Dashboard";
 import Authentication from "@/views/Authentication";
+import PageNotFound from "@/views/PageNotFound";
 import Login from "@/views/authentication/Login";
 import AgentSignup from "@/views/authentication/AgentSignup";
 import CustomerSignup from "@/views/authentication/CustomerSignup";
 import Confirmation from "@/views/authentication/Confirmation";
 import AgentVerification from "@/views/authentication/AgentVerification";
+import Dashboard from "@/Dashboard";
+import AccountDetails from "@/views/AccountDetails";
+import Licence from "@/views/Licence";
+import Forum from "@/views/forum/Forum";
+import ExploreTopic from "@/views/forum/ExploreTopic";
+import MyTopics from "@/views/forum/MyTopics";
+import StartNewTopic from "@/views/forum/StartNewTopic";
 
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "*",
+    name: "Page Not Found",
+    component: PageNotFound,
+  },
   {
     path: "/dashboard",
     component: TheContainer,
@@ -19,8 +31,47 @@ const routes = [
     children: [
       {
         path: "/dashboard",
-        name: "Home",
+        name: "Dashboard",
         component: Dashboard,
+      },
+      {
+        path: "/account-detials",
+        name: "Account Details",
+        component: AccountDetails,
+      },
+      {
+        path: "/licence",
+        name: "Licence",
+        component: Licence,
+      },
+      {
+        path: "/forum",
+        name: "Forum",
+        component: Forum,
+        redirect: '/forum/explore-topics',
+        children: [
+          {
+            path: "explore-topics",
+            name: "Explore Topic",
+            components: {
+              forum: ExploreTopic,
+            },
+          },
+          {
+            path: "my-topics",
+            name: "My Topics",
+            components: {
+              forum: MyTopics,
+            },
+          },
+          {
+            path: "start-new-topic",
+            name: "Start New Topic",
+            components: {
+              forum: StartNewTopic,
+            },
+          },
+        ],
       },
     ],
   },
