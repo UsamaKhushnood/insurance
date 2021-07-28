@@ -1,7 +1,7 @@
 <template >
   <div class="explore-topic">
     <BRow>
-      <BCol cols="9">
+      <BCol cols="8">
         <div class="forum-posts">
           <div
             class="single-forum-post"
@@ -10,7 +10,7 @@
           >
             <div class="fp-votes">
               <b-icon icon="arrow-up" variant="dark"></b-icon>
-              <p class="fp-count fw-7 f-18 text-danger">75</p>
+              <p class="fp-count fw-7 f-18 text-danger votes-count">75</p>
               <b-icon icon="arrow-down" variant="danger"></b-icon>
             </div>
             <div>
@@ -59,12 +59,16 @@
           </div>
         </div>
       </BCol>
-      <BCol cols="3"> right sidebar working </BCol>
+      <BCol cols="4"> 
+        <TopContributers />        
+         </BCol>
     </BRow>
   </div>
 </template>
 <script>
+import TopContributers from '@/components/forum/TopContributers'
 export default {
+  components: {TopContributers},
   data() {
     return {
       formPost: [1, 2, 3, 4, 5, 6, 7, 8],
@@ -76,6 +80,7 @@ export default {
 .explore-topic {
   .forum-posts {
     max-height: calc(100vh - 220px);
+    min-height: 650px;
     overflow: auto;
     padding: 15px;
     padding-top: 5px;
@@ -92,6 +97,11 @@ export default {
         display: flex;
         min-width: 100px;
         flex-direction: column;
+        .votes-count {
+          height: 50px;
+          display: flex;
+          align-items: center;
+        }
         svg.bi-arrow-up,
         svg.bi-arrow-down {
           font-size: 30px;

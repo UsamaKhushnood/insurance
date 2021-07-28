@@ -1,7 +1,10 @@
 <template>
   <div class="forum">
     <BRow class="row">
-      <div class="col-md-3">
+      <div
+        class="col-md-3 position-relative"
+        style="height: calc(100vh - 220px); min-height: 650px;"
+      >
         <div class="forum-tabs">
           <router-link
             to="/forum/explore-topics"
@@ -43,6 +46,12 @@
             </div>
           </router-link>
         </div>
+        <div class="gotoOnlineStore">
+          <div class="ad box-shadow">
+            <img src="@/assets/images/online-shopping.png" />
+            <button class="btn-yellow gotostorebtn">Go To Online Store</button>
+          </div>
+        </div>
       </div>
       <div class="col-md-9">
         <RouterView class="forum-view" name="forum" />
@@ -80,6 +89,33 @@ export default {};
 
       .f-icon svg {
         font-size: 30px;
+      }
+    }
+  }
+
+  .gotoOnlineStore {
+    position: absolute;
+    bottom: 50px;
+    .ad {
+      border-radius: 5px;
+      position: relative;
+      z-index: 8;
+      img {
+        border-radius: 5px;
+        width: 100%;
+      }
+      .gotostorebtn {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 200px;
+        border-radius: 5px;
+        transform: translate(-50%, 50%);
+        z-index: 9;
+        &:hover {
+          background: var(--yellow);
+          color: #fff;
+        }
       }
     }
   }
