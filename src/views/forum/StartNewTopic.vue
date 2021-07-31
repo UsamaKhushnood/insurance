@@ -141,7 +141,7 @@ export default {
   }
   div#quill-container {
     border: 0;
-    .ql-editor.ql-blank {
+    .ql-editor {
       box-shadow: inset 0 3px 10px rgb(0 0 0 / 20%);
       background: var(--light-grey);
       border-radius: 5px;

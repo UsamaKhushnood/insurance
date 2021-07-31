@@ -26,7 +26,7 @@
           </router-link>
           <router-link to="/event-management" tag="li">
             <img class="route-icon" src="@/assets/icons/events.png" />
-            <h5 class="route-name">Events Management</h5>
+            <h5 class="route-name">Event Management</h5>
           </router-link>
           <router-link to="/messaging" tag="li">
             <img class="route-icon" src="@/assets/icons/chat.png" />

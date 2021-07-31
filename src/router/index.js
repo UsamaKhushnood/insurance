@@ -15,6 +15,10 @@ import Forum from "@/views/forum/Forum";
 import ExploreTopic from "@/views/forum/ExploreTopic";
 import MyTopics from "@/views/forum/MyTopics";
 import StartNewTopic from "@/views/forum/StartNewTopic";
+import Events from "@/views/events/Events";
+import AllEvents from "@/views/events/AllEvents";
+import MyEvents from "@/views/events/MyEvents";
+import Meetings from "@/views/events/Meetings";
 
 Vue.use(VueRouter);
 
@@ -69,6 +73,35 @@ const routes = [
             name: "Start New Topic",
             components: {
               forum: StartNewTopic,
+            },
+          },
+        ],
+      },
+      {
+        path: "/event-management",
+        name: "Event Management",
+        component: Events,
+        redirect: '/event-management/all-events',
+        children: [
+          {
+            path: "all-events",
+            name: "All Events",
+            components: {
+              events: AllEvents,
+            },
+          },
+          {
+            path: "my-events",
+            name: "My Events",
+            components: {
+              events: MyEvents,
+            },
+          },
+          {
+            path: "meetings",
+            name: "Meetings",
+            components: {
+              events: Meetings,
             },
           },
         ],
