@@ -17,6 +17,7 @@ import MyTopics from "@/views/forum/MyTopics";
 import StartNewTopic from "@/views/forum/StartNewTopic";
 import Events from "@/views/events/Events";
 import AllEvents from "@/views/events/AllEvents";
+import EventDetails from "@/views/events/EventDetails";
 import MyEvents from "@/views/events/MyEvents";
 import Meetings from "@/views/events/Meetings";
 
@@ -91,6 +92,11 @@ const routes = [
             },
           },
           {
+            path: "event-details/:id",
+            name: "Event Details",
+            components: {events: EventDetails}
+          },
+          {
             path: "my-events",
             name: "My Events",
             components: {
@@ -106,6 +112,7 @@ const routes = [
           },
         ],
       },
+      
     ],
   },
   {

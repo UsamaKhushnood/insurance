@@ -18,7 +18,7 @@
                   <b-icon icon="geo-alt-fill" class="me-2 c-yellow"></b-icon>
                   Afua Sutherland Park
                 </div>
-                <button class="view-event-btn btn-yellow btn-block mt-3">
+                <button class="view-event-btn btn-yellow btn-block mt-3" @click="move('event-details/' + eIndex)">
                   View Details
                 </button>
               </div>
@@ -50,6 +50,11 @@ export default {
       ],
     };
   },
+  methods: {
+    move(to) {
+      this.$router.push({ path: to });
+    },
+  }
 };
 </script>
 <style lang="scss">

@@ -2,7 +2,7 @@
   <div class="my-events">
     <div class="row">
       <div class="col-md-8">
-        <div class="my-events-list box-shadow   ">
+        <div class="my-events-list box-shadow">
           <h3 class="c-blue text-center mb-4">My Accepted Events</h3>
           <div
             class="row event align-items-center"
@@ -26,7 +26,10 @@
               </div>
             </div>
             <div class="col-md-3">
-              <button class="view-event-btn btn-yellow btn-block mt-3">
+              <button
+                class="view-event-btn btn-yellow btn-block mt-3"
+                @click="move('event-details/' + eIndex)"
+              >
                 View Details
               </button>
             </div>
@@ -34,21 +37,26 @@
         </div>
       </div>
       <div class="col-md-4">
-          <UpcomingMeetings />
+        <UpcomingMeetings />
       </div>
     </div>
   </div>
 </template>
 <script>
-import UpcomingMeetings from '@/components/events/UpcomingMeetings'
+import UpcomingMeetings from "@/components/events/UpcomingMeetings";
 export default {
-    components: {UpcomingMeetings},
+  components: { UpcomingMeetings },
   data() {
     return {
       events: [
         12, 2, 21, 5, 54, 12, 2, 21, 5, 54, 12, 2, 21, 5, 54, 12, 2, 21, 5, 54,
       ],
     };
+  },
+  methods: {
+    move(to) {
+      this.$router.push({ path: to });
+    },
   },
 };
 </script>
