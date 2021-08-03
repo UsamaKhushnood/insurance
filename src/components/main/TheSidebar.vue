@@ -1,5 +1,5 @@
 <template>
-  <div class="main-sidebar box-shadow">
+  <div class="main-sidebar box-shadow" :class="{ minimize: minimize }">
     <div class="sidebar-head">
       <div class="sidebar-logo">
         <img src="@/assets/logo.png" />
@@ -66,12 +66,25 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  methods: {
+    minimizeSidebar(value) {
+      console.log(value);
+    },
+  },
+  computed: {
+    minimize() {
+      return this.$store.state.sidebarMinimize;
+    },
+  },
+};
 </script>
 <style lang="scss">
 .main-sidebar {
   height: 100vh;
-  overflow: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  transition: 0.3s all ease;
 
   .sidebar-head {
     display: flex;
@@ -102,6 +115,7 @@ export default {};
           align-items: center;
           height: 65px;
           padding-left: 30px;
+
           text-transform: capitalize;
           transition: all 0.3s ease-in;
           .route-icon {
@@ -127,6 +141,22 @@ export default {};
               fill: var(--blue);
             }
           }
+        }
+      }
+    }
+  }
+  &.minimize {
+    .sidebar-brand-name {
+      display: none;
+    }
+    h5.route-name {
+      display: none;
+    }
+    .sidebar-nav {
+      ul {
+        li {
+          justify-content: center;
+          padding: 0 !important;
         }
       }
     }

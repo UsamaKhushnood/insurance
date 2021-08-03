@@ -2,8 +2,12 @@
   <div class="box-shadow dashboard-header">
     <div class="row dashboard-row">
       <div class="col-md-2">
-        <b-icon icon="border-width" class="ms-4"></b-icon>
-        <b-icon icon="fullscreen" class="ms-4"></b-icon>
+        <b-icon
+          icon="border-width"
+          class="ms-4 pointer"
+          @click="$store.commit('set', ['sidebarMinimize', !minimize])"
+        ></b-icon>
+        <b-icon icon="fullscreen" class="ms-4 pointer"></b-icon>
       </div>
       <div class="col-md-6">
         <div class="dash-serach">
@@ -51,7 +55,7 @@
             <span class="route-link">Legal Terms</span>
           </router-link>
           <router-link class="dropdown-link" to="/account">
-            <img src="@/assets/icons/logout.png" class="me-2">
+            <img src="@/assets/icons/logout.png" class="me-2" />
             <span class="route-link">Logout</span>
           </router-link>
         </b-dropdown>
@@ -60,7 +64,18 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  methods: {
+    minSidebar() {
+      this.$emit("minimize-sidebar");
+    },
+  },
+  computed: {
+    minimize() {
+      return this.$store.state.sidebarMinimize;
+    },
+  },
+};
 </script>
 <style lang="scss">
 .dashboard-header {

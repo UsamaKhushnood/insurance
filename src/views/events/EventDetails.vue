@@ -90,6 +90,7 @@
               </div>
             </div>
           </div>
+
           <div class="mt-4 share-event">
             <h6 class="fw-6">Share with friends</h6>
             <div class="social-media-icon d-flex align-items-center">
