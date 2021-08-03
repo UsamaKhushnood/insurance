@@ -22,6 +22,14 @@
             <div class="row align-items-center">
               <div class="col-md-4">
                 <div class="date-n-location">
+                  <div class="♥">
+                    <b-icon
+                      icon="heart-fill"
+                      variant="danger"
+                      class="me-2"
+                    ></b-icon>
+                    <span>1,545</span>
+                  </div>
                   <div class="📅 fw-6">
                     <b-icon icon="clock" class="me-2 c-yellow"></b-icon>
                     <span>03-09-2021</span>
@@ -32,15 +40,8 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-2 ♥ f-20">
-                <b-icon
-                  icon="heart-fill"
-                  variant="danger"
-                  class="me-2"
-                ></b-icon>
-                <span>1,545</span>
-              </div>
-              <div class="col-md-6">
+
+              <div class="col-md-8">
                 <div class="event-call-to-action">
                   <button class="btn-yellow download-btn me-2">
                     Download Event iCal

@@ -82,8 +82,8 @@ export default {
 <style lang="scss">
 .main-sidebar {
   height: 100vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  // overflow-y: scroll;
+  // overflow-x: hidden;
   transition: 0.3s all ease;
 
   .sidebar-head {
@@ -103,6 +103,9 @@ export default {
   }
   .sidebar-body {
     margin-top: 20px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: calc(100vh - 120px);
 
     .sidebar-nav {
       ul {
