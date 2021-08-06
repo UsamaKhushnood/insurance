@@ -48,7 +48,7 @@
             <img class="route-icon" src="@/assets/icons/complaints.png" />
             <h5 class="route-name">complaints</h5>
           </router-link>
-          <router-link to="/faq" tag="li">
+          <router-link to="/faqs" tag="li">
             <img class="route-icon" src="@/assets/icons/faq.png" />
             <h5 class="route-name">faq's</h5>
           </router-link>

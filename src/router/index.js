@@ -11,6 +11,7 @@ import AgentVerification from "@/views/authentication/AgentVerification";
 import Dashboard from "@/Dashboard";
 import AccountDetails from "@/views/AccountDetails";
 import Licence from "@/views/Licence";
+import Faq from "@/views/Faq";
 import Forum from "@/views/forum/Forum";
 import ExploreTopic from "@/views/forum/ExploreTopic";
 import MyTopics from "@/views/forum/MyTopics";
@@ -48,6 +49,11 @@ const routes = [
         path: "/licence",
         name: "Licence",
         component: Licence,
+      },
+      {
+        path: "/faqs",
+        name: "FAQ's",
+        component: Faq,
       },
       {
         path: "/forum",

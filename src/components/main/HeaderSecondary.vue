@@ -23,7 +23,7 @@ export default {};
 </script>
 <style lang="scss">
 .secodary-header {
-  height: 75px;
+  height: 90px;
   align-items: center;
   padding: 15px;
   h5 {
