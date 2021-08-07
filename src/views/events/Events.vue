@@ -133,7 +133,7 @@ export default {
       color: var(--yellow);
     }
   }
-  @media only screen and (max-width: 1336px){
+  @media only screen and (max-width: 1360px){
     .Calender{
       .b-calendar .b-calendar-inner{
               width: 270px !important;

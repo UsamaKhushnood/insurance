@@ -2,12 +2,16 @@
   <div class="box-shadow dashboard-header">
     <div class="row dashboard-row">
       <div class="col-md-2">
-        <b-icon
-          icon="border-width"
+        <svg
           class="ms-4 pointer"
+          style="width: 30px; height: 30px"
           @click="$store.commit('set', ['sidebarMinimize', !minimize])"
-        ></b-icon>
-        <b-icon icon="fullscreen" class="ms-4 pointer"></b-icon>
+        >
+          <use xlink:href="@/assets/svg/minimize.svg#minimize"></use>
+        </svg>
+        <svg class="ms-4 pointer" style="width: 30px; height: 30px">
+          <use xlink:href="@/assets/svg/maximize.svg#max"></use>
+        </svg>
       </div>
       <div class="col-md-6">
         <div class="dash-serach">
