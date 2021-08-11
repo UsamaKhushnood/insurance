@@ -16,7 +16,7 @@
             <b-icon icon="grid"></b-icon>
             <h5 class="route-name">Dashboard</h5>
           </router-link>
-          <router-link to="/account-detials" tag="li">
+          <router-link to="/account-details" tag="li">
             <img class="route-icon" src="@/assets/icons/account.png" />
             <h5 class="route-name">Account Details</h5>
           </router-link>

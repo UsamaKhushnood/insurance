@@ -9,9 +9,18 @@ import CustomerSignup from "@/views/authentication/CustomerSignup";
 import Confirmation from "@/views/authentication/Confirmation";
 import AgentVerification from "@/views/authentication/AgentVerification";
 import Dashboard from "@/Dashboard";
-import AccountDetails from "@/views/AccountDetails";
+
+import AccountDetails from "@/views/account-details/AccountDetails";
+import EditProfile from "@/views/account-details/EditProfile";
+import Notification from "@/views/account-details/Notification";
+import Billing from "@/views/account-details/Billing";
+import Security from "@/views/account-details/Security";
+
+
 import Licence from "@/views/Licence";
 import Faq from "@/views/Faq";
+import VerifyAnAgent from "@/views/VerifyAnAgent";
+import Complaints from "@/views/Complaints";
 import Forum from "@/views/forum/Forum";
 import ExploreTopic from "@/views/forum/ExploreTopic";
 import MyTopics from "@/views/forum/MyTopics";
@@ -41,9 +50,40 @@ const routes = [
         component: Dashboard,
       },
       {
-        path: "/account-detials",
+        path: "/account-details",
         name: "Account Details",
         component: AccountDetails,
+        redirect: '/account-details/edit-profile',
+        children: [
+          {
+            path: 'edit-profile',
+            name: 'Edit Profile',
+            components: {
+              accountdetails: EditProfile
+            }
+          },
+          {
+            path: 'notification',
+            name: 'Notification',
+            components: {
+              accountdetails: Notification
+            }
+          },
+          {
+            path: 'billing',
+            name: 'Billing',
+            components: {
+              accountdetails: Billing
+            }
+          },
+          {
+            path: 'security',
+            name: 'Security',
+            components: {
+              accountdetails: Security
+            }
+          },
+        ]
       },
       {
         path: "/licence",
@@ -54,6 +94,16 @@ const routes = [
         path: "/faqs",
         name: "FAQ's",
         component: Faq,
+      },
+      {
+        path: "/verify-an-angent",
+        name: "Verify An Agent",
+        component: VerifyAnAgent,
+      },
+      {
+        path: "/complaints",
+        name: "Complaints",
+        component: Complaints,
       },
       {
         path: "/forum",

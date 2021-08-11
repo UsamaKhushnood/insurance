@@ -63,6 +63,10 @@ p{
   text-decoration: none;
 }
 
+.br-5 {
+  border-radius: 5px !important;
+}
+
 .br-10 {
   border-radius: 10px !important;
 }
@@ -146,6 +150,19 @@ p{
   border: 1px solid var(--yellow) !important;
 }
 
+.btn-hover-blue {
+  border-color: #fff;
+}
+.btn-hover-yellow {
+  border-color: #fff;
+}
+.btn-hover-blue:hover {
+  background: var(--blue);
+}
+.btn-hover-yellow:hover {
+  background: var(--yellow);
+}
+
 .c-light-grey {
   color: var(--light-grey);
 }
@@ -179,7 +196,7 @@ p{
 
 label {
   color: var(--blue2);
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 10px;
   font-size: 16px;
 }

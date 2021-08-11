@@ -1,6 +1,6 @@
 <template >
   <div>
-    <b-modal id="check-status" class="box-shadow" hide-footer centered>
+    <b-modal id="verify-agent" class="box-shadow" hide-footer centered>
       <template #modal-header="{ close }">
         <b-icon
           icon="x-circle"
@@ -10,7 +10,7 @@
           @click="close()"
         ></b-icon>
       </template>
-      <div class="check-status-modal">
+      <div class="verify-agent-modal">
         <div class="user-avatar">
           <b-avatar
             src="https://placekitten.com/300/300"
@@ -48,12 +48,9 @@
             </p>
           </div>
         </div>
-        <div class="modal-offset-buttons" v-show="!status">
+        <div class="modal-offset-buttons text-center">
           <button class="btn-yellow btn-hover-blue br-5 w-50">
-            Renew Now
-          </button>
-          <button class="btn-blue btn-hover-yellow br-5 w-50">
-            Complaint
+            Report Agent
           </button>
         </div>
       </div>
@@ -70,7 +67,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.check-status-modal {
+.verify-agent-modal {
   padding-bottom: 35px;
   .user-avatar {
     position: absolute;
