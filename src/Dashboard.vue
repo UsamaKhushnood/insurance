@@ -13,7 +13,7 @@
             semper.
           </p>
         </div>
-        <div class="dashboard-body box-shadow bg-white p-3">
+        <div class="dashboard-body box-shadow bg-white p-5">
           <h4 class="c-dark-grey mb-3">General Services &amp; Features</h4>
           <div class="general-links">
             <router-link

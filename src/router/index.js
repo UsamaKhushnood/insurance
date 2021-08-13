@@ -18,6 +18,7 @@ import Security from "@/views/account-details/Security";
 
 
 import Licence from "@/views/Licence";
+import Support from "@/views/Support";
 import Faq from "@/views/Faq";
 import VerifyAnAgent from "@/views/VerifyAnAgent";
 import Complaints from "@/views/Complaints";
@@ -89,6 +90,11 @@ const routes = [
         path: "/licence",
         name: "Licence",
         component: Licence,
+      },
+      {
+        path: "/support",
+        name: "Support",
+        component: Support,
       },
       {
         path: "/faqs",

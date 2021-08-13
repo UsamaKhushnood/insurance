@@ -173,7 +173,7 @@
 export default {};
 </script>
 <style lang="scss">
-input {
+.edit-profile input {
   background: #fff !important;
 }
 
