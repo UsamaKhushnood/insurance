@@ -46,7 +46,7 @@
                   <div class="col-md-3">
                     <span class="fw-7">16 hrs ago</span>
                   </div>
-                  <div class="col-md-3 d-flex align-items-center">
+                  <div class="col-md-3 d-flex align-items-center pointer" @click="move('topic/' + pIndex)">
                     <b-icon
                       icon="chat-left-text-fill"
                       class="f-20 ms-auto c-blue"
@@ -59,20 +59,25 @@
           </div>
         </div>
       </BCol>
-      <BCol cols="4"> 
-        <TopContributers />        
-         </BCol>
+      <BCol cols="4">
+        <TopContributers />
+      </BCol>
     </BRow>
   </div>
 </template>
 <script>
-import TopContributers from '@/components/forum/TopContributers'
+import TopContributers from "@/components/forum/TopContributers";
 export default {
-  components: {TopContributers},
+  components: { TopContributers },
   data() {
     return {
       formPost: [1, 2, 3, 4, 5, 6, 7, 8],
     };
+  },
+  methods: {
+    move(to) {
+      this.$router.push({ path: to });
+    },
   },
 };
 </script>

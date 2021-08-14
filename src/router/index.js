@@ -25,6 +25,7 @@ import Complaints from "@/views/Complaints";
 import Forum from "@/views/forum/Forum";
 import ExploreTopic from "@/views/forum/ExploreTopic";
 import MyTopics from "@/views/forum/MyTopics";
+import Topic from "@/views/forum/Topic";
 import StartNewTopic from "@/views/forum/StartNewTopic";
 import Events from "@/views/events/Events";
 import AllEvents from "@/views/events/AllEvents";
@@ -33,6 +34,7 @@ import MyEvents from "@/views/events/MyEvents";
 import Meetings from "@/views/events/Meetings";
 
 import Messaging from "@/views/messaging/Messaging";
+import ChatWithUser from "@/views/messaging/ChatWithUser";
 
 Vue.use(VueRouter);
 
@@ -127,6 +129,13 @@ const routes = [
             },
           },
           {
+            path: "topic/:id",
+            name: "Explore Topic",
+            components: {
+              forum: Topic,
+            },
+          },
+          {
             path: "my-topics",
             name: "My Topics",
             components: {
@@ -158,7 +167,9 @@ const routes = [
           {
             path: "event-details/:id",
             name: "Event Details",
-            components: {events: EventDetails}
+            components: {
+              events: EventDetails
+            }
           },
           {
             path: "my-events",
@@ -180,6 +191,15 @@ const routes = [
         path: '/messaging',
         name: 'Messaging',
         component: Messaging,
+        children: [ 
+          {
+            path: 'chat/:id',
+            name: 'Messaging',
+            components: {
+              messaging: ChatWithUser
+            },
+          }
+        ]
         
       }
       
