@@ -32,6 +32,8 @@ import EventDetails from "@/views/events/EventDetails";
 import MyEvents from "@/views/events/MyEvents";
 import Meetings from "@/views/events/Meetings";
 
+import Messaging from "@/views/messaging/Messaging";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -174,6 +176,12 @@ const routes = [
           },
         ],
       },
+      {
+        path: '/messaging',
+        name: 'Messaging',
+        component: Messaging,
+        
+      }
       
     ],
   },
