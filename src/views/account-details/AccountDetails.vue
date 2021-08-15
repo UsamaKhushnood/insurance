@@ -3,7 +3,7 @@
     <BRow class="row">
       <div
         class="col-md-3 position-relative"
-        style="height: calc(100vh - 220px); min-height: 650px;"
+        style="height: calc(100vh - 220px); min-height: 650px"
       >
         <div class="account-details-tabs">
           <router-link
@@ -99,6 +99,5 @@ export default {};
       }
     }
   }
-
 }
 </style>

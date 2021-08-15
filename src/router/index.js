@@ -18,18 +18,23 @@ import Security from "@/views/account-details/Security";
 
 
 import Licence from "@/views/Licence";
+import Support from "@/views/Support";
 import Faq from "@/views/Faq";
 import VerifyAnAgent from "@/views/VerifyAnAgent";
 import Complaints from "@/views/Complaints";
 import Forum from "@/views/forum/Forum";
 import ExploreTopic from "@/views/forum/ExploreTopic";
 import MyTopics from "@/views/forum/MyTopics";
+import Topic from "@/views/forum/Topic";
 import StartNewTopic from "@/views/forum/StartNewTopic";
 import Events from "@/views/events/Events";
 import AllEvents from "@/views/events/AllEvents";
 import EventDetails from "@/views/events/EventDetails";
 import MyEvents from "@/views/events/MyEvents";
 import Meetings from "@/views/events/Meetings";
+
+import Messaging from "@/views/messaging/Messaging";
+import ChatWithUser from "@/views/messaging/ChatWithUser";
 
 Vue.use(VueRouter);
 
@@ -91,6 +96,11 @@ const routes = [
         component: Licence,
       },
       {
+        path: "/support",
+        name: "Support",
+        component: Support,
+      },
+      {
         path: "/faqs",
         name: "FAQ's",
         component: Faq,
@@ -116,6 +126,13 @@ const routes = [
             name: "Explore Topic",
             components: {
               forum: ExploreTopic,
+            },
+          },
+          {
+            path: "topic/:id",
+            name: "Explore Topic",
+            components: {
+              forum: Topic,
             },
           },
           {
@@ -150,7 +167,9 @@ const routes = [
           {
             path: "event-details/:id",
             name: "Event Details",
-            components: {events: EventDetails}
+            components: {
+              events: EventDetails
+            }
           },
           {
             path: "my-events",
@@ -168,6 +187,21 @@ const routes = [
           },
         ],
       },
+      {
+        path: '/messaging',
+        name: 'Messaging',
+        component: Messaging,
+        children: [ 
+          {
+            path: 'chat/:id',
+            name: 'Messaging',
+            components: {
+              messaging: ChatWithUser
+            },
+          }
+        ]
+        
+      }
       
     ],
   },
