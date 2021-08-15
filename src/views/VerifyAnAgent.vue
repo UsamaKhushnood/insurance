@@ -36,22 +36,24 @@
           <div class="agent-details">
             <div class="agent-name">
               <div class="tooltip-label">Agent's Name</div>
-              <h4 class="agent-detail name">Kwame Asensu</h4>
+              <!-- <h4 class="agent-detail name">Kwame Asensu</h4> -->
+              <input type="text" class="agent-detail name" placeholder="Kwame Asensu" v-model="name" />
             </div>
             <div class="agent-id">
               <div class="tooltip-label">Agent's I.D</div>
-              <h4 class="agent-detail id">NGA 454/00001</h4>
+              <!-- <h4 class="agent-detail id">NGA 454/00001</h4> -->
+              <input type="text" class="agent-detail name" placeholder="NGA 454/00001" v-model="nagia_id" />
             </div>
           </div>
 
           <div class="verify-button mt-5 mb-5 text-center">
-            <button class="btn-blue btn-hover-yellow br-5 w-25" v-b-modal.verify-agent>
+            <button class="btn-blue btn-hover-yellow br-5 w-25" @click="getVerify" v-b-modal.verify-agent>
               <svg class="card-icon">
                 <use xlink:href="@/assets/svg/verify-card.svg#card"></use>
               </svg>
               Verify Agent
             </button>
-            <VerifyModal />
+            <VerifyModal :message='message'  />
           </div>
         </div>
       </div>
@@ -62,6 +64,45 @@
 import VerifyModal from '@/components/verify-agent/VerifyModal'
 export default {
   components:{VerifyModal}
+  ,
+  data() {
+    return {
+      name:'',  
+      nagia_id:'',  
+      status:'',  
+      message:''
+    };
+  },
+  methods: {
+    async getVerify() {
+      const vm = this;
+      
+      vm.$store
+        .dispatch("HTTP_POST_REQUEST", {url:vm.$store.state.user.user_type+`/agent-verify`,payload:{name:vm.name,nagia_id:this.nagia_id}})
+        .then((response) => {
+          console.log("re", response.data);
+          console.log("re", response.data.status);
+          
+          if(response.data.status == false){
+              vm.$store.commit("SET_MODEL_STATUS",false);
+              vm.message =response.data.message
+          }else{
+              vm.$store.commit("SET_MODEL_STATUS",true);
+              vm.message =response.data.message
+          }
+        })
+        .catch((error) => {
+          let errors = error.response.data.errors;
+          vm.$toast.error(errors.response.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+        });
+    },
+  },
+ 
 };
 </script>
 <style lang="scss">

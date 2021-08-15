@@ -26,25 +26,24 @@
               Agent Unique Identification code: NGA97/00001
             </h5>
           </div>
-          <button class="btn-blue br-5" @click="status = !status">
+          <!-- <button class="btn-blue br-5" @click="status = !status">
             change status
-          </button>
-          <div class="status" v-if="status">
+          </button> -->
+          <div class="status" v-if="myStatus">
             <svg width="100px">
               <use xlink:href="@/assets/svg/active.svg#active"></use>
             </svg>
-            <h2 style="color: #4bd12f">Status Active</h2>
+            <h2 style="color: #4bd12f"> {{this.message}}</h2>
           </div>
           <div class="status" v-else>
             <svg width="100px">
               <use xlink:href="@/assets/svg/inactive.svg#inactive"></use>
             </svg>
-            <h2 class="text-danger">Status Inavtive</h2>
+            <h2 class="text-danger"> {{this.message}}</h2>
           </div>
           <div class="desc">
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, id
-              laborum? Cupiditate laborum error, alias sapiente repudiandae
+               
             </p>
           </div>
         </div>
@@ -58,12 +57,20 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
+  props:['message'],
   data() {
     return {
-      status: true,
+      // status: true,
     };
   },
+  computed:{
+    ...mapGetters(["getModelStatus"]),
+    myStatus(){
+      return this.getModelStatus
+    }
+  }
 };
 </script>
 <style lang="scss">

@@ -8,12 +8,19 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './style.css'
 import router from './router'
 import store from './store'
+import Toast from "vue-toastification";
+// Import the CSS or use your own!
+import "vue-toastification/dist/index.css";
 
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
+
+
+
+Vue.use(Toast);
 Vue.config.productionTip = false
 
 new Vue({

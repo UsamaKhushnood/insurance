@@ -29,6 +29,7 @@
             <b-form-input
               id="input-1"
               type="email"
+              v-model="email"
               placeholder="Enter email"
               required
             ></b-form-input>
@@ -42,6 +43,7 @@
             <b-form-input
               id="input-2"
               type="password"
+              v-model="password"
               placeholder="Password"
               required
             ></b-form-input>
@@ -58,7 +60,7 @@
             </b-form-checkbox>
             <p class="c-red fw-6 pointer">Forget Password?</p>
           </div>
-          <b-button class="btn-gradient mt-4" block>Sign in</b-button>
+          <b-button class="btn-gradient mt-4" @click="signIn" block>Sign in</b-button>
         </b-form>
         <div class="below-dash mt-6"></div>
         <p class="c-blue fw-6 mt-4 mb-4 f-18">
@@ -75,8 +77,55 @@
 </template>
 <script>
 import Dropdown from "@/components/Dropdown";
+import axios from 'axios'
 export default {
   components: { Dropdown },
+  data(){
+    return {
+      email:'',
+      password:'',
+    }
+  },
+  methods:{
+   async signIn(){
+
+       const vm = this;
+           vm.$store.commit("SET_SPINNER", true);
+      await axios
+        .post(process.env.VUE_APP_API_URL+"login",{
+          email: this.email,
+          password: this.password
+        })
+        .then((response) => {
+          console.log('data::',response.data.userDetail.user);
+          const token = response.data.token
+          localStorage.setItem('token', token)
+           vm.$store.commit("SET_SPINNER", false);
+           vm.$store.commit("SET_AUTH_TOKEN", response.data.token);
+             
+           vm.$store.commit("SET_USER", response.data.userDetail.user);
+              vm.$toast.success("Login Successfully", {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+          window.location.href =process.env.VUE_APP_URL+'dashboard' 
+          vm.$router.push({ name: "Dashboard" });
+        })
+        .catch((errors) => {
+          console.log(errors)
+           if(errors.response)
+          this.$toast.error(errors.response.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+        });
+
+    }
+  }
 };
 </script>
 <style lang="scss">

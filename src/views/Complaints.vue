@@ -28,7 +28,8 @@
               >
                 <b-form-input
                   id="input-1"
-                  type="email"
+                  type="text"
+                  v-model="subject"
                   required
                   class="br-10"
                 ></b-form-input>
@@ -41,7 +42,8 @@
               >
                 <b-form-input
                   id="input-2"
-                  type="email"
+                  type="text"
+                  v-model="department"
                   required
                   class="br-10"
                 ></b-form-input>
@@ -55,14 +57,14 @@
               >
                 <b-form-textarea
                   id="complaints"
-                  type="email"
+                  v-model="complain"
                   class="br-10"
                   rows="8"  no-resize
                   required
                 ></b-form-textarea>
               </b-form-group>
             </div>
-            <div class="col-md-12 text-end mt-4 ">
+            <div class="col-md-12 text-end mt-4 " @click="setComplain">
                 <button class="btn-blue btn-hover-yellow w-25 br-5">
                     <b-icon icon="cursor"></b-icon>
                     Submit
@@ -75,7 +77,49 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  name:'complaints',
+   data() {
+    return {
+      subject:'',  
+      department:'',  
+      complain:'',  
+      message:''
+    };
+  },
+  methods: {
+    async setComplain() {
+      const vm = this;
+      vm.$store
+        .dispatch("HTTP_POST_REQUEST", {url:vm.$store.state.user.user_type+`/complains`,payload:{subject:vm.subject,department:this.department,complain:this.complain}})
+        .then((response) => {
+          if(response.data.status == true){
+            vm.$toast.success(response.data.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+            });
+          }else{
+            vm.$toast.error(response.data.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+          }
+          vm.subject ='',
+          vm.department ='',
+          vm.complain =''
+        })
+        .catch((error) => {
+          console.log('',error)
+         
+        });
+    },
+  },
+ 
+};
 </script>
 <style lang="scss">
 .complaints {
