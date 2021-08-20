@@ -13,6 +13,9 @@ const state = {
   sidebarShow: 'responsive',
   sidebarMinimize: false,
   user: '',
+  selected_event: '',
+  register_data: '',
+  reload_event: false,
   model_status: false,
   token: localStorage.getItem('token') || '',
   authentication_token: false,
@@ -50,6 +53,15 @@ const mutations = {
   SET_MODEL_STATUS(state, data) {
     state.model_status = data;
   },
+  SET_SELECTED_EVENT(state, data) {
+    state.selected_event = data;
+  },
+  SET_RELOAD_EVENTS(state, data) {
+    state.reload_event = data;
+  },
+  SET_REGISTER_DATA(state, data) {
+    state.register_data = data;
+  },
 }
 
 const getters = {
@@ -64,6 +76,15 @@ const getters = {
   },
   getModelStatus(state) {
     return state.model_status;
+  },
+  getSelectedEvent(state) {
+    return state.selected_event;
+  },
+  getEventReload(state) {
+    return state.reload_event;
+  },
+  getRegisterData(state) {
+    return state.register_data;
   },
 }
 const actions = {
@@ -91,6 +112,7 @@ const actions = {
         });
     })
   },
+
 }
 
 export default  new Vuex.Store({

@@ -6,8 +6,21 @@
         style="height: calc(100vh - 220px); min-height: 650px"
       >
         <div class="account-details-tabs">
-          <router-link
+          <router-link v-if="getUser.user_type == 'agent'"
             to="/account-details/edit-profile"
+            tag="button"
+            class="d-flex align-items-center tab"
+          >
+            <div class="text-start f-title">
+              <h5 class="c-blue">Edit Profile</h5>
+              <p class="c-grey">Details about your personal infromation</p>
+            </div>
+            <div class="f-icon">
+              <b-icon icon="chevron-right"></b-icon>
+            </div>
+          </router-link>
+          <router-link v-if="getUser.user_type == 'consumer'"
+            to="/account-details/edit-profile-consumer"
             tag="button"
             class="d-flex align-items-center tab"
           >
@@ -60,14 +73,23 @@
           </router-link>
         </div>
       </div>
-      <div class="col-md-9">
+      <div class="col-md-9" v-if="getUser.user_type == 'agent'">
         <RouterView class="account-details-view" name="accountdetails" />
+      </div>
+      <div class="col-md-9" v-if="getUser.user_type == 'consumer'">
+        <RouterView class="account-details-view" name="accountdetailsConsumer" />
       </div>
     </BRow>
   </div>
 </template>
 <script>
-export default {};
+import { mapGetters } from 'vuex';
+export default {
+  name:'Account Details',
+   computed:{
+    ...mapGetters(['getUser'])
+  }
+};
 </script>
 <style lang="scss">
 .account-details {

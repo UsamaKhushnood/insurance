@@ -1,6 +1,7 @@
 <template>
   <div class="TheContainer" id="app">
-    <div class="row">
+      <Circle10  v-if="getSpinner" />
+    <div class="row" v-else>
       <div class="theme-sidebar" :class='{minimize : minimize}'>
         <TheSidebar ref="sidebar" />
       </div>
@@ -15,11 +16,12 @@
   </div>
 </template>
 <script>
+import Circle10 from '@/components/Circle10.vue'
 import TheHeader from "./TheHeader.vue";
 import TheSidebar from "./TheSidebar.vue";
 import HeaderSecondary from "./HeaderSecondary.vue";
 export default {
-  components: { TheHeader, TheSidebar, HeaderSecondary },
+  components: { TheHeader, TheSidebar, HeaderSecondary, },
   methods: {
     doSomething() {
       console.log(this.$refs.sidebar, "sfklsdjl");

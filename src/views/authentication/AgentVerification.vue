@@ -25,14 +25,14 @@
       <div class="customer-body w-75 mx-auto">
         <h1 class="c-blue fw-6 mt-10">Sign up to NAGIA.</h1>
         <div class="below-dash"></div>
-        <b-form class="mt-5 customer-signup-form">
+        <b-form class="mt-5 customer-signup-form" @submit.prevent="register">
           <BRow>
             <BCol md="12">
               <b-form-group label="NIC Agent Code" label-for="verificationCode">
                 <b-form-input
                   id="verificationCode"
                   type="text"
-                  required
+                  
                 ></b-form-input>
               </b-form-group>
               <button class="btn-blue btn-block mt-4" @click="verify">Verify Now!</button>
@@ -64,12 +64,18 @@
               </b-form-checkbox>
             </BCol>
             <BCol md="12 mt-4 ">
-              <router-link
+              <button 
+              type="btn"
+               class="btn-gradient w-100"
+               >
+                Create Account
+              </button>
+              <!-- <router-link
                 to="/confirmation"
                 tag="button"
                 class="btn-gradient w-100"
                 >Create Account</router-link
-              >
+              > -->
             </BCol>
           </BRow>
         </b-form>
@@ -78,18 +84,55 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
+import {mapGetters} from 'vuex'
 import Dropdown from "@/components/Dropdown";
 export default {
+  name:'AgentVerification',
   components: { Dropdown },
   data() {
       return {
           isVerified: 'pending'
       }
   },
+  computed:{
+    ...mapGetters(['getRegisterData'])
+  },
   methods: {
       verify() {
           this.isVerified = 'true'
-      }
+      },
+    async register() {
+      const vm = this;
+  
+     await  axios.post(`/register`,
+          this.getRegisterData
+          )
+        .then((response) => {
+       
+          if(response.data.status == false){
+          vm.$toast.error(response.data.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+          }else{
+            vm.$toast.success(response.data.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+              vm.$router.push({ path: "login" });
+
+          }
+        })
+        .catch((error) => {
+          let errors = error.response.data.errors;
+         
+        });
+    },
   }
 };
 </script>

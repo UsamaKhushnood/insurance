@@ -30,50 +30,91 @@
         <b-form class="mt-5 agent-signup-form">
           <BRow>
             <BCol md="6">
+              <b-form-group label="Select Title" label-for="SelectTitle">
+                <b-form-select
+                  id="SelectTitle"
+                  required
+                  v-model="title"
+                  :options="options"
+                      class="field-category"
+                >
+                  <template #first>
+            <b-form-select-option :value="null" selected disabled>-- Please select an option --</b-form-select-option>
+          </template>
+                </b-form-select>
+              </b-form-group>
+            </BCol>
+            <BCol md="6">
               <b-form-group label="First Name" label-for="FirstName">
                 <b-form-input
                   id="FirstName"
+                  v-model="first_name"
                   type="text"
                   required
                 ></b-form-input>
               </b-form-group>
             </BCol>
+          
             <BCol md="6">
               <b-form-group label="Middle Name" label-for="MiddleName">
                 <b-form-input
                   id="MiddleName"
+                  v-model="middle_name"
                   type="text"
-                  required
                 ></b-form-input>
               </b-form-group>
             </BCol>
             <BCol md="6">
               <b-form-group label="Last Name" label-for="LastName">
-                <b-form-input id="LastName" type="text" required></b-form-input>
+                <b-form-input id="LastName"
+                  v-model="last_name"
+                 type="text"  required></b-form-input>
               </b-form-group>
             </BCol>
             <BCol md="6">
               <b-form-group label="Gender" label-for="Gender">
-                <b-form-input id="Gender" type="text" required></b-form-input>
+                <b-form-input id="Gender" 
+                type="text"
+                v-model="gender"
+                 required></b-form-input>
               </b-form-group>
             </BCol>
             <BCol md="6">
               <b-form-group label="PhoneNo" label-for="PhoneNo">
                 <b-form-input
                   id="PhoneNo"
-                  type="number"
+                  v-model="phone"
+                  type="tel"
                   required
                 ></b-form-input>
               </b-form-group>
             </BCol>
             <BCol md="6">
               <b-form-group label="Email" label-for="Email">
-                <b-form-input id="Email" type="email" required></b-form-input>
+                <b-form-input id="Email"
+                v-model="email"
+                 type="email" required></b-form-input>
+              </b-form-group>
+            </BCol>
+            <BCol md="6">
+              <b-form-group label="Password" label-for="Password">
+                <b-form-input id="Password"
+                v-model="password"
+                 type="password" required></b-form-input>
+              </b-form-group>
+            </BCol>
+            <BCol md="6">
+              <b-form-group label="Password Confirmation" label-for="Password Confirmation">
+                <b-form-input id="Password Confirmation"
+                v-model="password_confirmation"
+                 type="password" required></b-form-input>
               </b-form-group>
             </BCol>
             <BCol md="6">
               <b-form-group label="Location" label-for="Location">
-                <b-form-input id="Location" type="text" required></b-form-input>
+                <b-form-input id="Location"
+                v-model="location"
+                 type="text" required></b-form-input>
               </b-form-group>
             </BCol>
             <BCol md="6">
@@ -81,23 +122,30 @@
                 <b-form-input
                   id="DigiAddress"
                   type="text"
+                  v-model="digital_address"
                   required
                 ></b-form-input>
               </b-form-group>
             </BCol>
             <BCol md="6">
               <b-form-group label="Region" label-for="Region">
-                <b-form-input id="Region" type="text" required></b-form-input>
+                <b-form-input id="Region"
+                v-model="region"
+                type="text" required></b-form-input>
               </b-form-group>
             </BCol>
             <BCol md="6">
               <b-form-group label="District" label-for="District">
-                <b-form-input id="District" type="text" required></b-form-input>
+                <b-form-input id="District"
+                v-model="district"                
+                 type="text" required></b-form-input>
               </b-form-group>
             </BCol>
             <BCol md="6">
               <b-form-group label="Landmark" label-for="LandMark">
-                <b-form-input id="LandMark" type="text" required></b-form-input>
+                <b-form-input id="LandMark"
+                v-model="landmark"                
+                type="text" required></b-form-input>
               </b-form-group>
             </BCol>
             <BCol md="6">
@@ -107,8 +155,9 @@
               >
                 <b-form-input
                   id="AgentExistance"
+                  v-model="agent_existance"                
                   type="text"
-                  required
+             
                 ></b-form-input>
               </b-form-group>
             </BCol>
@@ -119,8 +168,9 @@
               >
                 <b-form-input
                   id="CurrentLifeCompany"
+                  v-model="current_life_company"
                   type="text"
-                  required
+               
                 ></b-form-input>
               </b-form-group>
             </BCol>
@@ -131,8 +181,9 @@
               >
                 <b-form-input
                   id="CurrentNonLifeCompany"
+                  v-model="current_non_life_company"
                   type="text"
-                  required
+                
                 ></b-form-input>
               </b-form-group>
             </BCol>
@@ -144,7 +195,8 @@
                 <b-form-input
                   id="PreviousLifeCompany"
                   type="text"
-                  required
+                  v-model="previous_life_company"
+               
                 ></b-form-input>
               </b-form-group>
             </BCol>
@@ -156,14 +208,18 @@
                 <b-form-input
                   id="PreviousNonLifeCompany"
                   type="text"
-                  required
+                v-model="previous_non_life_company"
+                  
                 ></b-form-input>
               </b-form-group>
             </BCol>
             <BCol md="12" class="mt-6">
-              <router-link to="/agent-verification" class="btn-gradient d-flex w-50 ms-auto justify-content-center">
+              <button @click="register" class="btn-gradient d-flex w-50 ms-auto justify-content-center">
                 Verify &amp; Register
-              </router-link>
+              </button>
+              <!-- <router-link to="/agent-verification" @click="register" class="btn-gradient d-flex w-50 ms-auto justify-content-center">
+                Verify &amp; Register
+              </router-link> -->
             </BCol>
           </BRow>
         </b-form>
@@ -172,9 +228,97 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 import Dropdown from "@/components/Dropdown";
 export default {
+  name:'AgentSignup',
   components: { Dropdown },
+   data() {
+    return {
+      title:'',  
+      first_name:'',  
+      middle_name:'',  
+      last_name:'',  
+      password:'',  
+      password_confirmation:'',  
+      gender:'',  
+      phone:'',  
+      email:'',  
+      location:'',  
+      digital_address:'',  
+      region:'',  
+      district:'',  
+      landmark:'',  
+      agent_existance:'',  
+      current_life_company:'',  
+      current_non_life_company:'',  
+      previous_life_company:'',  
+      previous_non_life_company:'',
+      options: [
+          { value: 'Mr', text: 'Mr' },
+          { value: 'Mrs', text: 'Mrs' },
+          { value: 'Miss', text: 'Miss' },
+          { value: 'Rev', text: 'Rev' },
+          { value: 'Dr', text: 'Dr' },
+          { value: 'Prof', text: 'Prof' },
+      ]
+    };
+  },
+  methods: {
+    async register() {
+
+        if(  
+      this.first_name ==''|| 
+      this.title ==''|| 
+      this.last_name ==''|| 
+      this.password==''|| 
+      this.password_confirmation==''|| 
+      this.gender==''|| 
+      this.phone==''|| 
+      this.email==''|| 
+      this.location==''|| 
+      this.digital_address==''|| 
+      this.region==''|| 
+      this.district==''|| 
+      this.landmark==''|| 
+      this.agent_existance==''|| 
+      this.current_life_company==''|| 
+      this.current_non_life_company==''|| 
+      this.previous_life_company==''|| 
+      this.previous_non_life_company==''){
+        return;
+      }
+
+      const vm = this;
+      let payload = {
+          device_token:'123456',
+          title:vm.title,
+          first_name:vm.first_name,
+          middle_name:this.middle_name,
+          last_name:this.last_name,
+          password:this.password,
+          password_confirmation:this.password_confirmation,
+          gender:this.gender,
+          phone:this.phone,
+          email:this.email,
+          location:this.location,
+          digital_address:this.digital_address,
+          region:this.region,
+          district:this.district,
+          landmark:this.landmark,
+          agent_existence:this.agent_existance,
+          current_life_company:this.current_life_company,
+          current_non_life_company:this.current_non_life_company,
+          previous_life_company:this.previous_life_company,
+          previous_non_life_company:this.previous_non_life_company,
+          user_type:'agent',
+          }
+        this.$store.commit('SET_REGISTER_DATA',payload)
+        this.$router.push({ path: '/agent-verification' });
+  
+    },
+  },
+ 
 };
 </script>
 <style lang="scss">
@@ -191,4 +335,14 @@ export default {
     }
   }
 }
+
+select.field-category.custom-select {
+  width: 100% !important;
+  border: none;
+  background: var(--light-grey);
+  padding: 10px;
+  border-radius: 5px;
+  height: 50px;
+}
+
 </style>

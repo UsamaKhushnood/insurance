@@ -11,13 +11,25 @@ import store from './store'
 import Toast from "vue-toastification";
 // Import the CSS or use your own!
 import "vue-toastification/dist/index.css";
+import VueMoment from 'vue-moment'
+// import moment from 'moment-timezone'
+
+Vue.use(VueMoment, {
+  // moment,
+})
+
+import jQuery from 'jquery'
+import axios from 'axios'
+import _ from 'underscore'
 
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
-
+global.$ = global.jQuery = jQuery
+global.axios = axios
+global._ = _
 
 
 Vue.use(Toast);

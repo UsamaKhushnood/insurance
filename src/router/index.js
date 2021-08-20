@@ -8,10 +8,12 @@ import AgentSignup from "@/views/authentication/AgentSignup";
 import CustomerSignup from "@/views/authentication/CustomerSignup";
 import Confirmation from "@/views/authentication/Confirmation";
 import AgentVerification from "@/views/authentication/AgentVerification";
+import ForgetPassword from "@/views/authentication/ForgetPassword";
 import Dashboard from "@/Dashboard";
 
 import AccountDetails from "@/views/account-details/AccountDetails";
-import EditProfile from "@/views/account-details/EditProfile";
+import EditProfileAgent from "@/views/account-details/EditProfileAgent";
+import EditProfileConsumer from "@/views/account-details/EditProfileConsumer";
 import Notification from "@/views/account-details/Notification";
 import Billing from "@/views/account-details/Billing";
 import Security from "@/views/account-details/Security";
@@ -62,11 +64,19 @@ const routes = [
         children: [
           {
             path: 'edit-profile',
-            name: 'Edit Profile',
+            name: 'Edit Profile Agent',
             components: {
-              accountdetails: EditProfile
+              accountdetails: EditProfileAgent
             }
           },
+          {
+            path: 'edit-profile-consumer',
+            name: 'Edit Profile Consumer',
+            components: {
+              accountdetailsConsumer: EditProfileConsumer
+            }
+          },
+          
           {
             path: 'notification',
             name: 'Notification',
@@ -247,6 +257,13 @@ const routes = [
         name: "Agent Verification",
         components: {
           authentication: AgentVerification,
+          },
+      },
+        {
+        path: "forget-password",
+        name: "ForgetPassword",
+        components: {
+          authentication: ForgetPassword,
         },
       },
     ],
@@ -257,6 +274,20 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+
+router.beforeEach((to, from, next) => {
+  if (!localStorage.getItem('token')) {
+      // checking to avoid loop
+      if (to.name === 'Login' || to.name === 'ForgetPassword' || to.name === 'Agent Area'|| to.name === 'Customer Area'|| to.name === 'Agent Verification' ) return next();
+      next({
+          path: '/'
+      });
+  }
+  else {
+     next();
+  }
 });
 
 export default router;

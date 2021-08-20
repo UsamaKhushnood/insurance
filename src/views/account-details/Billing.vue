@@ -5,19 +5,16 @@
         <h4 class="text-center c-grey">Membership Plan &amp; Billing</h4>
       </div>
       <div class="row membership-plans justify-content-evenly">
-        <div class="anual-plan plan">
-          <h1 class="c-blue mt-4">Anual Plan</h1>
-          <h6 class="c-grey">GHS 454</h6>
-          <button class="btn-blue btn-block">Active</button>
+        <div class="anual-plan plan" v-for="(plan,index) in billingPlans" :key="index">
+          <h1 class="c-blue mt-4">{{plan.name}}</h1>
+          <h6 class="c-grey">NGN {{plan.amount}} </h6>
+          <button class="btn-blue btn-block" v-if="userPlan[0].id ==plan.id && userPlan[0].user.plan_status == 1" @click="assignPlans(plan)">Active</button>
+          <button class="btn-blue btn-block" v-else  @click="assignPlans(plan)">Downgrade</button>
         </div>
-        <div class="monthly-plan plan">
-          <h1 class="c-blue mt-4">Monthly Plan</h1>
-          <h6 class="c-grey">GHS 454</h6>
-          <button class="btn-blue btn-block">Downgrade</button>
-        </div>
+    
       </div>
     </div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-12 mt-5 mb-2">
         <h5 class="c-blue">My Cards</h5>
       </div>
@@ -51,7 +48,7 @@
           <b-icon icon="x"></b-icon>
         </button>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -59,6 +56,8 @@ export default {
   data() {
     return {
       selected: null,
+      billingPlans: [],
+      userPlan: '',
       cards: [1, 2, 3, 4, 1, 2, 3, 4],
     };
   },
@@ -66,6 +65,46 @@ export default {
     deleteCard(xIndex) {
       this.cards.splice(xIndex, 1);
     },
+    async getMyPlans(){
+      let vm = this;
+        vm.$store
+        .dispatch("HTTP_GET_REQUEST", this.$store.state.user.user_type+`/billing-plans`)
+        .then((response) => {
+          console.log("re", response.data.data.plans);
+          vm.billingPlans = response.data.data.plans;
+          vm.userPlan = response.data.data.userPlan;
+        })
+        .catch((error) => {
+          let errors = error.response.data.errors;
+          vm.$toast.error(errors.response.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+        });
+    },
+      async assignPlans(plan){
+      let vm = this;
+        vm.$store
+        .dispatch("HTTP_GET_REQUEST", this.$store.state.user.user_type+`/select-plan/`+plan.id)
+        .then((response) => {
+          console.log("re", response);
+          vm.billingPlans = response.data.data;
+        })
+        .catch((error) => {
+          let errors = error.response.data.errors;
+          vm.$toast.error(errors.response.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+        });
+    },
+  },
+   mounted() {
+    this.getMyPlans();
   },
 };
 </script>

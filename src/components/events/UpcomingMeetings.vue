@@ -1,29 +1,27 @@
 <template>
   <div class="upcoming-meeting box-shadow">
     <h4 class="c-grey">Upcoming Meetings</h4>
-    <div class="meeting" v-for="(meeting, mIndex) in meetings" :key="mIndex">
-      <div class="smeeting" :class="meeting.background">
+    <div class="meeting" v-for="(meeting, Index) in meetings" :key="Index">
+      <div class="smeeting" :class="meeting.bg">
         <div class="meeting-details">
           <p class="f-10">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit
-            tempore maxime sequi eaque praesentium maxime sequi eaque
-            praesentium
+          {{meeting.description}}
           </p>
         </div>
         <div class="meeting-timing mt-2">
-          <span class="fw-7 f-12">12:40 PM - 15:40 PM</span>
+          <span class="fw-7 f-12">{{moment(meeting.start_time, ["HH.mm A"]).format("LT")}} - {{moment(meeting.end_time, ["HH.mm A"]).format("LT")}}</span>
         </div>
         <div class="members mt-2">
           <b-avatar-group size="30px">
-            <b-avatar
+            <!-- <b-avatar
               src="https://placekitten.com/300/300"
               variant="info"
             ></b-avatar>
             <b-avatar
               src="https://placekitten.com/300/300"
               variant="info"
-            ></b-avatar>
-            <b-avatar
+            ></b-avatar> -->
+            <!-- <b-avatar
               src="https://placekitten.com/300/300"
               variant="info"
             ></b-avatar>
@@ -34,7 +32,7 @@
             <b-avatar
               src="https://placekitten.com/320/320"
               variant="dark"
-            ></b-avatar>
+            ></b-avatar> -->
           </b-avatar-group>
         </div>
       </div>
@@ -42,16 +40,52 @@
   </div>
 </template>
 <script>
+import moment from 'moment'
 export default {
   data() {
     return {
+      moment:moment,
       meetings: [
-        { background: "m-green" },
-        { background: "m-yellow" },
-        { background: "m-red" },
-        { background: "m-purple" },
+        // { background: "m-green" },
+        // { background: "m-yellow" },
+        // { background: "m-red" },
+        // { background: "m-purple" },
       ],
     };
+  },
+  methods:{
+    async getMeeting(){
+      let vm = this;
+        vm.$store
+        .dispatch("HTTP_GET_REQUEST", this.$store.state.user.user_type+`/upcoming-meeting`)
+        .then((response) => {
+          console.log("re", response.data.data);
+              if (response.data.status == false) {
+            vm.$toast.error(response.data.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+          } else {
+          vm.meetings = response.data.data;
+         
+          }
+        })
+        .catch((error) => {
+          let errors = error.response.data.errors;
+          vm.$toast.error(errors.response.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+        });
+    },
+  
+  },
+    mounted() {
+    this.getMeeting();
   },
 };
 </script>

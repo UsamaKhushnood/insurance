@@ -4,17 +4,15 @@
     <div class="meeting" v-for="(meeting, mIndex) in meetings" :key="mIndex">
       <div class="smeeting" :class="meeting.background">
         <div class="meeting-details">
-          <p class="f-10">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit
-            tempore maxime sequi eaque praesentium maxime sequi eaque
-            praesentium
+           <p class="f-10">
+            {{meeting.description}}
           </p>
         </div>
         <div class="meeting-timing mt-2">
-          <span class="fw-7 f-12">12:40 PM - 15:40 PM</span>
+          <span class="fw-7 f-12">{{meeting.start_time}} - {{meeting.end_time}}</span>
         </div>
         <div class="members mt-2">
-          <b-avatar-group size="30px">
+          <!-- <b-avatar-group size="30px">
             <b-avatar
               src="https://placekitten.com/300/300"
               variant="info"
@@ -35,29 +33,64 @@
               src="https://placekitten.com/320/320"
               variant="dark"
             ></b-avatar>
-          </b-avatar-group>
+          </b-avatar-group> -->
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-export default {
-  data() {
-    return {
-      meetings: [
-        { background: "m-yellow" },
-        { background: "m-purple" },
-        { background: "m-green" },
-        { background: "m-yellow" },
-        { background: "m-green" },
-        { background: "m-red" },
-        { background: "m-red" },
-        { background: "m-purple" },
-      ],
-    };
-  },
-};
+  import axios from 'axios';
+  export default {
+    name:'Meeting',
+    data() {
+      return {
+        meetings: [
+          // { background: "m-yellow" },
+          // { background: "m-purple" },
+          // { background: "m-green" },
+          // { background: "m-yellow" },
+          // { background: "m-green" },
+          // { background: "m-red" },
+          // { background: "m-red" },
+          // { background: "m-purple" },
+        ],
+      };
+    },
+    methods: {
+      move(to,data) {
+        this.$router.push({ path: to });
+
+      },
+    async getMeetings(){
+        const vm = this;
+        // vm.$store.commit("SET_SPINNER", true);
+        // alert(this.$router.id);
+        await axios
+          .get(process.env.VUE_APP_API_URL+vm.$store.state.user.user_type+"/meetings/")
+          .then((response) => {
+            console.log('data::',response.data.data);
+          // vm.$store.commit("SET_SPINNER", false);
+            vm.meetings = response.data.data       
+          })
+          .catch((errors) => {
+            console.log(errors)
+            if(errors.response)
+            this.$toast.error(errors.response.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+          });
+      },
+
+
+    },
+    mounted(){
+    this.getMeetings()
+    }
+  };
 </script>
 <style lang="scss">
 .upcoming-meeting {

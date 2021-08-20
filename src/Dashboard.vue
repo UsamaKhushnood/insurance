@@ -39,7 +39,8 @@
               <h6 class="c-dark-grey option-name">Forum</h6>
             </router-link>
             <router-link
-              to="/event-management/all-events"
+              @click.native="redirectUrl('https://learn.nagia.com.gh')"
+              to="#"
               tag="div"
               class="option pointer"
             >
@@ -60,7 +61,8 @@
           <h4 class="c-dark-grey mb-3 mt-5">Self-Serve Resources</h4>
           <div class="general-links self-resources">
             <router-link
-              :to="'/' + x.link"
+              to="#"
+               @click.native="redirectUrl(x.link)" 
               tag="div"
               class="option pointer"
               v-for="(x, xIndex) in selfServe"
@@ -91,7 +93,7 @@
           <h4 class="c-dark-grey mb-3 mt-5">Personalized Support</h4>
           <div class="general-links self-resources">
             <router-link
-              :to="'/' + x.link"
+              to="#"
               tag="div"
               class="option pointer"
               v-for="(x, xIndex) in support"
@@ -145,7 +147,7 @@ export default {
           c1: "rgba(156,86,254,1)",
           c2: "rgba(247,85,235,1)",
           icon: "blog",
-          link: "/blog",
+          link: "https://nagia.com.gh/news-room/",
         },
         {
           title: "FAQ",
@@ -216,6 +218,14 @@ export default {
       ],
     };
   },
+  methods:{
+    redirectUrl(url){
+      // http://localhost:8080/
+      let  newUrl=url.slice(0, 23)
+      if(newUrl)
+      window.location.href=newUrl
+    }
+  }
 };
 </script>
 <style lang="scss">

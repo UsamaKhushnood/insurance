@@ -18,7 +18,7 @@
                   <b-icon icon="geo-alt-fill" class="me-2 c-yellow"></b-icon>
                   Afua Sutherland Park
                 </div>
-                <button class="view-event-btn btn-yellow btn-block mt-3" @click="move('event-details/' + eIndex)">
+                <button class="view-event-btn btn-yellow btn-block mt-3" @click="move('event-details/' + event.id,event)">
                   View Details
                 </button>
               </div>
@@ -33,20 +33,26 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 import UpcomingMeetings from '@/components/events/UpcomingMeetings'
+import { mapGetters } from 'vuex';
 export default {
   components: {UpcomingMeetings},
+   computed:{
+    ...mapGetters(['getEventReload']),
+    ImageUrl(){
+      return process.env.VUE_APP_IMAGE_URL
+    },
+     reloadEvent () {
+      return  this.getEventReload
+    }
+  },
   data() {
     return {
       events: [
-        { img: require("../../assets/images/event1.png") },
-        { img: require("../../assets/images/event2.png") },
-        { img: require("../../assets/images/event3.png") },
-        { img: require("../../assets/images/event4.png") },
-        { img: require("../../assets/images/event1.png") },
-        { img: require("../../assets/images/event2.png") },
-        { img: require("../../assets/images/event3.png") },
-        { img: require("../../assets/images/event4.png") },
+        // { img: require("../../assets/images/event1.png") },
+        // { img: require("../../assets/images/event2.png") },
+       
       ],
     };
   },
@@ -54,6 +60,36 @@ export default {
     move(to) {
       this.$router.push({ path: to });
     },
+  
+     async getAllEvents(){
+      const vm = this;
+      // vm.$store.commit("SET_SPINNER", true);
+      await axios
+        .get(process.env.VUE_APP_API_URL+vm.$store.state.user.user_type+"/events")
+        .then((response) => {
+          console.log('data::',response.data.data);
+          vm.$store.commit("SET_SPINNER", false);
+          this.events= response.data.data       
+        })
+        .catch((errors) => {
+          console.log(errors)
+           if(errors.response)
+          this.$toast.error(errors.response.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+        });
+      }
+    },
+    mounted(){
+    this.getAllEvents();
+  },
+  watch:{
+    reloadEvent(){
+      this.getAllEvents
+    }
   }
 };
 </script>

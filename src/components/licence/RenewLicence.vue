@@ -48,7 +48,9 @@
             <h6 class="card-info-label">Credit Card Number</h6>
             <input type="text" v-model="card.number" />
             <h6 class="card-info-label">Credit Card Owner</h6>
-            <input type="text" v-model="card.name" />
+            <input type="text" v-model="card.name" /> 
+               <h6 class="card-info-label">CVC</h6>
+            <input type="text" v-model="card.cvc" />
             <div class="row">
               <div class="p-0 pe-2 col-md-6">
                 <h6 class="card-info-label">Issue On</h6>
@@ -72,7 +74,7 @@
                 </svg>
                 <span>Back</span>
               </button>
-              <button class="pay-now-btn" v-b-modal.payment-successful>Pay Now</button>
+              <button class="pay-now-btn" v-b-modal.payment-successful @click="renewPlan">Pay Now</button>
               <ConfirmationModal />
             </div>
           </div>
@@ -82,6 +84,7 @@
   </div>
 </template>
 <script>
+import axios from "axios"
 import ConfirmationModal from './ConfirmationModal.vue'
 export default {
   components: {ConfirmationModal},
@@ -89,13 +92,74 @@ export default {
     return {
       status: true,
       card: {
-        number: "4567 6565 3456 1456",
+        number: "4242424242424242",
         name: "Ohemaa Yeboah",
-        issue: "09/19",
-        expire: "09/22",
+        issue: "09",
+        expire: "22",
+        cvc: "093",
       },
     };
   },
+
+  methods:{
+
+    redirectUrl(url){
+      window.open(url);
+
+    },
+     async renewPlan() {
+      const vm = this;
+      vm.$store.commit("SET_SPINNER", true);
+      await axios
+        .post(
+          process.env.VUE_APP_API_URL +
+            vm.$store.state.user.user_type +
+            "/payment",{ 
+              card_number: this.card.number,
+              card_owner: this.card.name,
+              expiry_month: this.card.issue,
+              expiry_year: this.card.expire,
+              cvc: this.card.cvc
+              }
+        )
+        .then((response) => {
+          console.log("data::", response.data.data);
+          vm.$store.commit("SET_SPINNER", false);
+          // this.events = response.data.data;
+           if(response.data.status == false){
+            vm.$toast.error(response.data.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+          vm.status =false
+          }else{
+            vm.$toast.success(response.data.message, {
+                position: "top-right",
+                closeButton: "button",
+                icon: true,
+                rtl: false,
+              });
+              vm.status =true
+                vm.redirectUrl( response.data.data.redirect)
+              // window.location.href = response.data.data.redirect;
+              // 4242424242424242
+          }
+        })
+        .catch((errors) => {
+          console.log(errors);
+          if (errors.response)
+            this.$toast.error(errors.response.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+        });
+    },
+  }
+
 };
 </script>
 <style lang="scss">

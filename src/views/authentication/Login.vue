@@ -1,6 +1,7 @@
 <template>
   <div class="login-page" id="login-page">
-    <div class="pt-5 w-60">
+        <Circle10  v-if="showSpinner" />
+    <div class="pt-5 w-60" v-else>
       <div class="d-flex justify-content-between">
         <div class="logo">
           <img src="@/assets/logo.png" alt="logo" />
@@ -58,7 +59,7 @@
             >
               Remember Me
             </b-form-checkbox>
-            <p class="c-red fw-6 pointer">Forget Password?</p>
+             <router-link to="/forget-password" ><p class="c-red fw-6 pointer">Forget Password?</p></router-link>
           </div>
           <b-button class="btn-gradient mt-4" @click="signIn" block>Sign in</b-button>
         </b-form>
@@ -69,7 +70,7 @@
         <div class="new-account-types d-flex justify-content-between">
           <router-link to="/agent" tag="button" class="btn-blue w-50 me-3">Agent Area</router-link>
           <router-link to="/customer" tag="button" class="btn-yellow me-3 w-50">Customer Area</router-link>
-          <router-link to="/dashboard" tag="button" class="btn-yellow w-50">Goto Dashboard</router-link>
+          <!-- <router-link to="/dashboard" tag="button" class="btn-yellow w-50">Goto Dashboard</router-link> -->
         </div>
       </div>
     </div>
@@ -84,6 +85,7 @@ export default {
     return {
       email:'',
       password:'',
+      showSpinner:false
     }
   },
   methods:{
@@ -100,23 +102,29 @@ export default {
           console.log('data::',response.data.userDetail.user);
           const token = response.data.token
           localStorage.setItem('token', token)
-           vm.$store.commit("SET_SPINNER", false);
-           vm.$store.commit("SET_AUTH_TOKEN", response.data.token);
-             
-           vm.$store.commit("SET_USER", response.data.userDetail.user);
-              vm.$toast.success("Login Successfully", {
-            position: "top-right",
-            closeButton: "button",
-            icon: true,
-            rtl: false,
-          });
+            vm.$store.commit("SET_AUTH_TOKEN", response.data.token);
+            vm.$store.commit("SET_SPINNER", false);
+            vm.$store.commit("SET_USER", response.data.userDetail.user);
+            vm.$toast.success("Login Successfully", {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
           window.location.href =process.env.VUE_APP_URL+'dashboard' 
-          vm.$router.push({ name: "Dashboard" });
+          // vm.$router.push({ name: "Dashboard" });
+
         })
         .catch((errors) => {
-          console.log(errors)
-           if(errors.response)
-          this.$toast.error(errors.response.message, {
+          var err =''
+          if(errors.response.data.errors.email){
+            err+=errors.response.data.errors.email
+          }
+          if(errors.response.data.errors.password){
+            err+=errors.response.data.errors.password
+          }
+          if(errors)
+          this.$toast.error(err, {
             position: "top-right",
             closeButton: "button",
             icon: true,

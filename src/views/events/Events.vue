@@ -46,16 +46,8 @@
             </div>
           </router-link>
         </div>
-        <div class="Calender">
-          <b-calendar
-            v-model="value"
-            @context="onContext"
-            today-variant="danger"
-            nav-button-variant="dark"
-            show-decade-nav
-            locale="en-US"
-            class="border rounded p-2"
-          ></b-calendar>
+        <div class="Calender" v-show="this.$router.currentRoute.path !='/event-management/meetings'">
+           <DatePicker v-model="range" :model-config="modelConfig" @input="eventOnDate" is-range is-expanded />
         </div>
       </div>
       <div class="col-md-9">
@@ -65,16 +57,69 @@
   </div>
 </template>
 <script>
+import DatePicker from "v-calendar/lib/components/date-picker.umd";
+import moment from 'moment';
 export default {
+  components: { DatePicker },
+
   data() {
     return {
+      moment: moment,
       value: "",
       context: null,
+        modelConfig: {
+        type: 'string',
+        mask: 'YYYY-MM-DD', // Uses 'iso' if missing
+      },
+       range: {
+        start: '',
+        end: '',
+      },
     };
   },
   methods: {
     onContext(ctx) {
       this.context = ctx;
+    },
+      async eventOnDate() {
+      let vm = this;
+      let payload = {
+        start_date: vm.range.start,
+        end_date: vm.range.end,
+      };
+
+      vm.$store
+        .dispatch("HTTP_POST_REQUEST", {
+          url: vm.$store.state.user.user_type + `/event-on-date`,
+          payload,
+        })
+        .then((response) => {
+          console.log("re", response.data);
+          if (response.data.status == false) {
+            vm.$toast.success(response.data.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+          } else {
+            vm.$toast.success(response.data.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+          }
+        })
+        .catch((error) => {
+          let errors = error.response.data.errors;
+          vm.$toast.error(errors.response.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+        });
     },
   },
 };
@@ -115,30 +160,15 @@ export default {
     bottom: 50px;
     display: flex;
     width: 100%;
-    .b-calendar.border.rounded.p-2 {
-      background: #fff;
-      box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
-    }
-
-    .b-calendar .b-calendar-inner {
-      width: 100% !important;
-    }
-
-    header.b-calendar-grid-caption {
+    .vc-header {
       background: var(--blue);
-      color: var(--yellow);
-    }
-    .b-calendar output {
-      background: var(--blue);
-      color: var(--yellow);
-    }
-  }
-  @media only screen and (max-width: 1360px){
-    .Calender{
-      .b-calendar .b-calendar-inner{
-              width: 270px !important;
+      padding: 10px !important;
+      .vc-title {
+        color: var(--yellow) !important;
       }
-
+      svg.vc-svg-icon {
+        color: var(--yellow);
+      }
     }
   }
 }

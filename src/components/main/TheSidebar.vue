@@ -36,7 +36,7 @@
             <img class="route-icon" src="@/assets/icons/forum.png" />
             <h5 class="route-name">forum</h5>
           </router-link>
-          <router-link to="/learn-at-nagia" tag="li">
+          <router-link to="#" @click.native="redirectUrl" tag="li">
             <img class="route-icon" src="@/assets/icons/learn.png" />
             <h5 class="route-name">learn at nagia</h5>
           </router-link>
@@ -56,7 +56,7 @@
             <img class="route-icon" src="@/assets/icons/support.png" />
             <h5 class="route-name">support</h5>
           </router-link>
-          <router-link to="/logout" tag="li">
+             <router-link @click="logout" to="" @click.native="logout" tag="li">
             <img class="route-icon" src="@/assets/icons/logout.png" />
             <h5 class="route-name">logout</h5>
           </router-link>
@@ -66,13 +66,48 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
+import { mapGetters } from 'vuex';
+
 export default {
   methods: {
     minimizeSidebar(value) {
       console.log(value);
     },
+      async logout(value) {
+      let vm = this;
+      await axios
+        .post(`/logout`, this.getToken)
+        .then((response) => {
+          if (response.data.status == false) {
+            vm.$toast.error(response.data.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+          } else {
+            vm.$toast.success(response.data.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+            vm.$router.push({ path: "login" });
+            localStorage.removeItem("token");
+            localStorage.clear();
+          }
+        })
+        .catch((error) => {
+          let errors = error.response.data.errors;
+        });
+    },
+    redirectUrl(){
+      window.location.href='https://learn.nagia.com.gh'
+    }
   },
   computed: {
+    ...mapGetters(["getToken", "getUser"]),
     minimize() {
       return this.$store.state.sidebarMinimize;
     },

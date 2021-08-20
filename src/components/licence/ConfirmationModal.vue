@@ -37,13 +37,13 @@
         </div>
         <div class="pay-button mt-5">
           <div class="payment-btn-group">
-            <button class="back-btn">
+            <!-- <button class="back-btn" >
               <svg>
                 <use xlink:href="@/assets/svg/arrow-back.svg#back"></use>
               </svg>
-              <span>Back</span>
-            </button>
-            <button class="pay-now-btn">Check Status</button>
+              <span  >Back</span>
+            </button> -->
+            <button class="pay-now-btn" v-b-modal.check-status>Check Status</button>
           </div>
         </div>
       </div>
@@ -51,6 +51,7 @@
   </div>
 </template>
 <script>
+import $ from 'jquery';
 export default {
   data() {
     return {
@@ -63,6 +64,12 @@ export default {
       },
     };
   },
+  methods:{
+    closeModal(){
+      $('#payment-successful___BV_modal_header_').hide()
+    }
+  }
+
 };
 </script>
 <style lang="scss">

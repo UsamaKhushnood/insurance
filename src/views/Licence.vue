@@ -22,7 +22,8 @@
               <div class="pdf-icon">
                 <img src="@/assets/icons/pdf.png" width="30px" />
               </div>
-              <a href="#" class="invoice-number ms-4 c-blue"
+              <a href="" class="invoice-number ms-4 c-blue"
+
                 >NAG00{{ xIndex + 1 }}</a
               >
               <div class="download-invocie ms-auto">
@@ -43,11 +44,11 @@
                   </svg>
                 </div>
                 <div class="status-desc">
-                  <h6 class="c-yellow text-center">Check status</h6>
+                  <h6 class="c-yellow text-center" @click="checkLicence">Check status</h6>
                 </div>
               </div>
             </div>
-            <CheckStatus />
+            <CheckStatus :status='status' />
           </div>
           <div class="col-md-6">
             <div class="status-info pointer" v-b-modal.renew-licence>
@@ -125,8 +126,85 @@ export default {
   components: { CheckStatus, RenewLicence },
   data() {
     return {
-      invoices: [12, 21, 21, 2, 21, 221, 1, 12, 21, 21, 2, 21, 221, 1],
+      invoices: [],
+      status: '',
     };
+  },
+    methods: {
+    deleteCard(xIndex) {
+      this.cards.splice(xIndex, 1);
+    },
+    async checkLicence(){
+      let vm = this;
+        vm.$store
+        .dispatch("HTTP_GET_REQUEST", this.$store.state.user.user_type+`/check-license`)
+        .then((response) => {
+          console.log("re", response);
+         
+          if(response.data.status == false){
+          vm.$toast.error(response.data.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+          vm.status =false
+          }else{
+            vm.$toast.success(response.data.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+          vm.status =true
+              // vm.$router.push({ path: "login" });
+          }
+        })
+        .catch((error) => {
+          let errors = error.response.data.errors;
+          vm.$toast.error(errors.response.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+        });
+    },
+    async getAllInvocies(){
+      let vm = this;
+        vm.$store
+        .dispatch("HTTP_GET_REQUEST", this.$store.state.user.user_type+`/all-invoices`)
+        .then((response) => {
+          console.log("re", response);
+         
+          if(response.data.status == false){
+          vm.$toast.error(response.data.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+          vm.status =false
+          }else{
+          
+          vm.invoices =response.data.data
+              // vm.$router.push({ path: "login" });
+          }
+        })
+        .catch((error) => {
+          let errors = error.response.data.errors;
+          vm.$toast.error(errors.response.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+        });
+    },
+   
+  },
+   mounted() {
+    this.getAllInvocies();
   },
 };
 </script>

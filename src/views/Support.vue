@@ -11,22 +11,7 @@
           </div>
           <div class="chatbox-body bg-white">
             <div class="messages-box">
-              <div class="my-messages">
-                <div class="my-avatar">
-                  <b-avatar
-                    variant="info"
-                    src="https://placekitten.com/300/300"
-                    class="mr-3"
-                  ></b-avatar>
-                </div>
-                <div class="messages">
-                  <p class="message">What's up Franky!</p>
-                  <p class="message">What's up Franky!</p>
-                  <p class="message">What's up Franky!</p>
-                </div>
-                <div class="time f-10">9:27 A.M</div>
-              </div>
-              <div class="user-messages">
+              <div class="user-messages" v-for="(adminmsg ,index) in adminMessages" :key="index">
                 <div class="user-avatar">
                   <b-avatar
                     variant="info"
@@ -35,17 +20,12 @@
                   ></b-avatar>
                 </div>
                 <div class="messages">
-                  <p class="message">Hi George! Nice to hear you again!</p>
-                  <p class="message">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Debitis obcaecati architecto suscipit velit iure ipsa dolor
-                    totam repudiandae cumque dolore!
-                  </p>
-                  <p class="message">Hi George! Nice to hear you again!</p>
+                  
+                  <p class="message">{{adminmsg.body}}</p>
                 </div>
                 <div class="time f-10">9:27 A.M</div>
               </div>
-              <div class="my-messages">
+              <div class="my-messages"  v-for="(agentmsg ,index) in agentMessages" :key="index">
                 <div class="my-avatar">
                   <b-avatar
                     variant="info"
@@ -54,33 +34,11 @@
                   ></b-avatar>
                 </div>
                 <div class="messages">
-                  <p class="message">What's up Franky!</p>
                   <p class="message">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Alias debitis vero inventore possimus quaerat odit iure, hic
-                    dicta repellendus incidunt nam reprehenderit eum dolorem
-                    officia autem, earum ex quod explicabo!
+                      {{agentmsg.body}}                    
                   </p>
-                  <p class="message">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Alias debitis vero inventore possimus quaerat odit iure, hic
-                    dicta repellendus incidunt nam reprehenderit eum dolorem
-                    officia autem, earum ex quod explicabo!
-                  </p>
-                  <p class="message latest-message">What's up Franky!</p>
-                </div>
-                <div class="time f-10">9:27 A.M</div>
-              </div>
-              <div class="user-messages">
-                <div class="user-avatar">
-                  <b-avatar
-                    variant="info"
-                    src="https://placekitten.com/300/300"
-                    class="mr-3"
-                  ></b-avatar>
-                </div>
-                <div class="messages">
-                  <p class="message typing-message">Franky is typing...</p>
+                 
+          
                 </div>
                 <div class="time f-10">9:27 A.M</div>
               </div>
@@ -89,6 +47,7 @@
               <div class="chatbox-input">
                 <input
                   type="text"
+                  v-model="message"
                   placeholder="Enter you message here"
                   class="chatbox-input-feild"
                 />
@@ -101,7 +60,7 @@
                     <i class="fas fa-paperclip"></i>
                   </label>
                 </div>
-                <button class="chat-options-btn send-msg-btn">
+                <button class="chat-options-btn send-msg-btn" @click="sendMessage">
                   <i class="fas fa-paper-plane"></i>
                 </button>
               </div>
@@ -116,9 +75,100 @@
   </div>
 </template>
 <script>
+import moment from 'moment'
+import axios from 'axios'
 import NagiaContact from "../components/NagiaContact.vue";
 export default {
+  name:'Support',
   components: { NagiaContact },
+   data() {
+    return {
+      moment:moment,
+      message:'',
+      adminMessages:[],
+      agentMessages:[],
+      consumerMessage:[],
+      allMessages: [
+
+      ],
+    };
+  },
+  methods:{
+          
+    async getAllMessage(){
+      let vm = this;
+        vm.$store
+        .dispatch("HTTP_GET_REQUEST", this.$store.state.user.user_type+`/get-messages`)
+        .then((response) => {
+          console.log("re", response.data.data);
+             if (response.data.status == false) {
+            vm.$toast.error(response.data.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+          } else {
+              vm.allmessages = response.data.data;
+                 response.data.data.filter(function(item) {
+                   if(item.type =='agent' ||item.type =='consumer'){
+                     vm.agentMessages.push(item)
+                   }else{
+                     vm.adminMessages.push(item)
+                   }
+              });
+          }
+        })
+        .catch((error) => {
+          let errors = error.response.data.errors;
+          vm.$toast.error(errors.response.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+        });
+    },
+      async sendMessage() {
+      const vm = this;
+      vm.$store.commit("SET_SPINNER", true);
+      await axios
+        .post(
+          process.env.VUE_APP_API_URL +
+            vm.$store.state.user.user_type +
+            "/send-message/" ,{message:this.message}
+        )
+        .then((response) => {
+          console.log("data::", response.data.data);
+          vm.$store.commit("SET_SPINNER", false);
+
+          if (response.data.status == false) {
+            vm.$toast.error(response.data.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+          } else {
+            vm.message='';
+            vm.getAllMessage();
+            vm.$toast.success(response.data.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+        
+          }
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+    },
+  },
+    mounted() {
+    this.getAllMessage();
+  },
 };
 </script>
 <style lang="scss">

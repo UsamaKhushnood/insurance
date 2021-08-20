@@ -26,9 +26,9 @@
               Agent Unique Identification code: NGA97/00001
             </h5>
           </div>
-          <button class="btn-blue br-5" @click="status = !status">
+          <!-- <button class="btn-blue br-5" @click="status = !status">
             change status
-          </button>
+          </button> -->
           <div class="status" v-if="status">
             <svg width="100px">
               <use xlink:href="@/assets/svg/active.svg#active"></use>
@@ -49,7 +49,7 @@
           </div>
         </div>
         <div class="modal-offset-buttons" v-show="!status">
-          <button class="btn-yellow btn-hover-blue br-5 w-50">
+          <button class="btn-yellow btn-hover-blue br-5 w-50" v-b-modal.renew-licence>
             Renew Now
           </button>
           <button class="btn-blue btn-hover-yellow br-5 w-50">
@@ -62,11 +62,12 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      status: true,
-    };
-  },
+  props:['status'],
+  // data() {
+  //   return {
+  //     status: true,
+  //   };
+  // },
 };
 </script>
 <style lang="scss">
