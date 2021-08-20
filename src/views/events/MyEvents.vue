@@ -6,7 +6,7 @@
           <h3 class="c-blue text-center mb-4">My Accepted Events</h3>
           <div
             class="row event align-items-center"
-            v-for="(data, id) in acceptEvents"
+            v-for="(data, id) in getEvent"
             :key="id"
           >
             <div class="col-md-3 event-img">
@@ -46,9 +46,11 @@
 <script>
 import axios from 'axios'
 import UpcomingMeetings from "@/components/events/UpcomingMeetings";
+import { mapGetters } from 'vuex';
 export default {
   components: { UpcomingMeetings },
   computed:{
+    ...mapGetters(['getEvent']),
     ImageUrl(){
       return process.env.VUE_APP_IMAGE_URL
     },
@@ -73,7 +75,9 @@ export default {
         .then((response) => {
           console.log('data::',response.data.data);
           vm.$store.commit("SET_SPINNER", false);
-          this.acceptEvents= response.data.data       
+          // this.acceptEvents= response.data.data 
+          vm.$store.commit("SET_EVENT_DATA", null);
+          vm.$store.commit("SET_EVENT_DATA", response.data.data );      
         })
         .catch((errors) => {
           console.log(errors)

@@ -20,6 +20,7 @@ const state = {
   token: localStorage.getItem('token') || '',
   authentication_token: false,
   showSpinner: false,
+  all_event: '',
 }
 
 axios.defaults.baseURL = process.env.VUE_APP_API_URL
@@ -62,6 +63,9 @@ const mutations = {
   SET_REGISTER_DATA(state, data) {
     state.register_data = data;
   },
+  SET_EVENT_DATA(state, data) {
+    state.all_event = data;
+  },
 }
 
 const getters = {
@@ -86,6 +90,10 @@ const getters = {
   getRegisterData(state) {
     return state.register_data;
   },
+  getEvent(state) {
+    return state.all_event;
+  },
+ 
 }
 const actions = {
  

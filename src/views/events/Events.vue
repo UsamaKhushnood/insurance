@@ -102,6 +102,7 @@ export default {
               icon: true,
               rtl: false,
             });
+             vm.$store.commit("SET_EVENT_DATA", null);
           } else {
             vm.$toast.success(response.data.message, {
               position: "top-right",
@@ -109,6 +110,8 @@ export default {
               icon: true,
               rtl: false,
             });
+             vm.$store.commit("SET_EVENT_DATA", null);
+             vm.$store.commit("SET_EVENT_DATA", response.data.data );
           }
         })
         .catch((error) => {

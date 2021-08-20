@@ -93,9 +93,10 @@ export default {
               icon: true,
               rtl: false,
             });
-            vm.$router.push({ path: "login" });
             localStorage.removeItem("token");
             localStorage.clear();
+            window.location.href = process.env.VUE_APP_URL
+            // vm.$router.push({ path: "/dashboard" });
           }
         })
         .catch((error) => {

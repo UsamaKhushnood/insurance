@@ -27,10 +27,10 @@
             <div class="d-flex align-items-center">
               <b-avatar
                 variant="info"
-                src="https://placekitten.com/300/300"
+                :src="ImageUrl+'agent/'+getUser.agent.image" 
                 class="me-3"
               ></b-avatar>
-              <h5 class="username">Janet Owusu</h5>
+              <h5 class="username">{{getUser.agent.first_name}}</h5>
               <b-icon
                 icon="caret-down-fill"
                 variant="dark"
@@ -38,27 +38,27 @@
               ></b-icon>
             </div>
           </template>
-          <router-link class="dropdown-link" to="/dashboard">
+          <router-link class="dropdown-link" to="/account-details/edit-profile">
             <b-icon icon="person" class="me-2 icon"></b-icon>
             <span class="route-link">My Profile</span>
           </router-link>
-          <router-link class="dropdown-link" to="/account">
+          <router-link class="dropdown-link" to="/verify-an-angent">
             <b-icon icon="credit-card" class="me-2 icon"></b-icon>
             <span class="route-link">I.D Card</span>
           </router-link>
-          <router-link class="dropdown-link" to="/account">
+          <router-link class="dropdown-link" to="/messaging">
             <b-icon icon="envelope" class="me-2 icon"></b-icon>
             <span class="route-link">Inbox</span>
           </router-link>
-          <router-link class="dropdown-link" to="/account">
+          <router-link class="dropdown-link" to="/account-details/security">
             <b-icon icon="gear" class="me-2 icon"></b-icon>
             <span class="route-link">Setting</span>
           </router-link>
-          <router-link class="dropdown-link" to="/account">
+          <router-link class="dropdown-link" to="/dashboard">
             <b-icon icon="lock" class="me-2 icon"></b-icon>
             <span class="route-link">Legal Terms</span>
           </router-link>
-          <router-link class="dropdown-link" to="/account">
+          <router-link class="dropdown-link" @click="logout" to="" @click.native="logout" >
             <img src="@/assets/icons/logout.png" class="me-2" />
             <span class="route-link">Logout</span>
           </router-link>
@@ -68,16 +68,50 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 export default {
   methods: {
     minSidebar() {
       this.$emit("minimize-sidebar");
     },
+   
+     async logout(value) {
+      let vm = this;
+      await axios
+        .post(`/logout`, this.getToken)
+        .then((response) => {
+          if (response.data.status == false) {
+            vm.$toast.error(response.data.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+          } else {
+            vm.$toast.success(response.data.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+            localStorage.removeItem("token");
+            localStorage.clear();
+            window.location.href = process.env.VUE_APP_URL
+          }
+        })
+        .catch((error) => {
+          let errors = error.response.data.errors;
+        });
+    },
   },
   computed: {
+    ...mapGetters(['getUser']),
     minimize() {
       return this.$store.state.sidebarMinimize;
     },
+      ImageUrl(){
+      return process.env.VUE_APP_IMAGE_URL
+    }
   },
 };
 </script>

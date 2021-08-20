@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-8">
         <div class="eventsList row">
-          <div class="col-md-6" v-for="(event, eIndex) in events" :key="eIndex">
+          <div class="col-md-6" v-for="(event, eIndex) in getEvent" :key="eIndex">
             <div class="event">
               <div class="event-img">
                 <img :src="event.img" />
@@ -39,7 +39,7 @@ import { mapGetters } from 'vuex';
 export default {
   components: {UpcomingMeetings},
    computed:{
-    ...mapGetters(['getEventReload']),
+    ...mapGetters(['getEventReload','getEvent']),
     ImageUrl(){
       return process.env.VUE_APP_IMAGE_URL
     },
@@ -69,7 +69,9 @@ export default {
         .then((response) => {
           console.log('data::',response.data.data);
           vm.$store.commit("SET_SPINNER", false);
-          this.events= response.data.data       
+             vm.$store.commit("SET_EVENT_DATA", null);
+          vm.$store.commit("SET_EVENT_DATA", response.data.data );
+          // this.events= response.data.data       
         })
         .catch((errors) => {
           console.log(errors)
@@ -81,7 +83,10 @@ export default {
             rtl: false,
           });
         });
-      }
+      },
+
+      
+
     },
     mounted(){
     this.getAllEvents();
