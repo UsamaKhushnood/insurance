@@ -7,11 +7,12 @@
             <div class="naigia-logo">
               <img src="@/assets/logo.png" width="100px" />
             </div>
-            <h1 class="heading">NAGIA Support Team</h1>
+              <h1 class="heading">NAGIA Support Team</h1>
           </div>
           <div class="chatbox-body bg-white">
-            <div class="messages-box">
-              <div class="user-messages" v-for="(adminmsg ,index) in adminMessages" :key="index">
+            <div class="messages-box"  v-for="(msg ,index) in allMessages" :key="index">
+              <!-- {{msg}} -->
+              <div class="user-messages"  v-show="msg.type == 'admin'" >
                 <div class="user-avatar">
                   <b-avatar
                     variant="info"
@@ -21,26 +22,39 @@
                 </div>
                 <div class="messages">
                   
-                  <p class="message">{{adminmsg.body}}</p>
+                  <p class="message">{{msg.body}}</p>
                 </div>
-                <div class="time f-10">9:27 A.M</div>
+                <div class="time f-10"> {{ moment(msg.created_at).fromNow()}}</div>
               </div>
-              <div class="my-messages"  v-for="(agentmsg ,index) in agentMessages" :key="index">
+              <!-- <div class="my-messages"  v-for="(agentmsg ,index) in agentMessages" :key="index"> -->
+              <div class="my-messages"  v-show="msg.type == 'agent' || msg.type == 'consumer' ">
                 <div class="my-avatar">
                   <b-avatar
                     variant="info"
-                    src="https://placekitten.com/300/300"
+                    v-if="msg.type =='agent'"
+                    :src="ImageUrl+'agent/'+getUser.agent.image"
                     class="mr-3"
                   ></b-avatar>
+                  <!-- consumer -->
+                   <b-avatar
+                    variant="info"
+                    v-else
+                    :src="ImageUrl+'consumer/'+getUser.consumer.image"
+                    class="mr-3"
+                  ></b-avatar> 
+
                 </div>
                 <div class="messages">
-                  <p class="message">
-                      {{agentmsg.body}}                    
+                  <p class="message" v-show="msg.attachment"><img  class="my-image"   :src="msg.attachment != null ?  attachmentUrl+msg.attachment.new_name : ''" alt=""></p>
+                  <p v-show="msg.body" class="message">
+                      {{msg.body}}                    
                   </p>
                  
           
                 </div>
-                <div class="time f-10">9:27 A.M</div>
+                <div class="time f-10">
+                     {{ moment(msg.created_at).fromNow()}}
+                  </div>
               </div>
             </div>
             <div class="chatbox-footer">
@@ -48,6 +62,7 @@
                 <input
                   type="text"
                   v-model="message"
+                  @keyup.enter="trigger" 
                   placeholder="Enter you message here"
                   class="chatbox-input-feild"
                 />
@@ -56,11 +71,11 @@
                     <i class="far fa-smile"></i>
                   </button>
                   <label class="chat-options-btn attach">
-                    <input type="file" />
+                    <input type="file" @input="uploadImage"  />
                     <i class="fas fa-paperclip"></i>
                   </label>
                 </div>
-                <button class="chat-options-btn send-msg-btn" @click="sendMessage">
+                <button class="chat-options-btn send-msg-btn" ref="sendMsg" @click="sendMessage">
                   <i class="fas fa-paper-plane"></i>
                 </button>
               </div>
@@ -78,8 +93,19 @@
 import moment from 'moment'
 import axios from 'axios'
 import NagiaContact from "../components/NagiaContact.vue";
+import { mapGetters } from 'vuex';
 export default {
   name:'Support',
+  computed:{
+    ...mapGetters(['getUser']),
+    ImageUrl(){
+      return process.env.VUE_APP_IMAGE_URL
+    },
+    attachmentUrl(){
+      return process.env.VUE_APP_IMAGE_STORAGE_URL
+    },
+   
+  },
   components: { NagiaContact },
    data() {
     return {
@@ -89,12 +115,30 @@ export default {
       agentMessages:[],
       consumerMessage:[],
       allMessages: [
-
       ],
     };
   },
   methods:{
-          
+     trigger() {
+      this.$refs.sendMsg.click()
+    },
+    uploadImage(event) {
+    let vm = this
+    var file_data = event.target.files[0];
+    const form_data = new FormData();
+    form_data.append('file', file_data);
+    console.log(form_data)
+    axios
+        .post(process.env.VUE_APP_API_URL+vm.$store.state.user.user_type+'/send-message', 
+          form_data
+    ).then(
+      response => {
+        console.log('image upload response > ', response.data.userDetail)
+        vm.$store.state.user.agent = response.data.userDetail.agent;
+        vm.getUpdateData()
+      }
+    )
+  },     
     async getAllMessage(){
       let vm = this;
         vm.$store
@@ -109,14 +153,15 @@ export default {
               rtl: false,
             });
           } else {
-              vm.allmessages = response.data.data;
-                 response.data.data.filter(function(item) {
-                   if(item.type =='agent' ||item.type =='consumer'){
-                     vm.agentMessages.push(item)
-                   }else{
-                     vm.adminMessages.push(item)
-                   }
-              });
+              vm.allMessages = response.data.data;
+
+              //    response.data.data.filter(function(item) {
+              //      if(item.attchment ==null){
+              //         // let path = JSON.parse(item.attchment)
+              //         console.log(item.attchment)
+              //            item.attchment = item.attchment.new_name
+              //      }
+              // });
           }
         })
         .catch((error) => {
@@ -319,5 +364,9 @@ export default {
       }
     }
   }
+}
+.my-image{
+height:100px;
+width:100px
 }
 </style>

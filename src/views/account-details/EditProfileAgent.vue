@@ -303,7 +303,6 @@ export default {
         first_name: vm.first_name,
         middle_name: vm.middle_name,
         last_name: vm.last_name,
-        // image: vm.image,
         gender: vm.gender,
         phone: vm.phone,
         email: vm.email,

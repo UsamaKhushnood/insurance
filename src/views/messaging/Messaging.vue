@@ -6,12 +6,12 @@
           <div class="header row">
             <div class="col-md-3 p-0">
               <b-avatar
-                src="https://placekitten.com/300/300"
+                :src="ImageUrl+'agent/'+getUser.agent.image"
                 size="4rem"
               ></b-avatar>
             </div>
             <div class="col-md-8 p-0">
-              <h5 class="c-dark-grey m-0">Janet Owusu</h5>
+              <h5 class="c-dark-grey m-0">{{getUser.agent.first_name}}</h5>
               <p class="c-dark-grey">Insurance Agent</p>
               <p class="c-online">
                 Online <b-icon class="c-dark-grey" icon="chevron-down"></b-icon>
@@ -25,6 +25,7 @@
                 type="search"
                 name="searchuser"
                 placeholder="Search for people"
+              v-model="searchQuery"
                 id="searchChatInput"
               />
               <i class="fas fa-search search-icon"></i>
@@ -33,19 +34,19 @@
           <div class="chatbox-body">
             <div
               class="user row"
-              v-for="(x, xIndex) in users"
+              v-for="(data, xIndex) in resultQuery"
               :key="xIndex"
               :class="{ active: $route.params.id == xIndex }"
               @click="move('/messaging/chat/' + xIndex)"
             >
               <div class="col-md-2 align-self-center">
                 <b-avatar
-                  src="https://placekitten.com/300/300"
+                 :src="ImageUrl+'agent/'+data.image"
                   size="40px"
                 ></b-avatar>
               </div>
               <div class="col-md-7">
-                <h5 class="c-dark-grey">{{ x }}</h5>
+                <h5 class="c-dark-grey">{{ data.name }}</h5>
                 <p class="c-grey f-12">How is work going?</p>
               </div>
               <div class="col-md-3">
@@ -66,17 +67,78 @@
   </div>
 </template>
 <script>
+import db from '../../../db';
+import moment from 'moment';
+import { mapGetters } from 'vuex';
+
 export default {
+    computed:{
+    ...mapGetters(['getEvent','getUser']),
+    ImageUrl(){
+      return process.env.VUE_APP_IMAGE_URL
+    },
+    resultQuery() {
+    
+      if (this.searchQuery) {
+        
+        return this.users.filter((data) =>
+          data.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+        );
+      } else {
+        return this.users;
+      }
+    },
+  },
   data() {
     return {
-      users: ["Dan Agyemang", "Dan", "Agyemang","Dan Agyemang", "Dan", "Agyemang","Dan Agyemang", "Dan", "Agyemang","Dan Agyemang", "Dan", "Agyemang",],
-    };
+      // users: ["Dan Agyemang", "Dan", "Agyemang","Dan Agyemang", "Dan", "Agyemang","Dan Agyemang", "Dan", "Agyemang","Dan Agyemang", "Dan", "Agyemang",],
+      users:[],
+      searchQuery:'',
+      moment:moment,
+      reciever:''
+};
   },
   methods: {
     move(to) {
       this.$router.push({ path: to });
     },
+    
+    SendMessage() {
+    const messagesRef = db.database().ref("Conversation");
+
+    if (inputMessage.value === "" || inputMessage.value === null) {
+      return;
+    }
+
+    const message = {
+      username: state.username,
+      content: inputMessage.value
+    }
+
+    messagesRef.push(message);
+    inputMessage.value = "";
+    },
+    
+    getAllUser() {
+       let vm = this 
+       let allUsers=[]
+      const users = db.database().ref("/Users").once('value')
+      .then(data => {
+        const values = data.val()
+        for(let key in values){
+          console.log(vm.getUser)
+          if(values[key].firebase_uid != vm.getUser.agent.firebase_uid)
+          allUsers.push(values[key])
+        }
+      });
+      vm.users = allUsers;
+      console.log('users',allUsers)
+    }
+
   },
+  mounted(){
+    this.getAllUser();
+  }
 };
 </script>
 <style lang="scss">

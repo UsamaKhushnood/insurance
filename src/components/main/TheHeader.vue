@@ -27,10 +27,19 @@
             <div class="d-flex align-items-center">
               <b-avatar
                 variant="info"
+                v-if="getUser.user_type =='agent'"
                 :src="ImageUrl+'agent/'+getUser.agent.image" 
                 class="me-3"
               ></b-avatar>
-              <h5 class="username">{{getUser.agent.first_name}}</h5>
+                <b-avatar
+                variant="info"
+                v-else
+                :src="ImageUrl+'consumer/'+getUser.consumer.image" 
+                class="me-3"
+              ></b-avatar>
+
+              <h5 class="username" v-if="getUser.user_type =='agent'" >{{getUser.agent.first_name}}</h5>
+              <h5 class="username" v-else>{{getUser.consumer.first_name}}</h5>
               <b-icon
                 icon="caret-down-fill"
                 variant="dark"

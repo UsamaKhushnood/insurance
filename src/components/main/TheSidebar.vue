@@ -16,27 +16,27 @@
             <b-icon icon="grid"></b-icon>
             <h5 class="route-name">Dashboard</h5>
           </router-link>
-          <router-link to="/account-details" tag="li">
+          <router-link to="/account-details"   tag="li">
             <img class="route-icon" src="@/assets/icons/account.png" />
             <h5 class="route-name">Account Details</h5>
           </router-link>
-          <router-link to="/licence" tag="li">
+          <router-link to="/licence" v-show="getUser.user_type =='agent'" tag="li">
             <img class="route-icon" src="@/assets/icons/licence.png" />
             <h5 class="route-name">Licence</h5>
           </router-link>
-          <router-link to="/event-management" tag="li">
+          <router-link to="/event-management" v-show="getUser.user_type =='agent'"  tag="li">
             <img class="route-icon" src="@/assets/icons/events.png" />
             <h5 class="route-name">Event Management</h5>
           </router-link>
-          <router-link to="/messaging" tag="li">
+          <router-link to="/messaging" v-show="getUser.user_type =='agent'"  tag="li">
             <img class="route-icon" src="@/assets/icons/chat.png" />
             <h5 class="route-name">messaging</h5>
           </router-link>
-          <router-link to="/forum" tag="li">
+          <router-link to="/forum" v-show="getUser.user_type =='agent'"  tag="li">
             <img class="route-icon" src="@/assets/icons/forum.png" />
             <h5 class="route-name">forum</h5>
           </router-link>
-          <router-link to="#" @click.native="redirectUrl" tag="li">
+          <router-link to="#" v-show="getUser.user_type =='agent'"  @click.native="redirectUrl" tag="li">
             <img class="route-icon" src="@/assets/icons/learn.png" />
             <h5 class="route-name">learn at nagia</h5>
           </router-link>

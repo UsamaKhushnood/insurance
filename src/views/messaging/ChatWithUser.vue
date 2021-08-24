@@ -106,8 +106,77 @@
   </div>
 </template>
 <script>
+import db from '../../../db';
+import moment from 'moment';
+import { mapGetters } from 'vuex';
 export default {
-  components: {},
+  name:"ChatWithUser",
+  computed:{
+    ...mapGetters(['getUser']),
+    ImageUrl(){
+      return process.env.VUE_APP_IMAGE_URL
+    },
+    resultQuery() {
+    
+      if (this.searchQuery) {
+        
+        return this.users.filter((data) =>
+          data.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+        );
+      } else {
+        return this.users;
+      }
+    },
+  },
+  data() {
+    return {
+      users:[],
+      searchQuery:'',
+      moment:moment,
+      reciever:''
+    };
+  },
+  methods: {
+    move(to) {
+      this.$router.push({ path: to });
+    },
+    
+     SendMessage() {
+      const messagesRef = db.database().ref("Conversation");
+
+      if (inputMessage.value === "" || inputMessage.value === null) {
+        return;
+      }
+
+      const message = {
+        username: state.username,
+        content: inputMessage.value
+      }
+
+      messagesRef.push(message);
+      inputMessage.value = "";
+    },
+    
+    getUserChat() {
+       let vm = this 
+       let allUsers=[]
+      const users = db.database().ref("/Users").once('value')
+      .then(data => {
+        const values = data.val()
+        for(let key in values){
+          console.log(vm.getUser)
+          if(values[key].firebase_uid != vm.getUser.agent.firebase_uid)
+          allUsers.push(values[key])
+        }
+      });
+      vm.users = allUsers;
+      console.log('users',allUsers)
+    }
+
+  },
+  mounted(){
+    this.getUserChat();
+  }
 };
 </script>
 <style lang="scss">

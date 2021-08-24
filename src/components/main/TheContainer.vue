@@ -1,7 +1,7 @@
 <template>
   <div class="TheContainer" id="app">
-      <Circle10  v-if="getSpinner" />
-    <div class="row" v-else>
+      <!-- <Circle10  v-if="getSpinner" /> -->
+    <div class="row" >
       <div class="theme-sidebar" :class='{minimize : minimize}'>
         <TheSidebar ref="sidebar" />
       </div>
