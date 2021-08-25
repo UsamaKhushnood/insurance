@@ -5,81 +5,84 @@
         <h3 class="heading">Dan Agyemang</h3>
       </div>
       <div class="chatbox-body bg-white">
-        <div class="messages-box">
-          <div class="my-messages">
-            <div class="my-avatar">
-              <b-avatar
-                variant="info"
-                src="https://placekitten.com/300/300"
-                class="mr-3"
-              ></b-avatar>
+        <div class="messages-container">
+          <div class="messages-box">
+            <div class="my-messages">
+              <div class="my-avatar">
+                <b-avatar
+                  variant="info"
+                  src="https://placekitten.com/300/300"
+                  class="mr-3"
+                ></b-avatar>
+              </div>
+              <div class="messages">
+                <p class="message">What's up Franky!</p>
+                <p class="message">What's up Franky!</p>
+                <p class="message">What's up Franky!</p>
+              </div>
+              <div class="time f-10">9:27 A.M</div>
             </div>
-            <div class="messages">
-              <p class="message">What's up Franky!</p>
-              <p class="message">What's up Franky!</p>
-              <p class="message">What's up Franky!</p>
+            <div class="user-messages">
+              <div class="user-avatar">
+                <b-avatar
+                  variant="info"
+                  src="https://placekitten.com/300/300"
+                  class="mr-3"
+                ></b-avatar>
+              </div>
+              <div class="messages">
+                <p class="message">Hi George! Nice to hear you again!</p>
+                <p class="message">
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  Debitis obcaecati architecto suscipit velit iure ipsa dolor
+                  totam repudiandae cumque dolore!
+                </p>
+                <p class="message">Hi George! Nice to hear you again!</p>
+              </div>
+              <div class="time f-10">9:27 A.M</div>
             </div>
-            <div class="time f-10">9:27 A.M</div>
-          </div>
-          <div class="user-messages">
-            <div class="user-avatar">
-              <b-avatar
-                variant="info"
-                src="https://placekitten.com/300/300"
-                class="mr-3"
-              ></b-avatar>
+            <div class="my-messages">
+              <div class="my-avatar">
+                <b-avatar
+                  variant="info"
+                  src="https://placekitten.com/300/300"
+                  class="mr-3"
+                ></b-avatar>
+              </div>
+              <div class="messages">
+                <p class="message">What's up Franky!</p>
+                <p class="message">
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  Alias debitis vero inventore possimus quaerat odit iure, hic
+                  dicta repellendus incidunt nam reprehenderit eum dolorem
+                  officia autem, earum ex quod explicabo!
+                </p>
+                <p class="message">
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  Alias debitis vero inventore possimus quaerat odit iure, hic
+                  dicta repellendus incidunt nam reprehenderit eum dolorem
+                  officia autem, earum ex quod explicabo!
+                </p>
+                <p class="message latest-message">What's up Franky!</p>
+              </div>
+              <div class="time f-10">9:27 A.M</div>
             </div>
-            <div class="messages">
-              <p class="message">Hi George! Nice to hear you again!</p>
-              <p class="message">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Debitis obcaecati architecto suscipit velit iure ipsa dolor
-                totam repudiandae cumque dolore!
-              </p>
-              <p class="message">Hi George! Nice to hear you again!</p>
+            <div class="user-messages">
+              <div class="user-avatar">
+                <b-avatar
+                  variant="info"
+                  src="https://placekitten.com/300/300"
+                  class="mr-3"
+                ></b-avatar>
+              </div>
+              <div class="messages">
+                <p class="message typing-message">Franky is typing...</p>
+              </div>
+              <div class="time f-10">9:27 A.M</div>
             </div>
-            <div class="time f-10">9:27 A.M</div>
-          </div>
-          <div class="my-messages">
-            <div class="my-avatar">
-              <b-avatar
-                variant="info"
-                src="https://placekitten.com/300/300"
-                class="mr-3"
-              ></b-avatar>
-            </div>
-            <div class="messages">
-              <p class="message">What's up Franky!</p>
-              <p class="message">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias
-                debitis vero inventore possimus quaerat odit iure, hic dicta
-                repellendus incidunt nam reprehenderit eum dolorem officia
-                autem, earum ex quod explicabo!
-              </p>
-              <p class="message">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias
-                debitis vero inventore possimus quaerat odit iure, hic dicta
-                repellendus incidunt nam reprehenderit eum dolorem officia
-                autem, earum ex quod explicabo!
-              </p>
-              <p class="message latest-message">What's up Franky!</p>
-            </div>
-            <div class="time f-10">9:27 A.M</div>
-          </div>
-          <div class="user-messages">
-            <div class="user-avatar">
-              <b-avatar
-                variant="info"
-                src="https://placekitten.com/300/300"
-                class="mr-3"
-              ></b-avatar>
-            </div>
-            <div class="messages">
-              <p class="message typing-message">Franky is typing...</p>
-            </div>
-            <div class="time f-10">9:27 A.M</div>
           </div>
         </div>
+
         <div class="chatbox-footer">
           <div class="chatbox-input">
             <input
@@ -106,20 +109,18 @@
   </div>
 </template>
 <script>
-import db from '../../../db';
-import moment from 'moment';
-import { mapGetters } from 'vuex';
+import db from "../../../db";
+import moment from "moment";
+import { mapGetters } from "vuex";
 export default {
-  name:"ChatWithUser",
-  computed:{
-    ...mapGetters(['getUser']),
-    ImageUrl(){
-      return process.env.VUE_APP_IMAGE_URL
+  name: "ChatWithUser",
+  computed: {
+    ...mapGetters(["getUser"]),
+    ImageUrl() {
+      return process.env.VUE_APP_IMAGE_URL;
     },
     resultQuery() {
-    
       if (this.searchQuery) {
-        
         return this.users.filter((data) =>
           data.name.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
@@ -130,18 +131,18 @@ export default {
   },
   data() {
     return {
-      users:[],
-      searchQuery:'',
-      moment:moment,
-      reciever:''
+      users: [],
+      searchQuery: "",
+      moment: moment,
+      reciever: "",
     };
   },
   methods: {
     move(to) {
       this.$router.push({ path: to });
     },
-    
-     SendMessage() {
+
+    SendMessage() {
       const messagesRef = db.database().ref("Conversation");
 
       if (inputMessage.value === "" || inputMessage.value === null) {
@@ -150,38 +151,40 @@ export default {
 
       const message = {
         username: state.username,
-        content: inputMessage.value
-      }
+        content: inputMessage.value,
+      };
 
       messagesRef.push(message);
       inputMessage.value = "";
     },
-    
-    getUserChat() {
-       let vm = this 
-       let allUsers=[]
-      const users = db.database().ref("/Users").once('value')
-      .then(data => {
-        const values = data.val()
-        for(let key in values){
-          console.log(vm.getUser)
-          if(values[key].firebase_uid != vm.getUser.agent.firebase_uid)
-          allUsers.push(values[key])
-        }
-      });
-      vm.users = allUsers;
-      console.log('users',allUsers)
-    }
 
+    getUserChat() {
+      let vm = this;
+      let allUsers = [];
+      const users = db
+        .database()
+        .ref("/Users")
+        .once("value")
+        .then((data) => {
+          const values = data.val();
+          for (let key in values) {
+            console.log(vm.getUser);
+            if (values[key].firebase_uid != vm.getUser.agent.firebase_uid)
+              allUsers.push(values[key]);
+          }
+        });
+      vm.users = allUsers;
+      console.log("users", allUsers);
+    },
   },
-  mounted(){
+  mounted() {
     this.getUserChat();
-  }
+  },
 };
 </script>
 <style lang="scss">
 .chat {
-    box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+  box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
   .chat-chat-box {
     .header {
       display: flex;
@@ -200,7 +203,8 @@ export default {
       overflow: auto;
       padding: 20px;
       position: relative;
-      .messages-box {
+      .messages-container {
+        height: calc(100vh - 430px);
         max-height: calc(100vh - 430px);
         overflow: auto;
       }
