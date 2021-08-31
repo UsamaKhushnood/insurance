@@ -46,6 +46,7 @@
             </div>
           </router-link>
           <router-link
+          v-if="getUser.user_type=='agent'"
             to="/account-details/billing"
             tag="button"
             class="d-flex align-items-center tab"
@@ -59,7 +60,8 @@
             </div>
           </router-link>
           <router-link
-            to="/account-details/security"
+            to=''
+            @click.native="redirectUrl('/account-details/security')"
             tag="button"
             class="d-flex align-items-center tab"
           >
@@ -85,9 +87,14 @@
 <script>
 import { mapGetters } from 'vuex';
 export default {
-  name:'Account Details',
+  name:'AccountDetails',
    computed:{
     ...mapGetters(['getUser'])
+  },
+  methods:{
+      redirectUrl(url){
+        this.$router.push({ path: url });
+      }
   }
 };
 </script>

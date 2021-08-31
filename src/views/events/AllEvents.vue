@@ -6,7 +6,7 @@
           <div class="col-md-6" v-for="(event, eIndex) in getEvent" :key="eIndex">
             <div class="event">
               <div class="event-img">
-                <img :src="event.img" />
+                     <img class="event-img" :src="ImageUrl+'event/'+event.image" />
               </div>
               <div class="event-body">
                 <h6 class="c-blue f-18 fw-9">Football Match NAGIA vs NIC</h6>

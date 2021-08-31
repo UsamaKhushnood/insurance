@@ -2,83 +2,38 @@
   <div class="chat">
     <div class="chat-chat-box">
       <div class="header">
-        <h3 class="heading">Dan Agyemang</h3>
+        <h3 class="heading">{{getReceiver.name}}</h3>
       </div>
       <div class="chatbox-body bg-white">
-        <div class="messages-box">
-          <div class="my-messages">
+        <div class="messages-box" v-for="(chat ,index) in getReceiverMsg" :key="index">
+           
+          <div class="my-messages" v-if="chat.sender === getReceiver.firebase_uid" >
             <div class="my-avatar">
               <b-avatar
                 variant="info"
-                src="https://placekitten.com/300/300"
+              :src="ImageUrl+'agent/'+getReceiver.image"
                 class="mr-3"
               ></b-avatar>
             </div>
             <div class="messages">
-              <p class="message">What's up Franky!</p>
-              <p class="message">What's up Franky!</p>
-              <p class="message">What's up Franky!</p>
+              <p class="message">{{chat.message}}</p>
             </div>
-            <div class="time f-10">9:27 A.M</div>
+            <div class="time f-10">{{chat.time}}</div>
           </div>
-          <div class="user-messages">
+          <div class="user-messages" v-if="chat.sender === getUser.agent.firebase_uid">
             <div class="user-avatar">
               <b-avatar
                 variant="info"
-                src="https://placekitten.com/300/300"
+              :src="ImageUrl+'agent/'+getUser.agent.image"
                 class="mr-3"
               ></b-avatar>
             </div>
             <div class="messages">
-              <p class="message">Hi George! Nice to hear you again!</p>
-              <p class="message">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Debitis obcaecati architecto suscipit velit iure ipsa dolor
-                totam repudiandae cumque dolore!
-              </p>
-              <p class="message">Hi George! Nice to hear you again!</p>
+              <p class="message">{{chat.message}}</p>
             </div>
-            <div class="time f-10">9:27 A.M</div>
+            <div class="time f-10">{{chat.time}}</div>
           </div>
-          <div class="my-messages">
-            <div class="my-avatar">
-              <b-avatar
-                variant="info"
-                src="https://placekitten.com/300/300"
-                class="mr-3"
-              ></b-avatar>
-            </div>
-            <div class="messages">
-              <p class="message">What's up Franky!</p>
-              <p class="message">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias
-                debitis vero inventore possimus quaerat odit iure, hic dicta
-                repellendus incidunt nam reprehenderit eum dolorem officia
-                autem, earum ex quod explicabo!
-              </p>
-              <p class="message">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias
-                debitis vero inventore possimus quaerat odit iure, hic dicta
-                repellendus incidunt nam reprehenderit eum dolorem officia
-                autem, earum ex quod explicabo!
-              </p>
-              <p class="message latest-message">What's up Franky!</p>
-            </div>
-            <div class="time f-10">9:27 A.M</div>
-          </div>
-          <div class="user-messages">
-            <div class="user-avatar">
-              <b-avatar
-                variant="info"
-                src="https://placekitten.com/300/300"
-                class="mr-3"
-              ></b-avatar>
-            </div>
-            <div class="messages">
-              <p class="message typing-message">Franky is typing...</p>
-            </div>
-            <div class="time f-10">9:27 A.M</div>
-          </div>
+      
         </div>
         <div class="chatbox-footer">
           <div class="chatbox-input">
@@ -86,6 +41,8 @@
               type="text"
               placeholder="Enter you message here"
               class="chatbox-input-feild"
+              v-model="message"
+              @keyup.enter="trigger" 
             />
             <div class="message-box-input-group">
               <button class="chat-options-btn smily">
@@ -96,7 +53,7 @@
                 <i class="fas fa-paperclip"></i>
               </label>
             </div>
-            <button class="chat-options-btn send-msg-btn">
+            <button class="chat-options-btn send-msg-btn" ref="sendMsg"   @click="sendMessage">
               <i class="fas fa-paper-plane"></i>
             </button>
           </div>
@@ -112,7 +69,7 @@ import { mapGetters } from 'vuex';
 export default {
   name:"ChatWithUser",
   computed:{
-    ...mapGetters(['getUser']),
+    ...mapGetters(['getUser','getReceiver','getReceiverMsg']),
     ImageUrl(){
       return process.env.VUE_APP_IMAGE_URL
     },
@@ -130,52 +87,106 @@ export default {
   },
   data() {
     return {
+      IsConversion:[],
       users:[],
       searchQuery:'',
       moment:moment,
-      reciever:''
+      reciever:'',
+      message:'',
+      timestamp:moment().format("MM-d-YYYY HH:mm:ss"),
+      time:moment().format("HH:mm a"),
+      date:moment().format("d/MM/YYYY"),
     };
   },
   methods: {
     move(to) {
       this.$router.push({ path: to });
     },
-    
-     SendMessage() {
-      const messagesRef = db.database().ref("Conversation");
-
-      if (inputMessage.value === "" || inputMessage.value === null) {
-        return;
-      }
-
-      const message = {
-        username: state.username,
-        content: inputMessage.value
-      }
-
-      messagesRef.push(message);
-      inputMessage.value = "";
+    trigger() {
+      this.$refs.sendMsg.click()
+    },
+    setConversion(){    
+      const rec_msg2 = db.database().ref("/Conversation/").child(this.getUser.agent.firebase_uid).child(this.getReceiver.firebase_uid).set({
+        id:this.getReceiver.firebase_uid,
+        image:this.getReceiver.image,        
+        last_message_time:this.time,        
+        name:this.getReceiver.name,        
+        timestamp:this.timestamp
+      }).then(
+        db.database().ref("/Conversation/").child(this.getReceiver.firebase_uid).child(this.getUser.agent.firebase_uid).set({
+        id:this.getUser.agent.firebase_uid,
+        image:this.getUser.agent.image,        
+        last_message_time:this.time,        
+        name:this.getUser.agent.first_name,        
+        timestamp:this.timestamp
+      }))
+      
     },
     
-    getUserChat() {
+    sendMessage() {
+      if(this.message == ''){
+        return;
+      }
+      let my_msg=
+       { date:this.date,
+        message:this.message,
+        sender:this.getUser.agent.firebase_uid,
+        reciever:this.getReceiver.firebase_uid,
+        itemType:'text',
+        time:this.time,
+        timestamp:this.timestamp
+       }
+      let  new_Msg = JSON.parse(JSON.stringify(my_msg))
+      this.setConversion()
+      
+      db.database().ref("/Chat").push(new_Msg)
+      this.message ='';
+      this.GetAllMsg()
+    },
+    //get all msg
+
+    GetAllMsg() {
+      console.log('reciever',rec)
+      let rec = this.getReceiver
        let vm = this 
-       let allUsers=[]
-      const users = db.database().ref("/Users").once('value')
+      let allConversion=[]
+   
+      let user =  JSON.parse(JSON.stringify(vm.getUser.agent.firebase_uid))
+      let reciever =  JSON.parse(JSON.stringify(rec.firebase_uid))
+
+      const rec_msg =  db.database().ref("/Chat").once('value')
       .then(data => {
         const values = data.val()
         for(let key in values){
-          console.log(vm.getUser)
-          if(values[key].firebase_uid != vm.getUser.agent.firebase_uid)
-          allUsers.push(values[key])
+          // let va =  JSON.parse(JSON.stringify(values[key]))
+          // console.log(va)
+          allConversion.push(values[key])
         }
-      });
-      vm.users = allUsers;
-      console.log('users',allUsers)
-    }
+      }); 
+      console.log('test',allConversion)
+      setTimeout(function(){
+        let mtArr = []
+        allConversion.filter((item) => { 
+        console.log('item',item.reciever)    
+        // item.sender == vm.getUser.agent.firebase_uid && item.reciever==rec.firebase_uid  ||
+            if( item.reciever === reciever || item.sender === user && item.reciever === user ||  item.sender===reciever)
+               {
+                 mtArr.push(item)
+              }
+  
+        })
+        console.log('totaarrrrrl',mtArr)    
+        vm.$store.commit('SET_RECEIVER_MSG',{}) 
+        vm.$store.commit('SET_RECEIVER_MSG',mtArr) 
+        console.log('total',allConversion)
+      },1000)
+    },
+
 
   },
   mounted(){
-    this.getUserChat();
+    // alert(moment().format("MM-d-YYYY HH:mm:ss"));
+    // alert(moment().format("MM-d-YYYY HH:mm:ss a"));
   }
 };
 </script>

@@ -5,10 +5,6 @@ import VuexPersistence from 'vuex-persist'
 
 Vue.use(Vuex)
 
-
-
-
-
 const state = {
   sidebarShow: 'responsive',
   sidebarMinimize: false,
@@ -21,6 +17,8 @@ const state = {
   authentication_token: false,
   showSpinner: false,
   all_event: '',
+  receiver_data: '',
+  receiver_msg: '',
 }
 
 axios.defaults.baseURL = process.env.VUE_APP_API_URL
@@ -66,6 +64,12 @@ const mutations = {
   SET_EVENT_DATA(state, data) {
     state.all_event = data;
   },
+  SET_RECEIVER(state, data) {
+    state.receiver_data = data;
+  },
+  SET_RECEIVER_MSG(state, data) {
+    state.receiver_msg = data;
+  },
 }
 
 const getters = {
@@ -74,6 +78,12 @@ const getters = {
   },
   getUser(state) {
     return state.user;
+  },
+  getReceiver(state) {
+    return state.receiver_data;
+  },
+  getReceiverMsg(state) {
+    return state.receiver_msg;
   },
   getToken(state) {
     return state.authentication_token;

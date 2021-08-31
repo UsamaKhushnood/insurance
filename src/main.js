@@ -13,7 +13,9 @@ import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import VueMoment from 'vue-moment'
 // import moment from 'moment-timezone'
+import vSelect from 'vue-select'
 
+Vue.component('v-select', vSelect)
 Vue.use(VueMoment, {
   // moment,
 })

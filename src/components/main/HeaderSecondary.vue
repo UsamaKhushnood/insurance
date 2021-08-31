@@ -3,13 +3,13 @@
     <div class="col-md-3 pe-0">
       <h4 class="c-blue d-flex align-items-baseline">
         Hello,
-        <h5>Welcome Back Janet!</h5>
+        <h6>Welcome Back {{getUser.agent ? getUser.agent.first_name : getUser.consumer.first_name}}!</h6>
       </h4>
     </div>
     <div class="col-md-6 p-0 d-flex justify-content-evenly">
-      <router-link to="licence" tag="button" class="box-shadow sh-btn">check licence status</router-link>
-      <router-link to="forum" tag="button" class="box-shadow sh-btn">Join forum</router-link>
-      <router-link to="learn-at-nagia" tag="button" class="box-shadow sh-btn">learn at NAGIA</router-link>
+      <router-link to="licence" tag="button"  v-if="getUser.user_type=='agent'"  class="box-shadow sh-btn"> check licence status</router-link>
+      <router-link to="forum" tag="button"   v-if="getUser.user_type=='agent'" class="box-shadow sh-btn">Join forum</router-link>
+      <router-link to="learn-at-nagia" tag="button"   v-if="getUser.user_type=='agent'" class="box-shadow sh-btn">learn at NAGIA</router-link>
     </div>
     <div class="col-md-3 ps-0 last-col">
       <h5 class="breadcrumb">
@@ -19,7 +19,13 @@
   </div>
 </template>
 <script>
-export default {};
+import { mapGetters } from 'vuex';
+export default {
+computed:{
+  ...mapGetters(['getUser'])
+}
+
+};
 </script>
 <style lang="scss">
 .secodary-header {

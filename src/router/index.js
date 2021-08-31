@@ -58,20 +58,27 @@ const routes = [
       },
       {
         path: "/account-details",
-        name: "Account Details",
+        name: "AccountDetails",
         component: AccountDetails,
         redirect: '/account-details/edit-profile',
         children: [
           {
+            path: 'security',
+            name: 'Security',
+            components: {
+              accountdetailsSecurity: Security
+            }
+          },
+          {
             path: 'edit-profile',
-            name: 'Edit Profile Agent',
+            name: 'EditProfileAgent',
             components: {
               accountdetails: EditProfileAgent
             }
           },
           {
             path: 'edit-profile-consumer',
-            name: 'Edit Profile Consumer',
+            name: 'Edit ProfileConsumer',
             components: {
               accountdetailsConsumer: EditProfileConsumer
             }
@@ -91,13 +98,7 @@ const routes = [
               accountdetails: Billing
             }
           },
-          {
-            path: 'security',
-            name: 'Security',
-            components: {
-              accountdetails: Security
-            }
-          },
+         
         ]
       },
       {

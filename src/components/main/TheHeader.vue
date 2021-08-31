@@ -55,7 +55,7 @@
             <b-icon icon="credit-card" class="me-2 icon"></b-icon>
             <span class="route-link">I.D Card</span>
           </router-link>
-          <router-link class="dropdown-link" to="/messaging">
+          <router-link class="dropdown-link" v-if="getUser.user_type =='agent'"  to="/messaging">
             <b-icon icon="envelope" class="me-2 icon"></b-icon>
             <span class="route-link">Inbox</span>
           </router-link>

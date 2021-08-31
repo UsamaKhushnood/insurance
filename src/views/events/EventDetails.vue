@@ -8,7 +8,7 @@
           </h3>
           <div class="event-description">
             <div class="event-img">
-                <img :src="ImageUrl+'event/'+currentEvent.image" />
+                <img class="event-img" :src="ImageUrl+'event/'+currentEvent.image" />
               </div>
             <p class="f-12 event-desc">
             {{currentEvent.description}}

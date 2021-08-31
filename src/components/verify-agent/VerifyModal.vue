@@ -19,11 +19,12 @@
         </div>
         <div class="status-modal-body">
           <div class="username">
-            <h1 class="fw-9">Janet Yaa Owsusu</h1>
+            <h1 class="fw-9" v-if="getUser.user_type =='consumer'">{{getUser.consumer.first_name}}</h1>
+            <h1 class="fw-9" v-else>{{getUser.agent.first_name}}</h1>
           </div>
           <div class="identification-code">
-            <h5 class="c-blue fw-7">
-              Agent Unique Identification code: NGA97/00001
+            <h5 class="c-blue fw-7" v-if="getUser.user_type =='agent'">
+              Agent Unique Identification code: {{getUser.agent.nagia_id}}
             </h5>
           </div>
           <!-- <button class="btn-blue br-5" @click="status = !status">
@@ -66,7 +67,7 @@ export default {
     };
   },
   computed:{
-    ...mapGetters(["getModelStatus"]),
+    ...mapGetters(["getModelStatus",'getUser']),
     myStatus(){
       return this.getModelStatus
     }

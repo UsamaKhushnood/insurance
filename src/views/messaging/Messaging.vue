@@ -37,7 +37,7 @@
               v-for="(data, xIndex) in resultQuery"
               :key="xIndex"
               :class="{ active: $route.params.id == xIndex }"
-              @click="move('/messaging/chat/' + xIndex)"
+              @click="move(data,'/messaging/chat/'+xIndex)"
             >
               <div class="col-md-2 align-self-center">
                 <b-avatar
@@ -73,7 +73,7 @@ import { mapGetters } from 'vuex';
 
 export default {
     computed:{
-    ...mapGetters(['getEvent','getUser']),
+    ...mapGetters(['getEvent','getUser','getReceiver']),
     ImageUrl(){
       return process.env.VUE_APP_IMAGE_URL
     },
@@ -95,30 +95,88 @@ export default {
       users:[],
       searchQuery:'',
       moment:moment,
-      reciever:''
+      reciever:'',
+      
 };
   },
   methods: {
-    move(to) {
+    move(data,to) {
       this.$router.push({ path: to });
+    //  this.GetAllMessages(data)
+        this.$store.commit('SET_RECEIVER',{})
+        this.$store.commit('SET_RECEIVER',data)
+        this.GetMsg(data)
     },
+
+  // GetMsg(rec) {
+  //     console.log('receiver',rec)
+  //      let vm = this 
+  //     let allConversion=[]
+  //      db.database().ref('/Chat').orderByChild('sender').equalTo(vm.getUser.agent.firebase_uid).on("value", function(snapshot) {
+  //       console.log(snapshot.val());
+  //    for(let key in values){
+  //    console.log(values);
+  //            if( values[key].receiver == rec.firebase_uid || values.reciever == vm.getAllUser.agent.firebase_uid){
+  //               allConversion.push(item)
+  //               vm.$store.commit('SET_RECEIVER_MSG',{}) 
+  //               vm.$store.commit('SET_RECEIVER_MSG',allConversion) 
+  //            }
     
-    SendMessage() {
-    const messagesRef = db.database().ref("Conversation");
+  //       }
 
-    if (inputMessage.value === "" || inputMessage.value === null) {
-      return;
-    }
+  //   });
+    
+      //  console.log('receiver',allConversion)
+      // setTimeout(function(){
+      //   console.log('data All',allConversion)
+      //    let mtArr = []
+      //    allConversion.filter((item) => { 
+      //       if( item.receiver == rec.firebase_uid)
+      //           mtArr.push(item)
+      //           vm.$store.commit('SET_RECEIVER_MSG',{}) 
+      //           vm.$store.commit('SET_RECEIVER_MSG',mtArr) 
+      //   })
+      //   console.log('Ar',mtArr)
+      // },1000)
 
-    const message = {
-      username: state.username,
-      content: inputMessage.value
-    }
+    // },
 
-    messagesRef.push(message);
-    inputMessage.value = "";
+    GetMsg(rec) {
+      console.log('reciever',rec)
+       let vm = this 
+      let allConversion=[]
+   
+      let user =  JSON.parse(JSON.stringify(vm.getUser.agent.firebase_uid))
+      let reciever =  JSON.parse(JSON.stringify(rec.firebase_uid))
+
+      const rec_msg =  db.database().ref("/Chat").once('value')
+      .then(data => {
+        const values = data.val()
+        for(let key in values){
+          // let va =  JSON.parse(JSON.stringify(values[key]))
+          // console.log(va)
+          allConversion.push(values[key])
+        }
+      }); 
+      console.log('test',allConversion)
+    setTimeout(function(){
+        let mtArr = []
+        allConversion.filter((item) => { 
+        console.log('item',item.reciever)    
+        // item.sender == vm.getUser.agent.firebase_uid && item.reciever==rec.firebase_uid  ||
+            if( item.reciever === reciever || item.sender === user && item.reciever === user ||  item.sender===reciever)
+               {
+                 mtArr.push(item)
+              }
+  
+        })
+        console.log('totaarrrrrl',mtArr)    
+        vm.$store.commit('SET_RECEIVER_MSG',{}) 
+        vm.$store.commit('SET_RECEIVER_MSG',mtArr) 
+        console.log('total',allConversion)
+      },1000)
     },
-    
+
     getAllUser() {
        let vm = this 
        let allUsers=[]
@@ -126,16 +184,16 @@ export default {
       .then(data => {
         const values = data.val()
         for(let key in values){
-          console.log(vm.getUser)
+          // console.log(vm.getUser)
           if(values[key].firebase_uid != vm.getUser.agent.firebase_uid)
           allUsers.push(values[key])
         }
       });
       vm.users = allUsers;
-      console.log('users',allUsers)
     }
 
   },
+
   mounted(){
     this.getAllUser();
   }

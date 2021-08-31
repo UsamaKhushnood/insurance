@@ -8,7 +8,7 @@
         <div class="anual-plan plan" v-for="(plan,index) in billingPlans" :key="index">
           <h1 class="c-blue mt-4">{{plan.name}}</h1>
           <h6 class="c-grey">NGN {{plan.amount}} </h6>
-          <button class="btn-blue btn-block" v-if="userPlan[0].id ==plan.id && userPlan[0].user.plan_status == 1" @click="assignPlans(plan)">Active</button>
+          <button class="btn-blue btn-block" v-if=" userPlan.id == plan.id && userPlan.user.plan_status == 1 " @click="assignPlans(plan)">Active</button>
           <button class="btn-blue btn-block" v-else  @click="assignPlans(plan)">Downgrade</button>
         </div>
     
@@ -72,7 +72,8 @@ export default {
         .then((response) => {
           console.log("re", response.data.data.plans);
           vm.billingPlans = response.data.data.plans;
-          vm.userPlan = response.data.data.userPlan;
+          vm.userPlan =  response.data.data.userPlan.lenght ? response.data.data.userPlan[0] : '';
+          // vm.userPlan ={...response.data.data.userPlan};
         })
         .catch((error) => {
           let errors = error.response.data.errors;

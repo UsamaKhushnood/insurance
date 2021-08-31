@@ -174,7 +174,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "Edit Profile Consumer",
+  name: "EditProfileConsumer",
      computed: {
     ImageUrl() {
       return process.env.VUE_APP_IMAGE_URL;
