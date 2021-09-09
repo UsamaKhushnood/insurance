@@ -2,8 +2,8 @@
   <div class="secodary-header row">
     <div class="col-md-3 pe-0">
       <h4 class="c-blue d-flex align-items-baseline">
-        Hello,
-        <h6>Welcome Back {{getUser.agent ? getUser.agent.first_name : getUser.consumer.first_name}}!</h6>
+       <span>Hello,</span> 
+        <h6 style="margin-left:9px">Welcome Back {{getUser.agent ? getUser.agent.first_name : getUser.consumer.first_name}}!</h6>
       </h4>
     </div>
     <div class="col-md-6 p-0 d-flex justify-content-evenly">

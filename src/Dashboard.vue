@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-8">
         <div class="dashboard-banner mb-5">
-          <h1 class="fw-9">Welcome, Agent!</h1>
+          <h1 class="fw-9">Welcome, {{this.getUser.user_type}}!</h1>
           <div class="border"></div>
           <p class="fw-7">
             Sed quis magna nec augue suscipit venenatis. Pellentesque eu felis
@@ -130,6 +130,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import NagiaContact from "@/components/NagiaContact";
 import UpcomingEvent from "@/components/events/UpcomingEvent.vue";
 export default {
@@ -137,6 +138,9 @@ export default {
     UpcomingEvent,
     NagiaContact,
   },
+  computed:{
+  ...mapGetters(['getUser'])
+},
   data() {
     return {
       icons: require("./assets/svg/dashboard.svg"),

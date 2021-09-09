@@ -63,18 +63,12 @@
             required
           ></b-form-input>
         </b-form-group>
-        <b-form-group
-          id="input-group-1"
-          label="Region"
-          label-for="input-1"
-          class="mt-3"
-        >
-          <b-form-input
-            id="input-1"
+        <b-form-group label="Region" label-for="Region">
+          <v-select
+            label="countryName"
             v-model="region"
-            type="text"
-            required
-          ></b-form-input>
+            :options="region_options"
+          ></v-select>
         </b-form-group>
         <b-form-group
           id="input-group-1"
@@ -211,18 +205,12 @@
             required
           ></b-form-input>
         </b-form-group>
-        <b-form-group
-          id="input-group-1"
-          label="District"
-          label-for="input-1"
-          class="mt-3"
-        >
-          <b-form-input
-            id="input-1"
+         <b-form-group label="District" label-for="District">
+          <v-select
+            label="countryName"
             v-model="district"
-            type="text"
-            required
-          ></b-form-input>
+            :options="district_options"
+          ></v-select>
         </b-form-group>
         <b-form-group
           id="input-group-1"
@@ -284,6 +272,8 @@ export default {
       region: "",
       district: "",
       landmark: "",
+      region_options: [],
+      district_options: [],
       agent_existence: "",
       current_life_company: "",
       current_non_life_company: "",
@@ -387,9 +377,40 @@ export default {
         (this.previous_life_company = this.$store.state.user.agent.previous_life_company),
         (this.previous_non_life_company = this.$store.state.user.agent.previous_non_life_company);
     },
+       async getDistrict() {
+      const vm = this;
+
+      await axios
+        .get(`/districs`)
+        .then((response) => {
+          $.each(response.data.data, function(index, value) {
+            vm.district_options.push(value.name);
+          });
+        })
+        .catch((error) => {
+          let errors = error.response.data.errors;
+        });
+    },
+    async getRegions() {
+      const vm = this;
+
+      await axios
+        .get(`/regions`)
+        .then((response) => {
+          // vm.region_options = response.data.data;
+          $.each(response.data.data, function(index, value) {
+            vm.region_options.push(value.name);
+          });
+        })
+        .catch((error) => {
+          let errors = error.response.data.errors;
+        });
+    },
   },
   mounted() {
     this.getUpdateData();
+    this.getDistrict();
+    this.getRegions();
   },
 };
 </script>
@@ -411,5 +432,13 @@ label[for="upload-pic-btn"] {
   top: 100px;
   right: 12px;
   cursor: pointer;
+}
+select.field-category.custom-select {
+  width: 100% !important;
+  border: none;
+  background: var(--light-grey);
+  padding: 10px;
+  border-radius: 5px;
+  height: 50px;
 }
 </style>
