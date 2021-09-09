@@ -1,6 +1,6 @@
 <template>
   <div class="TheContainer" id="app">
-      <!-- <Circle10  v-if="getSpinner" /> -->
+      <Circle10  v-if="getSpinner" />
     <div class="row" >
       <div class="theme-sidebar" :class='{minimize : minimize}'>
         <TheSidebar ref="sidebar" />
@@ -20,8 +20,9 @@ import Circle10 from '@/components/Circle10.vue'
 import TheHeader from "./TheHeader.vue";
 import TheSidebar from "./TheSidebar.vue";
 import HeaderSecondary from "./HeaderSecondary.vue";
+import { mapGetters } from 'vuex';
 export default {
-  components: { TheHeader, TheSidebar, HeaderSecondary, },
+  components: { TheHeader, TheSidebar, HeaderSecondary,Circle10 },
   methods: {
     doSomething() {
       console.log(this.$refs.sidebar, "sfklsdjl");
@@ -29,6 +30,7 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(['getSpinner']),
     minimize() {
       return this.$store.state.sidebarMinimize;
     },

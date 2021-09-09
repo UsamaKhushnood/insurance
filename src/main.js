@@ -14,6 +14,10 @@ import "vue-toastification/dist/index.css";
 import VueMoment from 'vue-moment'
 // import moment from 'moment-timezone'
 import vSelect from 'vue-select'
+import x5GMaps from 'x5-gmaps';
+// Option 1: Just your key
+Vue.use(x5GMaps, 'AIzaSyCgfNYYW7moqZw_3nCSVCN0BsdNofYsxck');
+
 
 Vue.component('v-select', vSelect)
 Vue.use(VueMoment, {

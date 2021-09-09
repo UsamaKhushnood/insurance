@@ -6,15 +6,28 @@
           <img src="@/assets/logo.png" alt="logo" />
         </div>
         <Dropdown>
-          <li class="c-dropdown-item">
-            <i class="fa fa-user c-icon"></i> Complaints
-          </li>
-          <li class="c-dropdown-item">
-            <i class="fa fa-user c-icon"></i> Privacy Policy
-          </li>
-          <li class="c-dropdown-item">
-            <i class="fa fa-user c-icon"></i> Terms of Services
-          </li>
+          <router-link to="/complain">
+            <li class="c-dropdown-item">
+              <i class="fa fa-user c-icon"></i> Complaints
+            </li>
+          </router-link>
+
+          <router-link
+            to=""
+            @click.native="sendTo('https://nagia.com.gh/privacy-policy/')"
+          >
+            <li class="c-dropdown-item">
+              <i class="fa fa-user c-icon"></i> Privacy Policy
+            </li>
+          </router-link>
+          <router-link
+            to=""
+            @click.native="sendTo('https://nagia.com.gh/terms-of-service/')"
+          >
+            <li class="c-dropdown-item">
+              <i class="fa fa-user c-icon"></i> Terms of Services
+            </li>
+          </router-link>
         </Dropdown>
       </div>
       <div class="login-area">
@@ -34,12 +47,20 @@
               required
             ></b-form-input>
           </b-form-group>
-          <b-button class="btn-gradient mt-4" @click="forgetPassword" block>Forget Password</b-button>
+          <b-button
+            class="btn-gradient mt-4"
+            :disabled="isDisabled"
+            @click="forgetPassword"
+            block
+            >Forget Password</b-button
+          >
         </b-form>
-     
+
         <div class="new-account-types d-flex justify-content-between mt-10">
-          <router-link to="/login" tag="button" class="btn-blue w-50 me-3">Sign</router-link>
-        
+          <router-link to="/login" tag="button" class="btn-blue w-50 me-3"
+            >Sign</router-link
+          >
+
           <!-- <router-link to="/dashboard" tag="button" class="btn-yellow w-50">Goto Dashboard</router-link> -->
         </div>
       </div>
@@ -48,53 +69,64 @@
 </template>
 <script>
 import Dropdown from "@/components/Dropdown";
-import axios from 'axios'
+import axios from "axios";
 export default {
-  name:'ForgetPassword',
+  name: "ForgetPassword",
   components: { Dropdown },
-  data(){
+  data() {
     return {
-      password:'',
-    }
+      password: "",
+      email: "",
+    };
   },
-  methods:{
-   async forgetPassword(){
+  methods: {
+    sendTo(url) {
+      window.location.href = url;
+    },
+    async forgetPassword() {
       const vm = this;
       vm.$store.commit("SET_SPINNER", true);
       await axios
-        .post(process.env.VUE_APP_API_URL+"password/email",{
+        .post(process.env.VUE_APP_API_URL + "password/email", {
           email: this.email,
         })
         .then((response) => {
-           vm.$store.commit("SET_SPINNER", false);
-            if(response.data.status == false){
-              vm.$toast.error(response.data.message, {
-                position: "top-right",
-                closeButton: "button",
-                icon: true,
-                rtl: false,
-              });
-          }else{
+          vm.$store.commit("SET_SPINNER", false);
+          if (response.data.status == false) {
+            vm.$toast.error(response.data.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+          } else {
+            vm.$store.commit("SET_SPINNER", false);
             vm.$toast.success(response.data.message, {
-            position: "top-right",
-            closeButton: "button",
-            icon: true,
-            rtl: false,
-          });
-        }
-      })
-      .catch((errors) => {
-        console.log(errors)
-        if(errors.response)
-        this.$toast.error(errors.response.message, {
-          position: "top-right",
-          closeButton: "button",
-          icon: true,
-          rtl: false,
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+          }
+        })
+        .catch((errors) => {
+          console.log(errors);
+          vm.$store.commit("SET_SPINNER", false);
+          if (errors.response)
+            this.$toast.error(errors.response.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
         });
-      });
-    }
-  }
+    },
+  },
+  computed: {
+    isDisabled: function() {
+      return !this.email;
+    },
+  },
 };
 </script>
 <style lang="scss">

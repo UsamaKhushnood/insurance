@@ -1,6 +1,8 @@
 <template>
+
   <div class="authenticaiton" id="authentication">
-    <div class="row">
+        <Circle10  v-if="getSpinner" />
+    <div class="row" v-else>
       <div
         class="col-md-5 left-side p-5 position-relative"
         :class="{ 'customer-background': $route.name == 'Customer Area' }"
@@ -42,6 +44,18 @@
     </div>
   </div>
 </template>
+<script>
+import Circle10 from '@/components/Circle10.vue'
+import { mapGetters } from 'vuex'
+export default {
+  components:{
+  Circle10
+  },
+  computed:{
+    ...mapGetters(['getSpinner'])
+  }
+}
+</script>
 
 <style lang="scss">
 .authenticaiton {

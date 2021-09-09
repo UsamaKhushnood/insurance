@@ -142,9 +142,16 @@ export default {
                 rtl: false,
               });
               vm.status =true
-                vm.redirectUrl( response.data.data.redirect)
+              window.open(response.data.data.redirect,'_self');
+            //  window.open(response.data.data.redirect,'_blank');
+              if(window.close){
+                console.log()
+              }
+              // window.open(response.data.data.redirect,response.data.data.redirect , 'toolbar=0,location=0,menubar=0');
+              // vm.redirectUrl( response.data.data.redirect)
+              // window.location = response.data.data.redirect
               // window.location.href = response.data.data.redirect;
-              // 4242424242424242
+              // window.location.redirect(process.env.VUE_APP_URL)
           }
         })
         .catch((errors) => {
@@ -158,6 +165,11 @@ export default {
             });
         });
     },
+    confirmExit() {
+        if (isAnyTaskInProgress) {
+           return "Some task is in progress. Are you sure, you want to close?";
+        }
+    }
   }
 
 };

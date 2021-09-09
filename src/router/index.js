@@ -6,6 +6,7 @@ import PageNotFound from "@/views/PageNotFound";
 import Login from "@/views/authentication/Login";
 import AgentSignup from "@/views/authentication/AgentSignup";
 import CustomerSignup from "@/views/authentication/CustomerSignup";
+import Complain from "@/views/authentication/Complain";
 import Confirmation from "@/views/authentication/Confirmation";
 import AgentVerification from "@/views/authentication/AgentVerification";
 import ForgetPassword from "@/views/authentication/ForgetPassword";
@@ -267,6 +268,13 @@ const routes = [
           authentication: ForgetPassword,
         },
       },
+      {
+        path: "complain",
+        name: "Complain",
+        components: {
+          authentication: Complain,
+        },
+      },
     ],
   },
 ];
@@ -281,7 +289,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (!localStorage.getItem('token')) {
       // checking to avoid loop
-      if (to.name === 'Login' || to.name === 'ForgetPassword' || to.name === 'Agent Area'|| to.name === 'Customer Area'|| to.name === 'Agent Verification' ) return next();
+      if (to.name === 'Login' || to.name === 'ForgetPassword' || to.name === 'Agent Area'|| to.name === 'Customer Area'|| to.name === 'Agent Verification' || to.name === 'Complain' ) return next();
       next({
           path: '/'
       });

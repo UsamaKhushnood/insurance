@@ -108,74 +108,111 @@ export default {
         this.GetMsg(data)
     },
 
-  // GetMsg(rec) {
-  //     console.log('receiver',rec)
-  //      let vm = this 
-  //     let allConversion=[]
-  //      db.database().ref('/Chat').orderByChild('sender').equalTo(vm.getUser.agent.firebase_uid).on("value", function(snapshot) {
-  //       console.log(snapshot.val());
-  //    for(let key in values){
-  //    console.log(values);
-  //            if( values[key].receiver == rec.firebase_uid || values.reciever == vm.getAllUser.agent.firebase_uid){
-  //               allConversion.push(item)
-  //               vm.$store.commit('SET_RECEIVER_MSG',{}) 
-  //               vm.$store.commit('SET_RECEIVER_MSG',allConversion) 
-  //            }
-    
-  //       }
-
-  //   });
-    
-      //  console.log('receiver',allConversion)
-      // setTimeout(function(){
-      //   console.log('data All',allConversion)
-      //    let mtArr = []
-      //    allConversion.filter((item) => { 
-      //       if( item.receiver == rec.firebase_uid)
-      //           mtArr.push(item)
-      //           vm.$store.commit('SET_RECEIVER_MSG',{}) 
-      //           vm.$store.commit('SET_RECEIVER_MSG',mtArr) 
-      //   })
-      //   console.log('Ar',mtArr)
-      // },1000)
-
-    // },
-
-    GetMsg(rec) {
-      console.log('reciever',rec)
+  GetMsg(rec) {
+      console.log('receiver',rec)
        let vm = this 
       let allConversion=[]
-   
-      let user =  JSON.parse(JSON.stringify(vm.getUser.agent.firebase_uid))
-      let reciever =  JSON.parse(JSON.stringify(rec.firebase_uid))
 
-      const rec_msg =  db.database().ref("/Chat").once('value')
-      .then(data => {
-        const values = data.val()
-        for(let key in values){
-          // let va =  JSON.parse(JSON.stringify(values[key]))
-          // console.log(va)
-          allConversion.push(values[key])
+      let values2 = db.database().ref('/Chat');
+      values2.once("value")
+      .then(function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+        // key will be "ada" the first time and "alan" the second time
+        var key = childSnapshot.key;
+        // childData will be the actual contents of the child
+        var childData = childSnapshot.val();
+        // if( childData.sender == vm.getUser.agent.firebase_uid  && childData.receiver ==  rec.firebase_uid )  {
+        if( childData.sender == vm.getUser.agent.firebase_uid && childData.reciever ==  rec.firebase_uid )  {
+          // if(childData.reciever == rec.firebase_uid)
+          allConversion.push(childData)
+          
+          vm.$store.commit('SET_RECEIVER_MSG',{}) 
+          vm.$store.commit('SET_RECEIVER_MSG',allConversion) 
         }
-      }); 
-      console.log('test',allConversion)
-    setTimeout(function(){
-        let mtArr = []
-        allConversion.filter((item) => { 
-        console.log('item',item.reciever)    
-        // item.sender == vm.getUser.agent.firebase_uid && item.reciever==rec.firebase_uid  ||
-            if( item.reciever === reciever || item.sender === user && item.reciever === user ||  item.sender===reciever)
-               {
-                 mtArr.push(item)
-              }
-  
-        })
-        console.log('totaarrrrrl',mtArr)    
-        vm.$store.commit('SET_RECEIVER_MSG',{}) 
-        vm.$store.commit('SET_RECEIVER_MSG',mtArr) 
-        console.log('total',allConversion)
+        if( childData.sender == rec.firebase_uid && childData.reciever ==  vm.getUser.agent.firebase_uid){
+            // if(childData.reciever == vm.getUser.agent.firebase_uid)
+            allConversion.push(childData)
+          
+          vm.$store.commit('SET_RECEIVER_MSG',{}) 
+          vm.$store.commit('SET_RECEIVER_MSG',allConversion) 
+        }
+        //  if( childData.sender == rec.firebase_uid  && childData.receiver == vm.getUser.agent.firebase_uid  ){
+        //      allConversion.push(childData)
+          
+        //   vm.$store.commit('SET_RECEIVER_MSG',{}) 
+        //   vm.$store.commit('SET_RECEIVER_MSG',allConversion) 
+        //  }
+      });
+    });
+
+      // let values = db.database().ref('/Chat').orderByChild('sender').equalTo(vm.getUser.agent.firebase_uid);
+      //       values.once("value")
+      // .then(function(snapshot) {
+      //   snapshot.forEach(function(childSnapshot) {
+      //   // key will be "ada" the first time and "alan" the second time
+      //   var key = childSnapshot.key;
+      //   // childData will be the actual contents of the child
+      //   var childData = childSnapshot.val();
+      //     if( childData.receiver == rec.firebase_uid || childData.receiver ==vm.getUser.agent.firebase_uid ){
+      //       allConversion.push(childData)
+      //       vm.$store.commit('SET_RECEIVER_MSG',{}) 
+      //       vm.$store.commit('SET_RECEIVER_MSG',allConversion) 
+      //     }
+      //   });
+      // });
+
+    
+
+
+      setTimeout(function(){
+        console.log('data All',allConversion)
+         let mtArr = []
+        //  allConversion.filter((item) => { 
+        //     if( item.receiver == rec.firebase_uid)
+        //         mtArr.push(item)
+        //         vm.$store.commit('SET_RECEIVER_MSG',{}) 
+        //         vm.$store.commit('SET_RECEIVER_MSG',mtArr) 
+        // })
+        // console.log('Ar',mtArr)
       },1000)
+
     },
+
+    // GetMsg(rec) {
+    //   console.log('reciever',rec)
+    //    let vm = this 
+    //   let allConversion=[]
+   
+    //   let user =  JSON.parse(JSON.stringify(vm.getUser.agent.firebase_uid))
+    //   let reciever =  JSON.parse(JSON.stringify(rec.firebase_uid))
+
+    //   const rec_msg =  db.database().ref("/Chat").once('value')
+    //   .then(data => {
+    //     const values = data.val()
+    //     for(let key in values){
+    //       // let va =  JSON.parse(JSON.stringify(values[key]))
+    //       // console.log(va)
+    //       allConversion.push(values[key])
+    //     }
+    //   }); 
+    //   console.log('test',allConversion)
+    // setTimeout(function(){
+    //     let mtArr = []
+    //     allConversion.filter((item) => { 
+    //     console.log('item',item.reciever)    
+    //     // item.sender == vm.getUser.agent.firebase_uid && item.reciever==rec.firebase_uid  ||
+    //         if( item.reciever === reciever && item.sender === user || item.sender == rec.firebase_uid  && item.reciever==vm.getUser.agent.firebase_uid)
+    //            {
+    //              mtArr.push(item)
+    //           }
+  
+    //     })
+    //     console.log('totaarrrrrl',mtArr)    
+    //     vm.$store.commit('SET_RECEIVER_MSG',{}) 
+    //     vm.$store.commit('SET_RECEIVER_MSG',mtArr) 
+    //     console.log('total',allConversion)
+    //   },1000)
+    // },
 
     getAllUser() {
        let vm = this 

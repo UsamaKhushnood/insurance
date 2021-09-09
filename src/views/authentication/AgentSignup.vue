@@ -12,15 +12,22 @@
               >Sign In</router-link
             >
             <Dropdown class="ms-4">
-              <li class="c-dropdown-item">
-                <i class="fa fa-user c-icon"></i> Complaints
-              </li>
-              <li class="c-dropdown-item">
-                <i class="fa fa-user c-icon"></i> Privacy Policy
-              </li>
-              <li class="c-dropdown-item">
-                <i class="fa fa-user c-icon"></i> Terms of Services
-              </li>
+              <router-link to="/complain">
+                  <li class="c-dropdown-item">
+                    <i class="fa fa-user c-icon"></i> Complaints
+                  </li>
+                </router-link>
+
+                <router-link to="" @click.native="sendTo('https://nagia.com.gh/privacy-policy/')">
+                  <li class="c-dropdown-item">
+                    <i class="fa fa-user c-icon"></i> Privacy Policy
+                  </li>
+                </router-link>
+               <router-link to="" @click.native="sendTo('https://nagia.com.gh/terms-of-service/')">
+                  <li class="c-dropdown-item">
+                    <i class="fa fa-user c-icon"></i> Terms of Services
+                  </li>
+                </router-link>
             </Dropdown>
           </div>
         </div>
@@ -77,19 +84,26 @@
               </b-form-group>
             </BCol>
             <BCol md="6">
-              <b-form-group label="Gender" label-for="Gender">
-                <b-form-input
+             <b-form-group label="Gender" label-for="Gender">
+                <b-form-select
                   id="Gender"
-                  type="text"
-                  v-model="gender"
                   required
-                ></b-form-input>
-              </b-form-group>
+                  v-model="gender"
+                  :options="genderOptions"
+                  class="field-category"
+                >
+                  <template #first>
+                    <b-form-select-option :value="null" selected disabled
+                      >-- Please select an option --</b-form-select-option
+                    >
+                  </template>
+                  </b-form-select>
+                </b-form-group>
             </BCol>
             <BCol md="6">
-              <b-form-group label="PhoneNo" label-for="PhoneNo">
+              <b-form-group label="Phone Number" label-for="Phone Number">
                 <b-form-input
-                  id="PhoneNo"
+                  id="Phone Number"
                   v-model="phone"
                   type="tel"
                   required
@@ -284,6 +298,11 @@ export default {
         { value: "Dr", text: "Dr" },
         { value: "Prof", text: "Prof" },
       ],
+       genderOptions:[
+        { value: "Male", text: "Male" },
+        { value: "Female", text: "Female" },
+        { value: "Other", text: "Other" },
+      ]
     };
   },
   methods: {
@@ -367,10 +386,18 @@ export default {
           let errors = error.response.data.errors;
         });
     },
+    sendTo(url){
+      window.location.href =url
+    }
   },
   mounted() {
     this.getDistrict();
     this.getRegions();
+  },
+  computed: {
+    isDisabled: function() {
+      return !this.email;
+    },
   },
 };
 </script>

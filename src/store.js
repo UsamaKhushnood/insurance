@@ -41,6 +41,7 @@ const mutations = {
     state[variable] = value
   },
   SET_SPINNER(state, spinner) {
+    console.log(spinner)
     state.showSpinner = spinner;
   },
   SET_AUTH_TOKEN(state, data) {

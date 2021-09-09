@@ -9,15 +9,22 @@
               >Sign In</router-link
             >
             <Dropdown class="ms-4">
-              <li class="c-dropdown-item">
-                <i class="fa fa-user c-icon"></i> Complaints
-              </li>
-              <li class="c-dropdown-item">
-                <i class="fa fa-user c-icon"></i> Privacy Policy
-              </li>
-              <li class="c-dropdown-item">
-                <i class="fa fa-user c-icon"></i> Terms of Services
-              </li>
+              <router-link to="/complain">
+                  <li class="c-dropdown-item">
+                    <i class="fa fa-user c-icon"></i> Complaints
+                  </li>
+                </router-link>
+
+                <router-link to="" @click.native="sendTo('https://nagia.com.gh/privacy-policy/')">
+                  <li class="c-dropdown-item">
+                    <i class="fa fa-user c-icon"></i> Privacy Policy
+                  </li>
+                </router-link>
+               <router-link to="" @click.native="sendTo('https://nagia.com.gh/terms-of-service/')">
+                  <li class="c-dropdown-item">
+                    <i class="fa fa-user c-icon"></i> Terms of Services
+                  </li>
+                </router-link>
             </Dropdown>
           </div>
         </div>
@@ -53,13 +60,14 @@
               <b-form-checkbox
                 id="confrimation"
                 name="confrimation"
+                v-model="confrimation"
                 value="accepted"
                 unchecked-value="not_accepted"
                 class="d-flex align-items-baseline"
               >
                 Creating an account means you’re okay with our
-                <span class="c-red">Terms of Service</span>, <br />
-                <span class="c-red">Privacy Policy</span>, and our default
+                <router-link to="" @click.native="sendTo('https://nagia.com.gh/terms-of-service/')"><span class="c-red">Terms of Service</span></router-link>, <br />
+                  <router-link to="" @click.native="sendTo('https://nagia.com.gh/privacy-policy/')"><span class="c-red">Privacy Policy</span></router-link>, and our default
                 <span class="c-red">Notification Settings</span>.
               </b-form-checkbox>
             </BCol>
@@ -67,6 +75,7 @@
               <button 
               type="btn"
                class="btn-gradient w-100"
+              :disabled='isDisabled'
                >
                 Create Account
               </button>
@@ -92,19 +101,26 @@ export default {
   components: { Dropdown },
   data() {
       return {
-          isVerified: 'pending'
+          isVerified: 'pending',
+          confrimation: "not_accepted",
       }
   },
   computed:{
-    ...mapGetters(['getRegisterData'])
+    ...mapGetters(['getRegisterData']),
+       isDisabled: function() {
+      return this.confrimation =="not_accepted";
+    },
   },
   methods: {
       verify() {
           this.isVerified = 'true'
       },
+        sendTo(url){
+      window.location.href =url
+    },
     async register() {
       const vm = this;
-  
+      vm.$store.commit('SET_SPINNER',true);
      await  axios.post(`/register`,
           this.getRegisterData
           )
@@ -117,7 +133,9 @@ export default {
             icon: true,
             rtl: false,
           });
+              vm.$store.commit('SET_SPINNER',false);
           }else{
+              vm.$store.commit('SET_SPINNER',false);
             vm.$toast.success(response.data.message, {
             position: "top-right",
             closeButton: "button",

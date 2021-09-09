@@ -9,15 +9,22 @@
               >Sign In</router-link
             >
             <Dropdown class="ms-4">
-              <li class="c-dropdown-item">
-                <i class="fa fa-user c-icon"></i> Complaints
-              </li>
-              <li class="c-dropdown-item">
-                <i class="fa fa-user c-icon"></i> Privacy Policy
-              </li>
-              <li class="c-dropdown-item">
-                <i class="fa fa-user c-icon"></i> Terms of Services
-              </li>
+          <router-link to="/complain">
+                  <li class="c-dropdown-item">
+                    <i class="fa fa-user c-icon"></i> Complaints
+                  </li>
+                </router-link>
+
+                <router-link to="" @click.native="sendTo('https://nagia.com.gh/privacy-policy/')">
+                  <li class="c-dropdown-item">
+                    <i class="fa fa-user c-icon"></i> Privacy Policy
+                  </li>
+                </router-link>
+               <router-link to="" @click.native="sendTo('https://nagia.com.gh/terms-of-service/')">
+                  <li class="c-dropdown-item">
+                    <i class="fa fa-user c-icon"></i> Terms of Services
+                  </li>
+                </router-link>
             </Dropdown>
           </div>
         </div>
@@ -39,6 +46,11 @@
 import Dropdown from "@/components/Dropdown";
 export default {
   components: { Dropdown },
+  methods:{
+    sendTo(url){
+      window.location.href =url
+    }
+  }
 };
 </script>
 <style lang="scss">

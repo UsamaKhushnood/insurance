@@ -87,7 +87,7 @@
 
         <div class="messages-box" v-for="(chat ,index) in getReceiverMsg" :key="index">
            
-          <div class="my-messages" v-if="chat.sender === getReceiver.firebase_uid" >
+          <div class="my-messages" v-if="chat.sender === getReceiver.firebase_uid || chat.receiver === getReceiver.firebase_uid " >
             <div class="my-avatar">
               <b-avatar
                 variant="info"
@@ -100,7 +100,7 @@
             </div>
             <div class="time f-10">{{chat.time}}</div>
           </div>
-          <div class="user-messages" v-if="chat.sender === getUser.agent.firebase_uid">
+          <div class="user-messages" v-if="chat.sender === getUser.agent.firebase_uid  ||  chat.receiver === getUser.agent.firebase_uid">
             <div class="user-avatar">
               <b-avatar
                 variant="info"

@@ -22,7 +22,7 @@
               <div class="pdf-icon">
                 <img src="@/assets/icons/pdf.png" width="30px" />
               </div>
-              <a href="" class="invoice-number ms-4 c-blue"
+              <a href="#" @click="getFile(x.id)" class="invoice-number ms-4 c-blue"
 
                 >NAG00{{ xIndex + 1 }}</a
               >
@@ -122,6 +122,7 @@
 <script>
 import CheckStatus from "@/components/licence/CheckStatus";
 import RenewLicence from "@/components/licence/RenewLicence";
+import axios from 'axios';
 export default {
   components: { CheckStatus, RenewLicence },
   data() {
@@ -188,6 +189,41 @@ export default {
           }else{
           
           vm.invoices =response.data.data
+              // vm.$router.push({ path: "login" });
+          }
+        })
+        .catch((error) => {
+          let errors = error.response.data.errors;
+          vm.$toast.error(errors.response.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+        });
+    },
+   
+   async getFile(id){
+      let vm = this;
+        vm.$store
+        .dispatch("HTTP_GET_REQUEST", this.$store.state.user.user_type+`/invoice/${id}`)
+        // axios.get('https://insurance.jawadmobiles.com/api/'+this.$store.state.user.user_type+`/invoice/${id}`)
+        .then((response) => {
+          console.log("re", response);
+         
+          if(response.data.status == false){
+          vm.$toast.error(response.data.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+          vm.status =false
+          }else{
+            console.log(response.data.data)
+            console.log(response.data)
+           window.open(response.data.data,'_blank');
+          // vm.invoices =response.data
               // vm.$router.push({ path: "login" });
           }
         })
