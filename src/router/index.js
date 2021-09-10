@@ -286,17 +286,17 @@ const router = new VueRouter({
 });
 
 
-router.beforeEach((to, from, next) => {
-  if (!localStorage.getItem('token')) {
-      // checking to avoid loop
-      if (to.name === 'Login' || to.name === 'ForgetPassword' || to.name === 'Agent Area'|| to.name === 'Customer Area'|| to.name === 'Agent Verification' || to.name === 'Complain' ) return next();
-      next({
-          path: '/'
-      });
-  }
-  else {
-     next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (!localStorage.getItem('token')) {
+//       // checking to avoid loop
+//       if (to.name === 'Login' || to.name === 'ForgetPassword' || to.name === 'Agent Area'|| to.name === 'Customer Area'|| to.name === 'Agent Verification' || to.name === 'Complain' ) return next();
+//       next({
+//           path: '/'
+//       });
+//   }
+//   else {
+//      next();
+//   }
+// });
 
 export default router;

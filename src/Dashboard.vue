@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-8">
         <div class="dashboard-banner mb-5">
-          <h1 class="fw-9">Welcome, {{this.getUser.user_type}}!</h1>
+          <h1 class="fw-9">Welcome, Agent!</h1>
           <div class="border"></div>
           <p class="fw-7">
             Sed quis magna nec augue suscipit venenatis. Pellentesque eu felis
@@ -62,7 +62,7 @@
           <div class="general-links self-resources">
             <router-link
               to="#"
-               @click.native="redirectUrl(x.link)" 
+              @click.native="redirectUrl(x.link)"
               tag="div"
               class="option pointer"
               v-for="(x, xIndex) in selfServe"
@@ -121,6 +121,83 @@
             </router-link>
           </div>
         </div>
+        <div class="dashboard-body box-shadow bg-white p-5 mt-5">
+          <h4 class="text-center c-dark-grey mb-3">Useful Links</h4>
+          <div class="links-contaier">
+            <div class="link">
+              <div class="png">
+                <img src="@/assets/images/home.png" class="link-icon" />
+              </div>
+              <div class="linkTitle">
+                <a href="#">NAGIA Home</a>
+              </div>
+            </div>
+            <div class="link">
+              <div class="png">
+                <img src="@/assets/images/learn.png" class="link-icon" />
+              </div>
+              <div class="linkTitle">
+                <a href="#">Learn At NAGIA</a>
+              </div>
+            </div>
+            <div class="link">
+              <div class="png">
+                <img src="@/assets/images/news.png" class="link-icon" />
+              </div>
+              <div class="linkTitle">
+                <a href="#">News &amp; Media </a>
+              </div>
+            </div>
+            <div class="link">
+              <div class="png">
+                <img src="@/assets/images/whatwedo.png" class="link-icon" />
+              </div>
+              <div class="linkTitle">
+                <a href="#">What We Do </a>
+              </div>
+            </div>
+            <div class="link">
+              <div class="png">
+                <img src="@/assets/images/onlinestore.png" class="link-icon" />
+              </div>
+              <div class="linkTitle">
+                <a href="#">Online Store</a>
+              </div>
+            </div>
+            <div class="link">
+              <div class="png">
+                <img src="@/assets/images/career.png" class="link-icon" />
+              </div>
+              <div class="linkTitle">
+                <a href="#">Careers</a>
+              </div>
+            </div>
+            <div class="link">
+              <div class="png">
+                <img src="@/assets/images/gallary.png" class="link-icon" />
+              </div>
+              <div class="linkTitle">
+                <a href="#">Gallary</a>
+              </div>
+            </div>
+            <div class="link">
+              <div class="png">
+                <img src="@/assets/images/locationicon.png" class="link-icon" />
+              </div>
+              <div class="linkTitle">
+                <a href="#">Location</a>
+              </div>
+            </div>
+            <div class="link">
+              <div class="png">
+                <img src="@/assets/images/legal.png" class="link-icon" />
+              </div>
+              <div class="linkTitle">
+                <a href="#">Legal</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col-md-4">
         <UpcomingEvent class="mb-4" />
@@ -130,7 +207,6 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
 import NagiaContact from "@/components/NagiaContact";
 import UpcomingEvent from "@/components/events/UpcomingEvent.vue";
 export default {
@@ -138,9 +214,6 @@ export default {
     UpcomingEvent,
     NagiaContact,
   },
-  computed:{
-  ...mapGetters(['getUser'])
-},
   data() {
     return {
       icons: require("./assets/svg/dashboard.svg"),
@@ -222,18 +295,53 @@ export default {
       ],
     };
   },
-  methods:{
-    redirectUrl(url){
+  methods: {
+    redirectUrl(url) {
       // http://localhost:8080/
-      let  newUrl=url.slice(0, 23)
-      if(newUrl)
-      window.location.href=newUrl
-    }
-  }
+      let newUrl = url.slice(0, 23);
+      if (newUrl) window.location.href = newUrl;
+    },
+  },
 };
 </script>
 <style lang="scss">
 .dashboard {
+  .links-contaier {
+    display: grid;
+    grid-template-columns: repeat(3, 190px);
+    justify-content: space-evenly;
+    row-gap: 30px;
+    margin-top: 30px;
+
+    .link {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+
+      .png {
+        padding: 30px;
+        img {
+          height: 70px;
+        }
+      }
+      .linkTitle {
+        text-align: center;
+        background: var(--blue);
+        color: var(--yellow);
+        padding: 10px;
+        width: 100%;
+        a {
+          color: var(--yellow);
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
   .dashboard-banner {
     background: url("./assets/images/faq-bg.png");
     background-repeat: no-repeat;
