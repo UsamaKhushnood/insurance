@@ -81,18 +81,65 @@
             <div class="row align-items-center">
               <div class="col-md-12">
                 <h4 class="c-blue fw-6 venu">Event Locaion</h4>
-                <div class="location-img"></div>
+                <!-- <div class="location-img"></div> -->
+                 <gmaps-map>
+                    <gmaps-marker :position="{ lat: parseInt(currentEvent.latitude) , lng:parseInt(currentEvent.longitude) }" />
+                </gmaps-map>
               </div>
             </div>
           </div>
-
+        <a href=""></a>
           <div class="mt-4 share-event">
             <h6 class="fw-6">Share with friends</h6>
             <div class="social-media-icon d-flex align-items-center">
-              <b-icon icon="facebook" class="f-24 me-2"></b-icon>
+              <!-- <b-icon icon="facebook" class="f-24 me-2"></b-icon>
               <b-icon icon="instagram" class="f-24 me-2"></b-icon>
               <b-icon icon="twitter" class="f-24 me-2"></b-icon>
-              <b-icon icon="linkedin" class="f-24 me-2"></b-icon>
+              <b-icon icon="linkedin" class="f-24 me-2"></b-icon> -->
+                <ShareNetwork
+                    :url="share_link"
+                    title="portal.nagia.com.gh"
+                    description="https://portal.nagia.com.gh/"
+                    quote="https://portal.nagia.com.gh/"
+                    hashtags="#nagia.com.gh"
+                    twitter-user=""
+                    inline-template
+                  >
+                    <div class="mt-2">
+                      <network
+                        network="facebook"
+                        style="margin-right: 4px; font-size:20px; background:#245B80; padding:5px; padding-left:7px;padding-right:7px; width:10px"
+                      >
+                        <a href="#" style="color:white" class="fa fa-facebook copy_text"></a>
+                      </network>
+          
+                      <network
+                        network="linkedin"
+                        style="margin-right: 4px; font-size:20px; background:#245B80; padding:5px;"
+                      >
+                        <a href="#" style="color:white" class="fa fa-linkedin copy_text"></a>
+                      </network>
+                      <network
+                        network="twitter"
+                        style="margin-right: 4px; font-size:20px; background:#245B80; padding:5px;"
+                      >
+                        <a href="#" style="color:white" class="fa fa-twitter copy_text"></a>
+                      </network>
+
+                      <network
+                        network="whatsapp"
+                        style="margin-right: 4px; font-size:20px; background:#245B80; padding:5px;"
+                      >
+                        <a href="#" style="color:white" class="fab fa-whatsapp copy_text"></a>
+                      </network>
+                      <!-- <button style="color: black;font-size:14px;background:#F1F1F1;padding:8px;"
+                        class="btn fa fa-clone copy_textt"
+                        data-toggle="tooltip"
+                        title="Copy to Clipboard"
+                        :href="link_url"
+                      > Copy Link</button> -->
+                    </div>
+                  </ShareNetwork>
             </div>
           </div>
         </div>
@@ -104,12 +151,14 @@
   </div>
 </template>
 <script>
-
+import { gmapsMap, gmapsMarker } from 'x5-gmaps';
 import UpcomingMeetings from "@/components/events/UpcomingMeetings";
+import VueSocialSharing from "vue-social-sharing";
 import axios from "axios";
 import { mapGetters } from "vuex";
 export default {
-  components: { UpcomingMeetings },
+ 
+  components: { UpcomingMeetings,gmapsMap, gmapsMarker , ShareNetwork: VueSocialSharing},
   computed: {
     ...mapGetters(["getSelectedEvent"]),
     currentEvent() {
@@ -122,6 +171,9 @@ export default {
   data() {
     return {
       eventDetail: "",
+      mylat: "",
+      mylong: "",
+      share_link:window.location.href
     };
   },
   methods: {
@@ -131,7 +183,7 @@ export default {
     },
     async getEventDetail() {
       const vm = this;
-      vm.$store.commit("SET_SPINNER", true);
+      // vm.$store.commit("SET_SPINNER", true);
       // alert(this.$router.id);
       await axios
         .get(
@@ -142,18 +194,19 @@ export default {
         )
         .then((response) => {
           console.log("data::", response.data.data);
-          vm.$store.commit("SET_SPINNER", false);
+          // vm.$store.commit("SET_SPINNER", false);
           vm.eventDetail = response.data.data;
         })
         .catch((errors) => {
-          console.log(errors);
-          if (errors.response)
-            this.$toast.error(errors.response.message, {
-              position: "top-right",
-              closeButton: "button",
-              icon: true,
-              rtl: false,
-            });
+          // console.log(errors);
+        if (errors.response)
+            console.log(errors);
+            // this.$toast.error(errors.response.message, {
+            //   position: "top-right",
+            //   closeButton: "button",
+            //   icon: true,
+            //   rtl: false,
+            // });
         });
     },
     async dislikeEvent() {
@@ -183,7 +236,7 @@ export default {
     },
     async acceptEvent(id) {
       const vm = this;
-      vm.$store.commit("SET_SPINNER", true);
+      // vm.$store.commit("SET_SPINNER", true);
       await axios
         .post(
           process.env.VUE_APP_API_URL +
@@ -195,7 +248,7 @@ export default {
           console.log("data::", response.data.data);
           this.events = response.data.data;
           //  vm.$store.commit("SET_USER", response.data.userDetail.user);
-          vm.$store.commit("SET_SPINNER", false);
+          // vm.$store.commit("SET_SPINNER", false);
           vm.getEventDetail();
           vm.$toast.success(response.data.message, {
             position: "top-right",

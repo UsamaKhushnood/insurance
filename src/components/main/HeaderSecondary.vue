@@ -9,7 +9,7 @@
     <div class="col-md-6 p-0 d-flex justify-content-evenly">
       <router-link to="licence" tag="button"  v-if="getUser.user_type=='agent'"  class="box-shadow sh-btn"> check licence status</router-link>
       <router-link to="forum" tag="button"   v-if="getUser.user_type=='agent'" class="box-shadow sh-btn">Join forum</router-link>
-      <router-link to="learn-at-nagia" tag="button"   v-if="getUser.user_type=='agent'" class="box-shadow sh-btn">learn at NAGIA</router-link>
+      <router-link to="#"  tag="button"  @click.native="redirectUrl('https://learn.nagia.com.gh')"  v-if="getUser.user_type=='agent'" class="box-shadow sh-btn">learn at NAGIA</router-link>
     </div>
     <div class="col-md-3 ps-0 last-col">
       <h5 class="breadcrumb">
@@ -23,6 +23,12 @@ import { mapGetters } from 'vuex';
 export default {
 computed:{
   ...mapGetters(['getUser'])
+},
+methods:{
+  redirectUrl(url){
+    // this.$router.push({ name: 'AccountSecurity' });
+    window.location.href =url
+  }
 }
 
 };

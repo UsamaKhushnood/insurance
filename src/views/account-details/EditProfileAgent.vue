@@ -179,19 +179,21 @@
             required
           ></b-form-input>
         </b-form-group>
-        <b-form-group
-          id="input-group-1"
-          label="Gender"
-          label-for="input-1"
-          class="mt-3"
-        >
-          <b-form-input
-            id="input-1"
-            v-model="gender"
-            type="text"
-            required
-          ></b-form-input>
-        </b-form-group>
+       <b-form-group label="Gender" label-for="Gender">
+        <b-form-select
+        id="Gender"
+        required
+        v-model="gender"
+        :options="genderOptions"
+        class="field-category"
+      >
+        <template #first>
+          <b-form-select-option :value="null" selected disabled
+            >-- Please select an option --</b-form-select-option
+          >
+        </template>
+      </b-form-select>
+    </b-form-group>
         <b-form-group
           id="input-group-1"
           label="Location"
@@ -238,6 +240,7 @@
             required
           ></b-form-input>
         </b-form-group>
+          
 
         <button
           class="btn-blue btn-hover-yellow mt-4 btn-block"
@@ -265,6 +268,11 @@ export default {
       last_name: "",
       image: "",
       gender: "",
+       genderOptions:[
+        { value: "Male", text: "Male" },
+        { value: "Female", text: "Female" },
+        { value: "Other", text: "Other" },
+      ],
       phone: "",
       email: "",
       location: "",

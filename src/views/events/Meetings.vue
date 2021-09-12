@@ -2,7 +2,7 @@
   <div class="upcoming-meeting box-shadow">
     <h3 class="c-blue text-center mb-4">All Upcoming Meetings</h3>
     <div class="meeting" v-for="(meeting, mIndex) in meetings" :key="mIndex">
-      <div class="smeeting" :class="meeting.background">
+      <div class="smeeting" :class="meeting.bg">
         <div class="meeting-details">
            <p class="f-10">
             {{meeting.description}}

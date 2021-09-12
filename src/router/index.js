@@ -17,6 +17,7 @@ import EditProfileAgent from "@/views/account-details/EditProfileAgent";
 import EditProfileConsumer from "@/views/account-details/EditProfileConsumer";
 import Notification from "@/views/account-details/Notification";
 import Billing from "@/views/account-details/Billing";
+import AccountSecurity from "@/views/account-details/AccountSecurity";
 import Security from "@/views/account-details/Security";
 
 

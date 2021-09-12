@@ -93,7 +93,8 @@ export default {
   },
   methods:{
       redirectUrl(url){
-        this.$router.push({ path: url });
+        this.$router.push({ name: 'AccountSecurity' });
+        // window.location.href =url
       }
   }
 };
