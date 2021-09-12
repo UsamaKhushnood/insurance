@@ -60,7 +60,7 @@
             </div>
           </router-link>
           <router-link
-            to=''
+            to='/account-details/security'
             @click.native="redirectUrl('/account-details/security')"
             tag="button"
             class="d-flex align-items-center tab"
