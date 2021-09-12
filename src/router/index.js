@@ -67,7 +67,7 @@ const routes = [
             name: "Security",
             components: {
               accountdetails: Security,
-              accountdetailsConsumer: Security
+              accountdetailsConsumer: Security,
             },
           },
           {
