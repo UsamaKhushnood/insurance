@@ -20,7 +20,6 @@ import Billing from "@/views/account-details/Billing";
 import AccountSecurity from "@/views/account-details/AccountSecurity";
 import Security from "@/views/account-details/Security";
 
-
 import Licence from "@/views/Licence";
 import Support from "@/views/Support";
 import Faq from "@/views/Faq";
@@ -62,46 +61,47 @@ const routes = [
         path: "/account-details",
         name: "AccountDetails",
         component: AccountDetails,
-        redirect: '/account-details/edit-profile',
+        redirect: "/account-details/edit-profile",
         children: [
           {
-            path: 'security',
-            name: 'Security',
+            path: "security",
+            name: "Security",
             components: {
-              accountdetailsSecurity: Security
-            }
+              accountdetails: Security,
+              accountdetailsConsumer: Security,
+            },
           },
           {
-            path: 'edit-profile',
-            name: 'EditProfileAgent',
+            path: "edit-profile",
+            name: "EditProfileAgent",
             components: {
-              accountdetails: EditProfileAgent
-            }
+              accountdetails: EditProfileAgent,
+            },
           },
           {
-            path: 'edit-profile-consumer',
-            name: 'Edit ProfileConsumer',
+            path: "edit-profile-consumer",
+            name: "Edit ProfileConsumer",
             components: {
-              accountdetailsConsumer: EditProfileConsumer
-            }
+              accountdetailsConsumer: EditProfileConsumer,
+            },
           },
-          
+
           {
-            path: 'notification',
-            name: 'Notification',
+            path: "notification",
+            name: "Notification",
             components: {
-              accountdetails: Notification
-            }
+              accountdetails: Notification,
+              accountdetailsConsumer: Notification,
+            },
           },
           {
-            path: 'billing',
-            name: 'Billing',
+            path: "billing",
+            name: "Billing",
             components: {
-              accountdetails: Billing
-            }
+              accountdetails: Billing,
+            },
           },
-         
-        ]
+        ],
       },
       {
         path: "/licence",
@@ -132,7 +132,7 @@ const routes = [
         path: "/forum",
         name: "Forum",
         component: Forum,
-        redirect: '/forum/explore-topics',
+        redirect: "/forum/explore-topics",
         children: [
           {
             path: "explore-topics",
@@ -168,7 +168,7 @@ const routes = [
         path: "/event-management",
         name: "Event Management",
         component: Events,
-        redirect: '/event-management/all-events',
+        redirect: "/event-management/all-events",
         children: [
           {
             path: "all-events",
@@ -181,8 +181,8 @@ const routes = [
             path: "event-details/:id",
             name: "Event Details",
             components: {
-              events: EventDetails
-            }
+              events: EventDetails,
+            },
           },
           {
             path: "my-events",
@@ -201,21 +201,19 @@ const routes = [
         ],
       },
       {
-        path: '/messaging',
-        name: 'Messaging',
+        path: "/messaging",
+        name: "Messaging",
         component: Messaging,
-        children: [ 
+        children: [
           {
-            path: 'chat/:id',
-            name: 'Messaging',
+            path: "chat/:id",
+            name: "Messaging",
             components: {
-              messaging: ChatWithUser
+              messaging: ChatWithUser,
             },
-          }
-        ]
-        
-      }
-      
+          },
+        ],
+      },
     ],
   },
   {
@@ -260,9 +258,9 @@ const routes = [
         name: "Agent Verification",
         components: {
           authentication: AgentVerification,
-          },
+        },
       },
-        {
+      {
         path: "forget-password",
         name: "ForgetPassword",
         components: {
@@ -285,7 +283,6 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
-
 
 // router.beforeEach((to, from, next) => {
 //   if (!localStorage.getItem('token')) {
