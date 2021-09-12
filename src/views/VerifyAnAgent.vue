@@ -20,18 +20,16 @@
       <div>
         <div class="ac-body">
           <div class="agents mt-4">
-             <!-- src="https://placekitten.com/300/300" -->
             <b-avatar
-             
-              :src="ImageUrl+'agent/'+getUser.agent.image"
+              src="https://placekitten.com/300/300"
               size="6rem"
             ></b-avatar>
             <b-avatar
-             :src="ImageUrl+'agent/'+getUser.agent.image"
+              src="https://placekitten.com/300/300"
               size="10rem"
             ></b-avatar>
             <b-avatar
-             :src="ImageUrl+'agent/'+getUser.agent.image"
+              src="https://placekitten.com/300/300"
               size="6rem"
             ></b-avatar>
           </div>
@@ -49,10 +47,7 @@
           </div>
 
           <div class="verify-button mt-5 mb-5 text-center">
-            <button class="btn-blue btn-hover-yellow br-5 w-25" 
-           
-            @click="getVerify('verify-agent')" 
-            >
+            <button class="btn-blue btn-hover-yellow br-5 w-25" @click="getVerify" v-b-modal.verify-agent>
               <svg class="card-icon">
                 <use xlink:href="@/assets/svg/verify-card.svg#card"></use>
               </svg>
@@ -67,26 +62,21 @@
 </template>
 <script>
 import VerifyModal from '@/components/verify-agent/VerifyModal'
-import { mapGetters } from 'vuex';
 export default {
-  components:{VerifyModal} ,
+  components:{VerifyModal}
+  ,
   data() {
     return {
       name:'',  
       nagia_id:'',  
       status:'',  
-      message:'',
-      show:false
+      message:''
     };
   },
   methods: {
-    async getVerify(id) {
-     
+    async getVerify() {
       const vm = this;
-       if(this.nagia_id ==''&& this.name ==''){
-         return
-       }
-        
+      
       vm.$store
         .dispatch("HTTP_POST_REQUEST", {url:vm.$store.state.user.user_type+`/agent-verify`,payload:{name:vm.name,nagia_id:this.nagia_id}})
         .then((response) => {
@@ -96,11 +86,9 @@ export default {
           if(response.data.status == false){
               vm.$store.commit("SET_MODEL_STATUS",false);
               vm.message =response.data.message
-                 vm.$bvModal.show(id)
           }else{
               vm.$store.commit("SET_MODEL_STATUS",true);
               vm.message =response.data.message
-                  vm.$bvModal.show(id)
           }
         })
         .catch((error) => {
@@ -114,15 +102,7 @@ export default {
         });
     },
   },
-   computed:{
-     ...mapGetters(['getUser']),
-       ImageUrl() {
-      return process.env.VUE_APP_IMAGE_URL;
-    },
-      isDisabled() {
-        return this.show == true ? true : false; 
-      },
-  },
+ 
 };
 </script>
 <style lang="scss">

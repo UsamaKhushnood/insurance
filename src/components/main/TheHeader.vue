@@ -34,7 +34,7 @@
                 <b-avatar
                 variant="info"
                 v-else
-                :src="ImageUrl+'customer/'+getUser.consumer.image" 
+                :src="ImageUrl+'consumer/'+getUser.consumer.image" 
                 class="me-3"
               ></b-avatar>
 

@@ -9,8 +9,6 @@ import './style.css'
 import router from './router'
 import store from './store'
 import Toast from "vue-toastification";
-import VueSocialSharing from 'vue-social-sharing'
-import SocialSharing from "vue-social-sharing";
 // Import the CSS or use your own!
 import "vue-toastification/dist/index.css";
 import VueMoment from 'vue-moment'
@@ -18,11 +16,9 @@ import VueMoment from 'vue-moment'
 import vSelect from 'vue-select'
 import x5GMaps from 'x5-gmaps';
 // Option 1: Just your key
-Vue.use(x5GMaps, 'G-F4XZ0BCMZD');
-// Vue.use(x5GMaps, 'AIzaSyCgfNYYW7moqZw_3nCSVCN0BsdNofYsxck');
+Vue.use(x5GMaps, 'AIzaSyCgfNYYW7moqZw_3nCSVCN0BsdNofYsxck');
 
-Vue.use(SocialSharing);
-Vue.use(VueSocialSharing);
+
 Vue.component('v-select', vSelect)
 Vue.use(VueMoment, {
   // moment,

@@ -129,7 +129,7 @@
                 <img src="@/assets/images/home.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link to="#" @click.native="redirectUrl('https://nagia.com.gh/')">NAGIA Home</router-link>
+                <a href="#">NAGIA Home</a>
               </div>
             </div>
             <div class="link">
@@ -137,7 +137,7 @@
                 <img src="@/assets/images/learn.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link to="#" @click.native="redirectUrl('https://learn.nagia.com.gh/')">Learn At NAGIA</router-link>
+                <a href="#">Learn At NAGIA</a>
               </div>
             </div>
             <div class="link">
@@ -145,7 +145,7 @@
                 <img src="@/assets/images/news.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link to="#" @click.native="redirectUrl('https://nagia.com.gh/news-room/')">News &amp; Media </router-link>
+                <a href="#">News &amp; Media </a>
               </div>
             </div>
             <div class="link">
@@ -153,7 +153,7 @@
                 <img src="@/assets/images/whatwedo.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link to="#" @click.native="redirectUrl('https://nagia.com.gh/our-services/')">What We Do </router-link>
+                <a href="#">What We Do </a>
               </div>
             </div>
             <div class="link">
@@ -161,7 +161,7 @@
                 <img src="@/assets/images/onlinestore.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link  to="#" @click.native="redirectUrl('https://nagia.com.gh/shop/')">Online Store</router-link>
+                <a href="#">Online Store</a>
               </div>
             </div>
             <div class="link">
@@ -169,7 +169,7 @@
                 <img src="@/assets/images/career.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link  to="#" @click.native="redirectUrl('https://nagia.com.gh/careers/')">Careers</router-link>
+                <a href="#">Careers</a>
               </div>
             </div>
             <div class="link">
@@ -177,7 +177,7 @@
                 <img src="@/assets/images/gallary.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link to="#"  @click.native="redirectUrl('https://nagia.com.gh/portfolio-grid/')">Gallary</router-link>
+                <a href="#">Gallary</a>
               </div>
             </div>
             <div class="link">
@@ -185,7 +185,7 @@
                 <img src="@/assets/images/locationicon.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link to="#"  @click.native="redirectUrl('https://nagia.com.gh/portfolio-grid/')">Location</router-link>
+                <a href="#">Location</a>
               </div>
             </div>
             <div class="link">
@@ -193,7 +193,7 @@
                 <img src="@/assets/images/legal.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link to="#"  @click.native="redirectUrl('https://nagia.com.gh/portfolio-grid/')">Legal</router-link>
+                <a href="#">Legal</a>
               </div>
             </div>
           </div>
