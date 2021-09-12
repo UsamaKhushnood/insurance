@@ -61,7 +61,8 @@ export default {
         .then((response) => {
           console.log("re", response.data.data);
               if (response.data.status == false) {
-            vm.$toast.error(response.data.message, {
+            // vm.$toast.error(response.data.message, {
+            vm.$toast.error('No UpComming Meetings Found', {
               position: "top-right",
               closeButton: "button",
               icon: true,
@@ -74,7 +75,8 @@ export default {
         })
         .catch((error) => {
           let errors = error.response.data.errors;
-          vm.$toast.error(errors.response.message, {
+          // vm.$toast.error(errors.response.message, {
+          vm.$toast.error('No UpComming Event Found', {
             position: "top-right",
             closeButton: "button",
             icon: true,

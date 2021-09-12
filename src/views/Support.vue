@@ -201,7 +201,7 @@ export default {
     },
     async sendMessage() {
       const vm = this;
-      vm.$store.commit("SET_SPINNER", true);
+      // vm.$store.commit("SET_SPINNER", true);
       await axios
         .post(
           process.env.VUE_APP_API_URL +
@@ -211,7 +211,7 @@ export default {
         )
         .then((response) => {
           console.log("data::", response.data.data);
-          vm.$store.commit("SET_SPINNER", false);
+          // vm.$store.commit("SET_SPINNER", false);
 
           if (response.data.status == false) {
             vm.$toast.error(response.data.message, {

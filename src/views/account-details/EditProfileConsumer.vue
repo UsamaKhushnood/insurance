@@ -12,7 +12,7 @@
           style="width: 200px"
         >
           <b-avatar
-            :src="ImageUrl+'consumer/'+this.$store.state.user.consumer.image"
+            :src="ImageUrl+'customer/'+this.$store.state.user.consumer.image"
             size="10rem"
           ></b-avatar>
           <label for="upload-pic-btn">
@@ -118,19 +118,21 @@
             type="text"
           ></b-form-input>
         </b-form-group>
-        <b-form-group
-          id="input-group-1"
-          label="Gender"
-          label-for="input-1"
-          class="mt-3"
-        >
-          <b-form-input
-            id="input-1"
-            v-model="gender"
-            type="text"
-            required
-          ></b-form-input>
-        </b-form-group>
+       <b-form-group label="Gender" label-for="Gender">
+        <b-form-select
+        id="Gender"
+        required
+        v-model="gender"
+        :options="genderOptions"
+        class="field-category"
+      >
+        <template #first>
+          <b-form-select-option :value="null" selected disabled
+            >-- Please select an option --</b-form-select-option
+          >
+        </template>
+      </b-form-select>
+    </b-form-group>
         <b-form-group
           id="input-group-1"
           label="Location"
@@ -182,6 +184,11 @@ export default {
       last_name: "",
       image: "",
       gender: "",
+          genderOptions:[
+        { value: "Male", text: "Male" },
+        { value: "Female", text: "Female" },
+        { value: "Other", text: "Other" },
+      ],
       phone: "",
       email: "",
       location: "",

@@ -60,7 +60,7 @@
             </div>
           </router-link>
           <router-link
-            to='/account-details/security'
+            to=''
             @click.native="redirectUrl('/account-details/security')"
             tag="button"
             class="d-flex align-items-center tab"
@@ -93,7 +93,8 @@ export default {
   },
   methods:{
       redirectUrl(url){
-        this.$router.push({ path: url });
+      this.$router.push({ path: url });
+        // window.location.href =url
       }
   }
 };

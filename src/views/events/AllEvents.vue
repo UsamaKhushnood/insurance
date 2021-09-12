@@ -74,14 +74,15 @@ export default {
           // this.events= response.data.data       
         })
         .catch((errors) => {
-          console.log(errors)
+          // console.log(errors)
            if(errors.response)
-          this.$toast.error(errors.response.message, {
-            position: "top-right",
-            closeButton: "button",
-            icon: true,
-            rtl: false,
-          });
+          console.log(errors)
+          // this.$toast.error(errors.response.message, {
+          //   position: "top-right",
+          //   closeButton: "button",
+          //   icon: true,
+          //   rtl: false,
+          // });
         });
       },
 
