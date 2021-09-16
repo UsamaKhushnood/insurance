@@ -22,16 +22,15 @@
           <div class="agents mt-4">
              <!-- src="https://placekitten.com/300/300" -->
             <b-avatar
-             
-              :src="ImageUrl+'agent/'+getUser.agent.image"
+              :src="myImage"
               size="6rem"
             ></b-avatar>
             <b-avatar
-             :src="ImageUrl+'agent/'+getUser.agent.image"
+              :src="myImage"
               size="10rem"
             ></b-avatar>
             <b-avatar
-             :src="ImageUrl+'agent/'+getUser.agent.image"
+              :src="myImage"
               size="6rem"
             ></b-avatar>
           </div>
@@ -122,6 +121,19 @@ export default {
       isDisabled() {
         return this.show == true ? true : false; 
       },
+      myImage(){
+        // alert(typeof(this.getUser.agent.image))
+        let url ='';
+        console.log(typeof(this.getUser.agent));
+        if(this.getUser.user_type == 'agent'){
+         url  =  typeof(this.getUser.agent.image) !== 'undefined' || this.getUser.agent.image !== null ?  this.ImageUrl+'agent/'+this.getUser.agent.image : 'https://placekitten.com/300/300';
+        }else{
+        return  typeof(this.getUser.consumer.image) !== 'undefined' || this.getUser.consumer.image !== null ?  this.ImageUrl+'agent/'+this.getUser.consumer.image : 'https://placekitten.com/300/300';
+
+        }
+        // return 1;
+        return url;
+      }
   },
 };
 </script>

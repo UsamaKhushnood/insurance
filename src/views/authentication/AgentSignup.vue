@@ -301,7 +301,7 @@ export default {
        genderOptions:[
         { value: "Male", text: "Male" },
         { value: "Female", text: "Female" },
-        { value: "Other", text: "Other" },
+        
       ]
     };
   },

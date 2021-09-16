@@ -13,10 +13,11 @@
           id="input-group-1"
           label="Current Password"
           label-for="input-1"
-          class="mt-3 ml-2"
+          class="mt-3 ml-2 "
         >
           <b-form-input
             id="input-1"
+            class="wt"
             v-model="current_password"
             type="password"
             required
@@ -29,6 +30,7 @@
           class="mt-3"
         >
           <b-form-input
+            class="wt"
             id="input-1"
             v-model="password"
             type="password"
@@ -42,6 +44,7 @@
           class="mt-3"
         >
           <b-form-input
+            class="wt"
             id="input-1"
             v-model="password_confirmation"
             type="password"
@@ -51,7 +54,7 @@
        
       <button
           class="btn-blue btn-hover-yellow mt-4 btn-block"
-        
+        @click="resetPassword()"
         >
           Save
         </button>
@@ -62,14 +65,15 @@
     </div>
 </template>
 <script>
+
 export default {
-    name:"AccountSecurity",
-    data(){
-        return {
+    name:"Security",
+   data() {
+    return {
             current_password:'',
             password:'',
             password_confirmation:'',
-        }
+        };
     },
     methods:{
         resetPassword(){
@@ -79,7 +83,10 @@ export default {
                 password:vm.password,
                 confirm_password:vm.password_confirmation,
             }
-
+          if(this.current_password == '' || this.password == '' || this.password_confirmation == '' )
+          {
+            return;
+          }
             vm.$store
                 .dispatch("HTTP_POST_REQUEST", {
                 url: vm.$store.state.user.user_type + `/password-change`,
@@ -124,12 +131,13 @@ export default {
 }
 </script>
 <style lang="scss">
-.Security input {
-  background: #fff !important;
+.wt {
+  // background: #fff !important;
+   background-color: #fff !important;
 }
 
 label[for="upload-pic-btn"] {
-  background: var(--yellow);
+  // background: var(--yellow);
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -141,5 +149,31 @@ label[for="upload-pic-btn"] {
   top: 100px;
   right: 12px;
   cursor: pointer;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    /* color: #212529; */
+   
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input {
+    background: #f8f9fa !important;
+    border: 0px !important;
+    padding: 12px 15px !important;
+    border-radius: 15px !important;
+    color: #000 !important;
 }
 </style>

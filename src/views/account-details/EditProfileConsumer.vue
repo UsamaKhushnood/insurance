@@ -12,7 +12,7 @@
           style="width: 200px"
         >
           <b-avatar
-            :src="ImageUrl+'customer/'+this.$store.state.user.consumer.image"
+            :src="ImageUrl+'consumer/'+this.$store.state.user.consumer.image"
             size="10rem"
           ></b-avatar>
           <label for="upload-pic-btn">
@@ -184,10 +184,9 @@ export default {
       last_name: "",
       image: "",
       gender: "",
-          genderOptions:[
+      genderOptions:[
         { value: "Male", text: "Male" },
         { value: "Female", text: "Female" },
-        { value: "Other", text: "Other" },
       ],
       phone: "",
       email: "",

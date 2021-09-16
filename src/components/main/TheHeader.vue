@@ -34,7 +34,7 @@
                 <b-avatar
                 variant="info"
                 v-else
-                :src="ImageUrl+'customer/'+getUser.consumer.image" 
+                :src="ImageUrl+'consumer/'+getUser.consumer.image" 
                 class="me-3"
               ></b-avatar>
 
@@ -51,10 +51,10 @@
             <b-icon icon="person" class="me-2 icon"></b-icon>
             <span class="route-link">My Profile</span>
           </router-link>
-          <router-link class="dropdown-link" to="/verify-an-angent">
+          <!-- <router-link class="dropdown-link" to="/verify-an-angent">
             <b-icon icon="credit-card" class="me-2 icon"></b-icon>
             <span class="route-link">I.D Card</span>
-          </router-link>
+          </router-link> -->
           <router-link class="dropdown-link" v-if="getUser.user_type =='agent'"  to="/messaging">
             <b-icon icon="envelope" class="me-2 icon"></b-icon>
             <span class="route-link">Inbox</span>
