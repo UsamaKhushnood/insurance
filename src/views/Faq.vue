@@ -2,7 +2,18 @@
   <div class="faqs">
     <div class="row">
       <div class="col-md-8">
-        <div class="faq-banner mb-5">
+        <div class="faq-banner mb-5" v-if="getUser.user_type == 'agent'">
+          <h1 class="fw-9">Frequently asked questions</h1>
+          <div class="border"></div>
+          <p class="fw-7">
+            Sed quis magna nec augue suscipit venenatis. Pellentesque eu felis
+            nisl. Sed diam velit, venenatis sed molestie sit amet, consequat ac
+            diam. Vestibulum ante ipsum primis in faucibus orci luctus et
+            ultrices posuere cubilia curae; Donec lacinia ante eu feugiat
+            semper.
+          </p>
+        </div>
+        <div class="faq-banner consumer-banner mb-5" v-else>
           <h1 class="fw-9">Frequently asked questions</h1>
           <div class="border"></div>
           <p class="fw-7">
@@ -61,11 +72,17 @@ export default {
       ],
     };
   },
+   computed:{
+    ...mapGetters(['getUser'])
+  },
   methods: {
     async getFaqs() {
       const vm = this;
       vm.$store
-        .dispatch("HTTP_GET_REQUEST", this.$store.state.user.user_type+`/faqs`)
+        .dispatch(
+          "HTTP_GET_REQUEST",
+          this.$store.state.user.user_type + `/faqs`
+        )
         .then((response) => {
           console.log("re", response);
           vm.faqs = response.data.data;
@@ -99,6 +116,11 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    &.consumer-banner {
+      background: url("../assets/images/consumer.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
     h1 {
       color: #fff;
     }

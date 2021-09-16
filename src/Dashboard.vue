@@ -2,8 +2,19 @@
   <div class="dashboard">
     <div class="row">
       <div class="col-md-8">
-        <div class="dashboard-banner mb-5">
+        <div class="dashboard-banner mb-5" v-if="getUser.user_type == 'agent'">
           <h1 class="fw-9">Welcome, Agent!</h1>
+          <div class="border"></div>
+          <p class="fw-7">
+            Sed quis magna nec augue suscipit venenatis. Pellentesque eu felis
+            nisl. Sed diam velit, venenatis sed molestie sit amet, consequat ac
+            diam. Vestibulum ante ipsum primis in faucibus orci luctus et
+            ultrices posuere cubilia curae; Donec lacinia ante eu feugiat
+            semper.
+          </p>
+        </div>
+        <div class="dashboard-banner consumer-banner mb-5" v-else>
+          <h1 class="fw-9">Welcome, Client!</h1>
           <div class="border"></div>
           <p class="fw-7">
             Sed quis magna nec augue suscipit venenatis. Pellentesque eu felis
@@ -129,7 +140,11 @@
                 <img src="@/assets/images/home.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link to="#" @click.native="redirectUrl('https://nagia.com.gh/')">NAGIA Home</router-link>
+                <router-link
+                  to="#"
+                  @click.native="redirectUrl('https://nagia.com.gh/')"
+                  >NAGIA Home</router-link
+                >
               </div>
             </div>
             <div class="link">
@@ -137,7 +152,11 @@
                 <img src="@/assets/images/learn.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link to="#" @click.native="redirectUrl('https://learn.nagia.com.gh/')">Learn At NAGIA</router-link>
+                <router-link
+                  to="#"
+                  @click.native="redirectUrl('https://learn.nagia.com.gh/')"
+                  >Learn At NAGIA</router-link
+                >
               </div>
             </div>
             <div class="link">
@@ -145,7 +164,11 @@
                 <img src="@/assets/images/news.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link to="#" @click.native="redirectUrl('https://nagia.com.gh/news-room/')">News &amp; Media </router-link>
+                <router-link
+                  to="#"
+                  @click.native="redirectUrl('https://nagia.com.gh/news-room/')"
+                  >News &amp; Media
+                </router-link>
               </div>
             </div>
             <div class="link">
@@ -153,7 +176,13 @@
                 <img src="@/assets/images/whatwedo.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link to="#" @click.native="redirectUrl('https://nagia.com.gh/our-services/')">What We Do </router-link>
+                <router-link
+                  to="#"
+                  @click.native="
+                    redirectUrl('https://nagia.com.gh/our-services/')
+                  "
+                  >What We Do
+                </router-link>
               </div>
             </div>
             <div class="link">
@@ -161,7 +190,11 @@
                 <img src="@/assets/images/onlinestore.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link  to="#" @click.native="redirectUrl('https://nagia.com.gh/shop/')">Online Store</router-link>
+                <router-link
+                  to="#"
+                  @click.native="redirectUrl('https://nagia.com.gh/shop/')"
+                  >Online Store</router-link
+                >
               </div>
             </div>
             <div class="link">
@@ -169,7 +202,11 @@
                 <img src="@/assets/images/career.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link  to="#" @click.native="redirectUrl('https://nagia.com.gh/careers/')">Careers</router-link>
+                <router-link
+                  to="#"
+                  @click.native="redirectUrl('https://nagia.com.gh/careers/')"
+                  >Careers</router-link
+                >
               </div>
             </div>
             <div class="link">
@@ -177,7 +214,13 @@
                 <img src="@/assets/images/gallary.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link to="#"  @click.native="redirectUrl('https://nagia.com.gh/portfolio-grid/')">Gallary</router-link>
+                <router-link
+                  to="#"
+                  @click.native="
+                    redirectUrl('https://nagia.com.gh/portfolio-grid/')
+                  "
+                  >Gallary</router-link
+                >
               </div>
             </div>
             <div class="link">
@@ -185,7 +228,13 @@
                 <img src="@/assets/images/locationicon.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link to="#"  @click.native="redirectUrl('https://nagia.com.gh/portfolio-grid/')">Location</router-link>
+                <router-link
+                  to="#"
+                  @click.native="
+                    redirectUrl('https://nagia.com.gh/portfolio-grid/')
+                  "
+                  >Location</router-link
+                >
               </div>
             </div>
             <div class="link">
@@ -193,7 +242,13 @@
                 <img src="@/assets/images/legal.png" class="link-icon" />
               </div>
               <div class="linkTitle">
-                <router-link to="#"  @click.native="redirectUrl('https://nagia.com.gh/portfolio-grid/')">Legal</router-link>
+                <router-link
+                  to="#"
+                  @click.native="
+                    redirectUrl('https://nagia.com.gh/portfolio-grid/')
+                  "
+                  >Legal</router-link
+                >
               </div>
             </div>
           </div>
@@ -207,12 +262,16 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import NagiaContact from "@/components/NagiaContact";
 import UpcomingEvent from "@/components/events/UpcomingEvent.vue";
 export default {
   components: {
     UpcomingEvent,
     NagiaContact,
+  },
+  computed: {
+    ...mapGetters(["getUser"]),
   },
   data() {
     return {
@@ -353,6 +412,11 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    &.consumer-banner {
+      background: url("./assets/images/consumer.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
     h1 {
       color: #fff;
     }
