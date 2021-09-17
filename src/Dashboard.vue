@@ -24,9 +24,9 @@
             semper.
           </p>
         </div>
-        <div class="dashboard-body box-shadow bg-white p-5">
-          <h4 class="c-dark-grey mb-3">General Services &amp; Features</h4>
-          <div class="general-links">
+        <div class="dashboard-body box-shadow bg-white p-5" >
+          <h4 class="c-dark-grey mb-3" v-if="getUser.user_type == 'agent'">General Services &amp; Features</h4>
+          <div class="general-links" v-if="getUser.user_type == 'agent'">
             <router-link
               to="/event-management"
               tag="div"
@@ -108,7 +108,8 @@
               tag="div"
               class="option pointer"
               v-for="(x, xIndex) in support"
-              :key="xIndex"
+              :class="[ getUser.user_type == 'agent' ? 'agent' : x.class]"
+              :key="xIndex"              
             >
               <div
                 class="option-icon"
@@ -132,130 +133,11 @@
             </router-link>
           </div>
         </div>
-        <div class="dashboard-body box-shadow bg-white p-5 mt-5">
-          <h4 class="text-center c-dark-grey mb-3">Useful Links</h4>
-          <div class="links-contaier">
-            <div class="link">
-              <div class="png">
-                <img src="@/assets/images/home.png" class="link-icon" />
-              </div>
-              <div class="linkTitle">
-                <router-link
-                  to="#"
-                  @click.native="redirectUrl('https://nagia.com.gh/')"
-                  >NAGIA Home</router-link
-                >
-              </div>
-            </div>
-            <div class="link">
-              <div class="png">
-                <img src="@/assets/images/learn.png" class="link-icon" />
-              </div>
-              <div class="linkTitle">
-                <router-link
-                  to="#"
-                  @click.native="redirectUrl('https://learn.nagia.com.gh/')"
-                  >Learn At NAGIA</router-link
-                >
-              </div>
-            </div>
-            <div class="link">
-              <div class="png">
-                <img src="@/assets/images/news.png" class="link-icon" />
-              </div>
-              <div class="linkTitle">
-                <router-link
-                  to="#"
-                  @click.native="redirectUrl('https://nagia.com.gh/news-room/')"
-                  >News &amp; Media
-                </router-link>
-              </div>
-            </div>
-            <div class="link">
-              <div class="png">
-                <img src="@/assets/images/whatwedo.png" class="link-icon" />
-              </div>
-              <div class="linkTitle">
-                <router-link
-                  to="#"
-                  @click.native="
-                    redirectUrl('https://nagia.com.gh/our-services/')
-                  "
-                  >What We Do
-                </router-link>
-              </div>
-            </div>
-            <div class="link">
-              <div class="png">
-                <img src="@/assets/images/onlinestore.png" class="link-icon" />
-              </div>
-              <div class="linkTitle">
-                <router-link
-                  to="#"
-                  @click.native="redirectUrl('https://nagia.com.gh/shop/')"
-                  >Online Store</router-link
-                >
-              </div>
-            </div>
-            <div class="link">
-              <div class="png">
-                <img src="@/assets/images/career.png" class="link-icon" />
-              </div>
-              <div class="linkTitle">
-                <router-link
-                  to="#"
-                  @click.native="redirectUrl('https://nagia.com.gh/careers/')"
-                  >Careers</router-link
-                >
-              </div>
-            </div>
-            <div class="link">
-              <div class="png">
-                <img src="@/assets/images/gallary.png" class="link-icon" />
-              </div>
-              <div class="linkTitle">
-                <router-link
-                  to="#"
-                  @click.native="
-                    redirectUrl('https://nagia.com.gh/portfolio-grid/')
-                  "
-                  >Gallary</router-link
-                >
-              </div>
-            </div>
-            <div class="link">
-              <div class="png">
-                <img src="@/assets/images/locationicon.png" class="link-icon" />
-              </div>
-              <div class="linkTitle">
-                <router-link
-                  to="#"
-                  @click.native="
-                    redirectUrl('https://nagia.com.gh/portfolio-grid/')
-                  "
-                  >Location</router-link
-                >
-              </div>
-            </div>
-            <div class="link">
-              <div class="png">
-                <img src="@/assets/images/legal.png" class="link-icon" />
-              </div>
-              <div class="linkTitle">
-                <router-link
-                  to="#"
-                  @click.native="
-                    redirectUrl('https://nagia.com.gh/portfolio-grid/')
-                  "
-                  >Legal</router-link
-                >
-              </div>
-            </div>
-          </div>
-        </div>
+
       </div>
       <div class="col-md-4">
-        <UpcomingEvent class="mb-4" />
+        <UpcomingEvent class="mb-4" v-if="getUser.user_type == 'agent'" />
+        <HowCanWeHelp class="mb-4" v-else />
         <NagiaContact class="mb-4" />
       </div>
     </div>
@@ -265,10 +147,12 @@
 import { mapGetters } from "vuex";
 import NagiaContact from "@/components/NagiaContact";
 import UpcomingEvent from "@/components/events/UpcomingEvent.vue";
+import HowCanWeHelp from "@/components/HowCanWeHelp.vue";
 export default {
   components: {
     UpcomingEvent,
     NagiaContact,
+    HowCanWeHelp,
   },
   computed: {
     ...mapGetters(["getUser"]),
@@ -323,7 +207,7 @@ export default {
           c1: "rgba(0,24,238,1)",
           c2: "rgba(26,223,254,1)",
           icon: "link",
-          link: "faqs",
+          link: "useful-links",
         },
       ],
       support: [
@@ -342,6 +226,7 @@ export default {
           c2: "rgba(252,160,64,1)",
           icon: "user",
           link: "/blog",
+          class: "d-none",
         },
         {
           title: "support",

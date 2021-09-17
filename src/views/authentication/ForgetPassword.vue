@@ -39,7 +39,7 @@
             label="Your Email:"
             label-for="input-1"
           >
-            <b-form-input
+            <b-form-input 
               id="input-1"
               type="email"
               v-model="email"
