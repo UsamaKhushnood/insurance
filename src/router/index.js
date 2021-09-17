@@ -11,6 +11,7 @@ import Confirmation from "@/views/authentication/Confirmation";
 import AgentVerification from "@/views/authentication/AgentVerification";
 import ForgetPassword from "@/views/authentication/ForgetPassword";
 import Dashboard from "@/Dashboard";
+import UsefulLinks from "@/views/UsefulLinks";
 
 import AccountDetails from "@/views/account-details/AccountDetails";
 import EditProfileAgent from "@/views/account-details/EditProfileAgent";
@@ -55,6 +56,11 @@ const routes = [
         path: "/dashboard",
         name: "Dashboard",
         component: Dashboard,
+      },
+      {
+        path: "/useful-links",
+        name: "Dashboard",
+        component: UsefulLinks,
       },
       {
         path: "/account-details",
