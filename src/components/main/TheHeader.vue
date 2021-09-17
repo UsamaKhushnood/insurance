@@ -63,7 +63,8 @@
             <b-icon icon="gear" class="me-2 icon"></b-icon>
             <span class="route-link">Setting</span>
           </router-link>
-          <router-link class="dropdown-link" to="/dashboard">
+          <router-link class="dropdown-link"  to=""
+            @click.native="sendTo('https://nagia.com.gh/terms-of-service/')">
             <b-icon icon="lock" class="me-2 icon"></b-icon>
             <span class="route-link">Legal Terms</span>
           </router-link>
@@ -111,6 +112,9 @@ export default {
         .catch((error) => {
           let errors = error.response.data.errors;
         });
+    },
+    sendTo(url) {
+      window.open(url,'_blank');
     },
   },
   computed: {

@@ -13,12 +13,18 @@
             </li>
           </router-link>
 
-          <router-link to="" @click.native="sendTo('https://nagia.com.gh/privacy-policy/')">
+          <router-link
+            to=""
+            @click.native="sendTo('https://nagia.com.gh/privacy-policy/')"
+          >
             <li class="c-dropdown-item">
               <i class="fa fa-user c-icon"></i> Privacy Policy
             </li>
           </router-link>
-          <router-link to="" @click.native="sendTo('https://nagia.com.gh/terms-of-service/')">
+          <router-link
+            to=""
+            @click.native="sendTo('https://nagia.com.gh/terms-of-service/')"
+          >
             <li class="c-dropdown-item">
               <i class="fa fa-user c-icon"></i> Terms of Services
             </li>
@@ -148,7 +154,7 @@ export default {
         });
     },
     sendTo(url){
-      window.location.href =url
+      window.open(url,'_blank');
     }
   },
   created(){

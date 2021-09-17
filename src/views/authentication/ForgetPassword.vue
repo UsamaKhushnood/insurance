@@ -81,7 +81,8 @@ export default {
   },
   methods: {
     sendTo(url) {
-      window.location.href = url;
+      window.open(url,'_blank');
+      // window.location.href = url;
     },
     async forgetPassword() {
       const vm = this;

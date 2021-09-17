@@ -12,22 +12,28 @@
               >Sign In</router-link
             >
             <Dropdown class="ms-4">
-              <router-link to="/complain">
-                  <li class="c-dropdown-item">
-                    <i class="fa fa-user c-icon"></i> Complaints
-                  </li>
-                </router-link>
+             <router-link to="/complain">
+            <li class="c-dropdown-item">
+              <i class="fa fa-user c-icon"></i> Complaints
+            </li>
+          </router-link>
 
-                <router-link to="" @click.native="sendTo('https://nagia.com.gh/privacy-policy/')">
-                  <li class="c-dropdown-item">
-                    <i class="fa fa-user c-icon"></i> Privacy Policy
-                  </li>
-                </router-link>
-               <router-link to="" @click.native="sendTo('https://nagia.com.gh/terms-of-service/')">
-                  <li class="c-dropdown-item">
-                    <i class="fa fa-user c-icon"></i> Terms of Services
-                  </li>
-                </router-link>
+          <router-link
+            to=""
+            @click.native="sendTo('https://nagia.com.gh/privacy-policy/')"
+          >
+            <li class="c-dropdown-item">
+              <i class="fa fa-user c-icon"></i> Privacy Policy
+            </li>
+          </router-link>
+          <router-link
+            to=""
+            @click.native="sendTo('https://nagia.com.gh/terms-of-service/')"
+          >
+            <li class="c-dropdown-item">
+              <i class="fa fa-user c-icon"></i> Terms of Services
+            </li>
+          </router-link>
             </Dropdown>
           </div>
         </div>
@@ -387,7 +393,8 @@ export default {
         });
     },
     sendTo(url){
-      window.location.href =url
+         window.open(url,'_blank');
+      // window.location.href =url
     }
   },
   mounted() {
