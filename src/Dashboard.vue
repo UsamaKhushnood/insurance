@@ -358,7 +358,10 @@ export default {
     redirectUrl(url) {
       // http://localhost:8080/
       let newUrl = url.slice(0, 23);
-      if (newUrl) window.location.href = newUrl;
+      if (newUrl) {
+        window.open(newUrl,'_blank');
+      }
+      // window.location.href = newUrl;
     },
   },
 };

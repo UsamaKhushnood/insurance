@@ -128,7 +128,7 @@ export default {
         if(this.getUser.user_type == 'agent'){
          url  =  typeof(this.getUser.agent.image) !== 'undefined' || this.getUser.agent.image !== null ?  this.ImageUrl+'agent/'+this.getUser.agent.image : 'https://placekitten.com/300/300';
         }else{
-        return  typeof(this.getUser.consumer.image) !== 'undefined' || this.getUser.consumer.image !== null ?  this.ImageUrl+'agent/'+this.getUser.consumer.image : 'https://placekitten.com/300/300';
+        return  typeof(this.getUser.consumer.image) !== 'undefined' || this.getUser.consumer.image !== null ?  this.ImageUrl+'consumer/'+this.getUser.consumer.image : 'https://placekitten.com/300/300';
 
         }
         // return 1;
