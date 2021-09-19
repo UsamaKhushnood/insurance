@@ -70,6 +70,7 @@
 import db from '../../../db';
 import moment from 'moment';
 import { mapGetters } from 'vuex';
+import _ from 'lodash';
 
 export default {
     computed:{
@@ -105,7 +106,31 @@ export default {
     //  this.GetAllMessages(data)
         this.$store.commit('SET_RECEIVER',{})
         this.$store.commit('SET_RECEIVER',data)
-        this.GetMsg(data)
+        this.GetMsg2(data)
+    },
+
+
+
+  GetMsg2(rec) {
+       let vm = this;
+    let allConversion=[]
+      const users = db.database().ref("/Chat").once('value')
+      .then(data => {
+        const values = data.val()
+         console.log('Auth User',vm.getUser.agent.firebase_uid )
+          console.log('rec User',rec.firebase_uid)
+          console.log('Rec User',vm.getReceiver.firebase_uid)
+         console.log(' Msg',values )
+        for(let key in values){
+          if( values[key].sender == vm.getUser.agent.firebase_uid && values[key].reciever ==  rec.firebase_uid || values[key].sender.toString() == rec.firebase_uid.toString() )  {
+            console.log(key , values[key])
+            allConversion.push(values[key])
+          }
+        }
+      });
+        
+      vm.$store.commit('SET_RECEIVER_MSG',{}) 
+      vm.$store.commit('SET_RECEIVER_MSG',allConversion) 
     },
 
   GetMsg(rec) {
@@ -116,12 +141,16 @@ export default {
       let values2 = db.database().ref('/Chat');
       values2.once("value")
       .then(function(snapshot) {
+       
         snapshot.forEach(function(childSnapshot) {
         // key will be "ada" the first time and "alan" the second time
         var key = childSnapshot.key;
         // childData will be the actual contents of the child
         var childData = childSnapshot.val();
         // if( childData.sender == vm.getUser.agent.firebase_uid  && childData.receiver ==  rec.firebase_uid )  {
+
+      
+    
         if( childData.sender == vm.getUser.agent.firebase_uid && childData.reciever ==  rec.firebase_uid )  {
           // if(childData.reciever == rec.firebase_uid)
           allConversion.push(childData)
@@ -129,13 +158,13 @@ export default {
           vm.$store.commit('SET_RECEIVER_MSG',{}) 
           vm.$store.commit('SET_RECEIVER_MSG',allConversion) 
         }
-        if( childData.sender == rec.firebase_uid && childData.reciever ==  vm.getUser.agent.firebase_uid){
-            // if(childData.reciever == vm.getUser.agent.firebase_uid)
-            allConversion.push(childData)
+        // if( childData.sender == rec.firebase_uid && childData.reciever ==  vm.getUser.agent.firebase_uid){
+        //     // if(childData.reciever == vm.getUser.agent.firebase_uid)
+        //     allConversion.push(childData)
           
-          vm.$store.commit('SET_RECEIVER_MSG',{}) 
-          vm.$store.commit('SET_RECEIVER_MSG',allConversion) 
-        }
+        //   vm.$store.commit('SET_RECEIVER_MSG',{}) 
+        //   vm.$store.commit('SET_RECEIVER_MSG',allConversion) 
+        // }
         //  if( childData.sender == rec.firebase_uid  && childData.receiver == vm.getUser.agent.firebase_uid  ){
         //      allConversion.push(childData)
           
