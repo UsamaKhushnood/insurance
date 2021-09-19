@@ -49,9 +49,11 @@
           </div>
         </div>
         <div class="modal-offset-buttons text-center">
+          <router-link to="/complain">
           <button class="btn-yellow btn-hover-blue br-5 w-50">
             Report Agent
           </button>
+          </router-link>
         </div>
       </div>
     </b-modal>

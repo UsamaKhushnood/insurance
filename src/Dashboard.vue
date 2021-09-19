@@ -191,7 +191,7 @@ export default {
           c1: " rgba(156,86,254,1)",
           c2: "rgba(88,200,242,1)",
           icon: "terms",
-          link: "message",
+          link: "https://nagia.com.gh/terms-of-service/",
         },
         {
           title: "Refrence Library",

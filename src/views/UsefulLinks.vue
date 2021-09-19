@@ -24,7 +24,7 @@
               <div class="linkTitle">
                 <router-link
                   to="#"
-                  @click.native="redirectUrl('https://learn.nagia.com.gh/')"
+                  @click.native="redirectUrl('https://learn.nagia.com.gh')"
                   >Learn At NAGIA</router-link
                 >
               </div>
@@ -93,7 +93,7 @@
                 >
               </div>
             </div>
-            <div class="link">
+            <!-- <div class="link">
               <div class="png">
                 <img src="@/assets/images/locationicon.png" class="link-icon" />
               </div>
@@ -120,7 +120,7 @@
                   >Legal</router-link
                 >
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -230,8 +230,11 @@ export default {
   methods: {
     redirectUrl(url) {
       // http://localhost:8080/
-      let newUrl = url.slice(0, 23);
-      if (newUrl){
+      if(url !='https://learn.nagia.com.gh'){
+        let newUrl = url.slice(0, 23);
+        window.open(newUrl,'_blank');
+      }else{
+        let newUrl = url;
         window.open(newUrl,'_blank');
       }  
     },
