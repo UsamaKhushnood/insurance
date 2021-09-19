@@ -13,7 +13,7 @@
       <div class="verify-agent-modal">
         <div class="user-avatar">
           <b-avatar
-            src="https://placekitten.com/300/300"
+            :src="ImageUrl+this.$store.state.user.user_type +'/'+this.$store.state.user.consumer.image"
             size="8rem"
           ></b-avatar>
         </div>
@@ -71,7 +71,10 @@ export default {
     myStatus(){
       return this.getModelStatus
     }
-  }
+  },
+  ImageUrl() {
+    return process.env.VUE_APP_IMAGE_URL;
+  },
 };
 </script>
 <style lang="scss">
