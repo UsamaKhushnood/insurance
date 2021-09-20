@@ -17,15 +17,17 @@
           <h1 class="fw-9">Welcome, Client!</h1>
           <div class="border"></div>
           <p class="fw-7">
-            Sed quis magna nec augue suscipit venenatis. Pellentesque eu felis
-            nisl. Sed diam velit, venenatis sed molestie sit amet, consequat ac
-            diam. Vestibulum ante ipsum primis in faucibus orci luctus et
-            ultrices posuere cubilia curae; Donec lacinia ante eu feugiat
-            semper.
+            As customer you can verify agents through your dashboard, edit user
+            profile and submit complaints. Customers have access to NAGIA
+            support team via live chat. Access to the learning management system
+            and frequently asked questions. This is 100% free & all data are
+            store for easy reference.
           </p>
         </div>
-        <div class="dashboard-body box-shadow bg-white p-5" >
-          <h4 class="c-dark-grey mb-3" v-if="getUser.user_type == 'agent'">General Services &amp; Features</h4>
+        <div class="dashboard-body box-shadow bg-white p-5">
+          <h4 class="c-dark-grey mb-3" v-if="getUser.user_type == 'agent'">
+            General Services &amp; Features
+          </h4>
           <div class="general-links" v-if="getUser.user_type == 'agent'">
             <router-link
               to="/event-management"
@@ -108,8 +110,8 @@
               tag="div"
               class="option pointer"
               v-for="(x, xIndex) in support"
-              :class="[ getUser.user_type == 'agent' ? 'agent' : x.class]"
-              :key="xIndex"              
+              :class="[getUser.user_type == 'agent' ? 'agent' : x.class]"
+              :key="xIndex"
             >
               <div
                 class="option-icon"
@@ -133,7 +135,6 @@
             </router-link>
           </div>
         </div>
-
       </div>
       <div class="col-md-4">
         <UpcomingEvent class="mb-4" v-if="getUser.user_type == 'agent'" />
@@ -244,7 +245,7 @@ export default {
       // http://localhost:8080/
       let newUrl = url.slice(0, 23);
       if (newUrl) {
-        window.open(newUrl,'_blank');
+        window.open(newUrl, "_blank");
       }
       // window.location.href = newUrl;
     },

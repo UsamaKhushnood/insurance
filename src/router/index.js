@@ -39,6 +39,10 @@ import Meetings from "@/views/events/Meetings";
 import Messaging from "@/views/messaging/Messaging";
 import ChatWithUser from "@/views/messaging/ChatWithUser";
 
+import Documentations from '@/views/documentations/Documentations'
+import Constitutions from '@/views/documentations/Constitutions'
+import CodeofConduct from '@/views/documentations/CodeofConduct'
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -204,6 +208,28 @@ const routes = [
             },
           },
         ],
+      },
+      {
+        path: '/documentations',
+        name: 'Documentations',
+        component: Documentations,
+        redirect: '/documentations/nagia-constitution',
+        children: [
+          {
+            path: 'nagia-constitution',
+            name: 'Documentations',
+            components: {
+              documentations: Constitutions
+            }
+          },
+          {
+            path: 'nagia-code-of-conduct',
+            name: 'Documentations',
+            components: {
+              documentations: CodeofConduct
+            }
+          },
+        ]
       },
       {
         path: "/messaging",

@@ -6,11 +6,11 @@
           <h1 class="fw-9">Frequently asked questions</h1>
           <div class="border"></div>
           <p class="fw-7">
-            Sed quis magna nec augue suscipit venenatis. Pellentesque eu felis
-            nisl. Sed diam velit, venenatis sed molestie sit amet, consequat ac
-            diam. Vestibulum ante ipsum primis in faucibus orci luctus et
-            ultrices posuere cubilia curae; Donec lacinia ante eu feugiat
-            semper.
+            Got any questions? we're here to answer! Below you will find answers
+            to the questions we get asked the most about NAGIA. If you don't see
+            your questions here, drop us a line on our Contact Page or Phone
+            Call. Yo can also contact Management via the Live Chat Support on
+            your dashboard.
           </p>
         </div>
         <div class="faq-banner consumer-banner mb-5" v-else>
@@ -72,8 +72,8 @@ export default {
       ],
     };
   },
-   computed:{
-    ...mapGetters(['getUser'])
+  computed: {
+    ...mapGetters(["getUser"]),
   },
   methods: {
     async getFaqs() {
