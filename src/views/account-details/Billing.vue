@@ -7,9 +7,10 @@
       <div class="row membership-plans justify-content-evenly">
         <div class="anual-plan plan" v-for="(plan,index) in billingPlans" :key="index">
           <h1 class="c-blue mt-4">{{plan.name}}</h1>
-          <h6 class="c-grey">NGN {{plan.amount}} </h6>
+          <h6 class="c-grey" v-if="index == 0">GHS  {{plan.amount}}/month </h6>
+          <h6 class="c-grey" v-else>GHS  {{plan.amount}}/year </h6>
           <button class="btn-blue btn-block" v-if=" userPlan.id == plan.id && userPlan.user.plan_status == 1 " @click="assignPlans(plan)">Active</button>
-          <button class="btn-blue btn-block" v-else  @click="assignPlans(plan)">Downgrade</button>
+          <button class="btn-blue btn-block" v-else  @click="assignPlans(plan)">Select Option</button>
         </div>
     
       </div>

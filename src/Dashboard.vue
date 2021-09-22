@@ -6,11 +6,12 @@
           <h1 class="fw-9">Welcome, Agent!</h1>
           <div class="border"></div>
           <p class="fw-7">
-            Sed quis magna nec augue suscipit venenatis. Pellentesque eu felis
-            nisl. Sed diam velit, venenatis sed molestie sit amet, consequat ac
-            diam. Vestibulum ante ipsum primis in faucibus orci luctus et
-            ultrices posuere cubilia curae; Donec lacinia ante eu feugiat
-            semper.
+            As an Agent you can have access to Membership, Events, Instant Chat,
+            NAGIA Forum, News &amp; Blog, Learning Management System (LMS) for
+            NAGIA, Online Shop, Complaints, Frequently Asked Questions and Admin
+            Support. Agents can Edit Personal Profile, Notification Settings,
+            Membership Plan &amp; Change Security Options. And also access to
+            NAGIA's Library.
           </p>
         </div>
         <div class="dashboard-banner consumer-banner mb-5" v-else>
@@ -20,7 +21,7 @@
             As customer you can verify agents through your dashboard, edit user
             profile and submit complaints. Customers have access to NAGIA
             support team via live chat. Access to the learning management system
-            and frequently asked questions. This is 100% free & all data are
+            and frequently asked questions. This is 100% free &amp; all data are
             store for easy reference.
           </p>
         </div>

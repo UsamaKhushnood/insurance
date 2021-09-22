@@ -6,12 +6,12 @@
           <div class="header row">
             <div class="col-md-3 p-0">
               <b-avatar
-                :src="ImageUrl+'agent/'+getUser.agent.image"
+                :src="ImageUrl + 'agent/' + getUser.agent.image"
                 size="4rem"
               ></b-avatar>
             </div>
             <div class="col-md-8 p-0">
-              <h5 class="c-dark-grey m-0">{{getUser.agent.first_name}}</h5>
+              <h5 class="c-dark-grey m-0">{{ getUser.agent.first_name }}</h5>
               <p class="c-dark-grey">Insurance Agent</p>
               <p class="c-online">
                 Online <b-icon class="c-dark-grey" icon="chevron-down"></b-icon>
@@ -25,7 +25,7 @@
                 type="search"
                 name="searchuser"
                 placeholder="Search for people"
-              v-model="searchQuery"
+                v-model="searchQuery"
                 id="searchChatInput"
               />
               <i class="fas fa-search search-icon"></i>
@@ -37,11 +37,11 @@
               v-for="(data, xIndex) in resultQuery"
               :key="xIndex"
               :class="{ active: $route.params.id == xIndex }"
-              @click="move(data,'/messaging/chat/'+xIndex)"
+              @click="move(data, '/messaging/chat/' + xIndex)"
             >
               <div class="col-md-2 align-self-center">
                 <b-avatar
-                 :src="ImageUrl+'agent/'+data.image"
+                  :src="ImageUrl + 'agent/' + data.image"
                   size="40px"
                 ></b-avatar>
               </div>
@@ -67,21 +67,19 @@
   </div>
 </template>
 <script>
-import db from '../../../db';
-import moment from 'moment';
-import { mapGetters } from 'vuex';
-import _ from 'lodash';
+import db from "../../../db";
+import moment from "moment";
+import { mapGetters } from "vuex";
+import _ from "lodash";
 
 export default {
-    computed:{
-    ...mapGetters(['getEvent','getUser','getReceiver']),
-    ImageUrl(){
-      return process.env.VUE_APP_IMAGE_URL
+  computed: {
+    ...mapGetters(["getEvent", "getUser", "getReceiver"]),
+    ImageUrl() {
+      return process.env.VUE_APP_IMAGE_URL;
     },
     resultQuery() {
-    
       if (this.searchQuery) {
-        
         return this.users.filter((data) =>
           data.name.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
@@ -93,86 +91,89 @@ export default {
   data() {
     return {
       // users: ["Dan Agyemang", "Dan", "Agyemang","Dan Agyemang", "Dan", "Agyemang","Dan Agyemang", "Dan", "Agyemang","Dan Agyemang", "Dan", "Agyemang",],
-      users:[],
-      searchQuery:'',
-      moment:moment,
-      reciever:'',
-      
-};
+      users: [],
+      searchQuery: "",
+      moment: moment,
+      reciever: "",
+    };
   },
   methods: {
-    move(data,to) {
+    move(data, to) {
       this.$router.push({ path: to });
-    //  this.GetAllMessages(data)
-        this.$store.commit('SET_RECEIVER',{})
-        this.$store.commit('SET_RECEIVER',data)
-        this.GetMsg2(data)
+      //  this.GetAllMessages(data)
+      this.$store.commit("SET_RECEIVER", {});
+      this.$store.commit("SET_RECEIVER", data);
+      this.GetMsg2(data);
     },
 
-
-
-  GetMsg2(rec) {
-       let vm = this;
-    let allConversion=[]
-      const users = db.database().ref("/Chat").once('value')
-      .then(data => {
-        const values = data.val()
-         console.log('Auth User',vm.getUser.agent.firebase_uid )
-          console.log('rec User',rec.firebase_uid)
-          console.log('Rec User',vm.getReceiver.firebase_uid)
-         console.log(' Msg',values )
-        for(let key in values){
-          if( values[key].sender == vm.getUser.agent.firebase_uid && values[key].reciever ==  rec.firebase_uid || values[key].sender.toString() == rec.firebase_uid.toString() )  {
-            console.log(key , values[key])
-            allConversion.push(values[key])
+    GetMsg2(rec) {
+      let vm = this;
+      let allConversion = [];
+      const users = db
+        .database()
+        .ref("/Chat")
+        .once("value")
+        .then((data) => {
+          const values = data.val();
+          console.log("Auth User", vm.getUser.agent.firebase_uid);
+          console.log("rec User", rec.firebase_uid);
+          console.log("Rec User", vm.getReceiver.firebase_uid);
+          console.log(" Msg", values);
+          for (let key in values) {
+            if (
+              (values[key].sender == vm.getUser.agent.firebase_uid &&
+                values[key].reciever == rec.firebase_uid) ||
+              values[key].sender.toString() == rec.firebase_uid.toString()
+            ) {
+              console.log(key, values[key]);
+              allConversion.push(values[key]);
+            }
           }
-        }
-      });
-        
-      vm.$store.commit('SET_RECEIVER_MSG',{}) 
-      vm.$store.commit('SET_RECEIVER_MSG',allConversion) 
+        });
+
+      vm.$store.commit("SET_RECEIVER_MSG", {});
+      vm.$store.commit("SET_RECEIVER_MSG", allConversion);
     },
 
-  GetMsg(rec) {
-      console.log('receiver',rec)
-       let vm = this 
-      let allConversion=[]
+    GetMsg(rec) {
+      console.log("receiver", rec);
+      let vm = this;
+      let allConversion = [];
 
-      let values2 = db.database().ref('/Chat');
-      values2.once("value")
-      .then(function(snapshot) {
-       
-        snapshot.forEach(function(childSnapshot) {
-        // key will be "ada" the first time and "alan" the second time
-        var key = childSnapshot.key;
-        // childData will be the actual contents of the child
-        var childData = childSnapshot.val();
-        // if( childData.sender == vm.getUser.agent.firebase_uid  && childData.receiver ==  rec.firebase_uid )  {
+      let values2 = db.database().ref("/Chat");
+      values2.once("value").then(function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+          // key will be "ada" the first time and "alan" the second time
+          var key = childSnapshot.key;
+          // childData will be the actual contents of the child
+          var childData = childSnapshot.val();
+          // if( childData.sender == vm.getUser.agent.firebase_uid  && childData.receiver ==  rec.firebase_uid )  {
 
-      
-    
-        if( childData.sender == vm.getUser.agent.firebase_uid && childData.reciever ==  rec.firebase_uid )  {
-          // if(childData.reciever == rec.firebase_uid)
-          allConversion.push(childData)
-          
-          vm.$store.commit('SET_RECEIVER_MSG',{}) 
-          vm.$store.commit('SET_RECEIVER_MSG',allConversion) 
-        }
-        // if( childData.sender == rec.firebase_uid && childData.reciever ==  vm.getUser.agent.firebase_uid){
-        //     // if(childData.reciever == vm.getUser.agent.firebase_uid)
-        //     allConversion.push(childData)
-          
-        //   vm.$store.commit('SET_RECEIVER_MSG',{}) 
-        //   vm.$store.commit('SET_RECEIVER_MSG',allConversion) 
-        // }
-        //  if( childData.sender == rec.firebase_uid  && childData.receiver == vm.getUser.agent.firebase_uid  ){
-        //      allConversion.push(childData)
-          
-        //   vm.$store.commit('SET_RECEIVER_MSG',{}) 
-        //   vm.$store.commit('SET_RECEIVER_MSG',allConversion) 
-        //  }
+          if (
+            childData.sender == vm.getUser.agent.firebase_uid &&
+            childData.reciever == rec.firebase_uid
+          ) {
+            // if(childData.reciever == rec.firebase_uid)
+            allConversion.push(childData);
+
+            vm.$store.commit("SET_RECEIVER_MSG", {});
+            vm.$store.commit("SET_RECEIVER_MSG", allConversion);
+          }
+          // if( childData.sender == rec.firebase_uid && childData.reciever ==  vm.getUser.agent.firebase_uid){
+          //     // if(childData.reciever == vm.getUser.agent.firebase_uid)
+          //     allConversion.push(childData)
+
+          //   vm.$store.commit('SET_RECEIVER_MSG',{})
+          //   vm.$store.commit('SET_RECEIVER_MSG',allConversion)
+          // }
+          //  if( childData.sender == rec.firebase_uid  && childData.receiver == vm.getUser.agent.firebase_uid  ){
+          //      allConversion.push(childData)
+
+          //   vm.$store.commit('SET_RECEIVER_MSG',{})
+          //   vm.$store.commit('SET_RECEIVER_MSG',allConversion)
+          //  }
+        });
       });
-    });
 
       // let values = db.database().ref('/Chat').orderByChild('sender').equalTo(vm.getUser.agent.firebase_uid);
       //       values.once("value")
@@ -184,34 +185,30 @@ export default {
       //   var childData = childSnapshot.val();
       //     if( childData.receiver == rec.firebase_uid || childData.receiver ==vm.getUser.agent.firebase_uid ){
       //       allConversion.push(childData)
-      //       vm.$store.commit('SET_RECEIVER_MSG',{}) 
-      //       vm.$store.commit('SET_RECEIVER_MSG',allConversion) 
+      //       vm.$store.commit('SET_RECEIVER_MSG',{})
+      //       vm.$store.commit('SET_RECEIVER_MSG',allConversion)
       //     }
       //   });
       // });
 
-    
-
-
-      setTimeout(function(){
-        console.log('data All',allConversion)
-         let mtArr = []
-        //  allConversion.filter((item) => { 
+      setTimeout(function () {
+        console.log("data All", allConversion);
+        let mtArr = [];
+        //  allConversion.filter((item) => {
         //     if( item.receiver == rec.firebase_uid)
         //         mtArr.push(item)
-        //         vm.$store.commit('SET_RECEIVER_MSG',{}) 
-        //         vm.$store.commit('SET_RECEIVER_MSG',mtArr) 
+        //         vm.$store.commit('SET_RECEIVER_MSG',{})
+        //         vm.$store.commit('SET_RECEIVER_MSG',mtArr)
         // })
         // console.log('Ar',mtArr)
-      },1000)
-
+      }, 1000);
     },
 
     // GetMsg(rec) {
     //   console.log('reciever',rec)
-    //    let vm = this 
+    //    let vm = this
     //   let allConversion=[]
-   
+
     //   let user =  JSON.parse(JSON.stringify(vm.getUser.agent.firebase_uid))
     //   let reciever =  JSON.parse(JSON.stringify(rec.firebase_uid))
 
@@ -223,46 +220,48 @@ export default {
     //       // console.log(va)
     //       allConversion.push(values[key])
     //     }
-    //   }); 
+    //   });
     //   console.log('test',allConversion)
     // setTimeout(function(){
     //     let mtArr = []
-    //     allConversion.filter((item) => { 
-    //     console.log('item',item.reciever)    
+    //     allConversion.filter((item) => {
+    //     console.log('item',item.reciever)
     //     // item.sender == vm.getUser.agent.firebase_uid && item.reciever==rec.firebase_uid  ||
     //         if( item.reciever === reciever && item.sender === user || item.sender == rec.firebase_uid  && item.reciever==vm.getUser.agent.firebase_uid)
     //            {
     //              mtArr.push(item)
     //           }
-  
+
     //     })
-    //     console.log('totaarrrrrl',mtArr)    
-    //     vm.$store.commit('SET_RECEIVER_MSG',{}) 
-    //     vm.$store.commit('SET_RECEIVER_MSG',mtArr) 
+    //     console.log('totaarrrrrl',mtArr)
+    //     vm.$store.commit('SET_RECEIVER_MSG',{})
+    //     vm.$store.commit('SET_RECEIVER_MSG',mtArr)
     //     console.log('total',allConversion)
     //   },1000)
     // },
 
     getAllUser() {
-       let vm = this 
-       let allUsers=[]
-      const users = db.database().ref("/Users").once('value')
-      .then(data => {
-        const values = data.val()
-        for(let key in values){
-          // console.log(vm.getUser)
-          if(values[key].firebase_uid != vm.getUser.agent.firebase_uid)
-          allUsers.push(values[key])
-        }
-      });
+      let vm = this;
+      let allUsers = [];
+      const users = db
+        .database()
+        .ref("/Users")
+        .once("value")
+        .then((data) => {
+          const values = data.val();
+          for (let key in values) {
+            // console.log(vm.getUser)
+            if (values[key].firebase_uid != vm.getUser.agent.firebase_uid)
+              allUsers.push(values[key]);
+          }
+        });
       vm.users = allUsers;
-    }
-
+    },
   },
 
-  mounted(){
+  mounted() {
     this.getAllUser();
-  }
+  },
 };
 </script>
 <style lang="scss">

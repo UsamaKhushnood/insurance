@@ -22,7 +22,7 @@
           </router-link>
           <router-link to="/licence" v-show="getUser.user_type =='agent'" tag="li">
             <img class="route-icon" src="@/assets/icons/licence.png" />
-            <h5 class="route-name">Licence</h5>
+            <h5 class="route-name">Membership</h5>
           </router-link>
           <router-link to="/event-management" v-show="getUser.user_type =='agent'"  tag="li">
             <img class="route-icon" src="@/assets/icons/events.png" />
