@@ -5,13 +5,12 @@
         <div class="licence-renewal">
           <div class="heading">
             <h1 class="licence-renewal-title c-blue">
-              One-Click Licence Renewal
+              One-Click Membership Renewal
             </h1>
             <p class="licence-renewal-desc c-grey fw-6">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
-              magnam, provident, voluptates tempora expedita voluptate, nemo
-              laborum voluptatibus minus molestias libero eius odio aut pariatur
-              quam facere enim nostrum sit?
+              Agent can renew membership, view invoices, make payments, and
+              check membership status. All membershipbare pre-verified through
+              NIC systems and processed with NAGIA membership payments
             </p>
           </div>
         </div>
@@ -22,8 +21,10 @@
               <div class="pdf-icon">
                 <img src="@/assets/icons/pdf.png" width="30px" />
               </div>
-              <a href="#" @click="getFile(x.id)" class="invoice-number ms-4 c-blue"
-
+              <a
+                href="#"
+                @click="getFile(x.id)"
+                class="invoice-number ms-4 c-blue"
                 >NAG00{{ xIndex + 1 }}</a
               >
               <div class="download-invocie ms-auto">
@@ -44,11 +45,13 @@
                   </svg>
                 </div>
                 <div class="status-desc">
-                  <h6 class="c-yellow text-center" @click="checkLicence">Check status</h6>
+                  <h6 class="c-yellow text-center" @click="checkLicence">
+                    Check status
+                  </h6>
                 </div>
               </div>
             </div>
-            <CheckStatus :status='status' />
+            <CheckStatus :status="status" />
           </div>
           <div class="col-md-6">
             <div class="status-info pointer" v-b-modal.renew-licence>
@@ -75,8 +78,8 @@
                 </svg>
               </div>
               <div class="col col-md-8 text-center">
-                <h2>Active Licence</h2>
-                <p>you have an active verified licence</p>
+                <h2>Active Membership</h2>
+                <p>you have an active verified membership</p>
               </div>
             </div>
           </div>
@@ -88,7 +91,7 @@
               </div>
               <div class="col col-md-8 text-center">
                 <h2>Nagia Membership</h2>
-                <p>you have an active verified licence</p>
+                <p>you have an active verified membership</p>
               </div>
             </div>
             <div class="membership-desc mt-2 p-3">
@@ -122,43 +125,46 @@
 <script>
 import CheckStatus from "@/components/licence/CheckStatus";
 import RenewLicence from "@/components/licence/RenewLicence";
-import axios from 'axios';
+import axios from "axios";
 export default {
   components: { CheckStatus, RenewLicence },
   data() {
     return {
       invoices: [],
-      status: '',
+      status: "",
     };
   },
-    methods: {
+  methods: {
     deleteCard(xIndex) {
       this.cards.splice(xIndex, 1);
     },
-    async checkLicence(){
+    async checkLicence() {
       let vm = this;
-        vm.$store
-        .dispatch("HTTP_GET_REQUEST", this.$store.state.user.user_type+`/check-license`)
+      vm.$store
+        .dispatch(
+          "HTTP_GET_REQUEST",
+          this.$store.state.user.user_type + `/check-license`
+        )
         .then((response) => {
           console.log("re", response);
-         
-          if(response.data.status == false){
-          vm.$toast.error(response.data.message, {
-            position: "top-right",
-            closeButton: "button",
-            icon: true,
-            rtl: false,
-          });
-          vm.status =false
-          }else{
+
+          if (response.data.status == false) {
+            vm.$toast.error(response.data.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+            vm.status = false;
+          } else {
             vm.$toast.success(response.data.message, {
-            position: "top-right",
-            closeButton: "button",
-            icon: true,
-            rtl: false,
-          });
-          vm.status =true
-              // vm.$router.push({ path: "login" });
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+            vm.status = true;
+            // vm.$router.push({ path: "login" });
           }
         })
         .catch((error) => {
@@ -171,25 +177,27 @@ export default {
           });
         });
     },
-    async getAllInvocies(){
+    async getAllInvocies() {
       let vm = this;
-        vm.$store
-        .dispatch("HTTP_GET_REQUEST", this.$store.state.user.user_type+`/all-invoices`)
+      vm.$store
+        .dispatch(
+          "HTTP_GET_REQUEST",
+          this.$store.state.user.user_type + `/all-invoices`
+        )
         .then((response) => {
           console.log("re", response);
-         
-          if(response.data.status == false){
-          vm.$toast.error(response.data.message, {
-            position: "top-right",
-            closeButton: "button",
-            icon: true,
-            rtl: false,
-          });
-          vm.status =false
-          }else{
-          
-          vm.invoices =response.data.data
-              // vm.$router.push({ path: "login" });
+
+          if (response.data.status == false) {
+            vm.$toast.error(response.data.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+            vm.status = false;
+          } else {
+            vm.invoices = response.data.data;
+            // vm.$router.push({ path: "login" });
           }
         })
         .catch((error) => {
@@ -202,29 +210,32 @@ export default {
           });
         });
     },
-   
-   async getFile(id){
+
+    async getFile(id) {
       let vm = this;
-        vm.$store
-        .dispatch("HTTP_GET_REQUEST", this.$store.state.user.user_type+`/invoice/${id}`)
+      vm.$store
+        .dispatch(
+          "HTTP_GET_REQUEST",
+          this.$store.state.user.user_type + `/invoice/${id}`
+        )
         // axios.get('https://insurance.jawadmobiles.com/api/'+this.$store.state.user.user_type+`/invoice/${id}`)
         .then((response) => {
           console.log("re", response);
-         
-          if(response.data.status == false){
-          vm.$toast.error(response.data.message, {
-            position: "top-right",
-            closeButton: "button",
-            icon: true,
-            rtl: false,
-          });
-          vm.status =false
-          }else{
-            console.log(response.data.data)
-            console.log(response.data)
-           window.open(response.data.data,'_blank');
-          // vm.invoices =response.data
-              // vm.$router.push({ path: "login" });
+
+          if (response.data.status == false) {
+            vm.$toast.error(response.data.message, {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
+            vm.status = false;
+          } else {
+            console.log(response.data.data);
+            console.log(response.data);
+            window.open(response.data.data, "_blank");
+            // vm.invoices =response.data
+            // vm.$router.push({ path: "login" });
           }
         })
         .catch((error) => {
@@ -237,9 +248,8 @@ export default {
           });
         });
     },
-   
   },
-   mounted() {
+  mounted() {
     this.getAllInvocies();
   },
 };

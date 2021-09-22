@@ -114,7 +114,7 @@ const routes = [
       },
       {
         path: "/licence",
-        name: "Licence",
+        name: "Membership",
         component: Licence,
       },
       {

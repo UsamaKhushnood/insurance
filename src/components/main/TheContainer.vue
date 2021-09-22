@@ -1,28 +1,36 @@
 <template>
   <div class="TheContainer" id="app">
-      <Circle10  v-if="getSpinner" />
-    <div class="row" >
-      <div class="theme-sidebar" :class='{minimize : minimize}'>
+    <Circle10 v-if="getSpinner" />
+    <div class="row">
+      <div
+        class="theme-sidebar"
+        :class="{ minimize: minimize, fullscreen: !maximize }"
+      >
         <TheSidebar ref="sidebar" />
       </div>
-      <div class="theme-body" :class='{minimize : minimize}'>
+      <div
+        class="theme-body"
+        :class="{ minimize: minimize, fullscreen: !maximize }"
+      >
         <TheHeader v-on:minimize-sidebar="doSomething" />
         <HeaderSecondary />
         <div class="dashboard-router-view">
           <RouterView />
         </div>
+        <TheFooter />
       </div>
     </div>
   </div>
 </template>
 <script>
-import Circle10 from '@/components/Circle10.vue'
+import Circle10 from "@/components/Circle10.vue";
 import TheHeader from "./TheHeader.vue";
 import TheSidebar from "./TheSidebar.vue";
+import TheFooter from "./TheFooter.vue";
 import HeaderSecondary from "./HeaderSecondary.vue";
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 export default {
-  components: { TheHeader, TheSidebar, HeaderSecondary,Circle10 },
+  components: { TheHeader, TheSidebar, HeaderSecondary, Circle10, TheFooter },
   methods: {
     doSomething() {
       console.log(this.$refs.sidebar, "sfklsdjl");
@@ -30,9 +38,12 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getSpinner']),
+    ...mapGetters(["getSpinner"]),
     minimize() {
       return this.$store.state.sidebarMinimize;
+    },
+    maximize() {
+      return this.$store.state.fullScreen;
     },
   },
 };
@@ -45,14 +56,20 @@ export default {
   &.minimize {
     width: 100px;
   }
+  &.fullscreen {
+    width: 0;
+  }
 }
 .theme-body {
   width: calc(100% - 350px);
   padding: 0;
   background: var(--light-grey);
   box-shadow: inset 0 3px 10px rgb(0 0 0 / 20%);
-    &.minimize {
-    width: calc(100% - 100px);;
+  &.minimize {
+    width: calc(100% - 100px);
+  }
+  &.fullscreen {
+    width: 100%;
   }
   .dashboard-router-view {
     padding: 30px;

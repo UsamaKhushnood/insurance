@@ -8,6 +8,7 @@ Vue.use(Vuex)
 const state = {
   sidebarShow: 'responsive',
   sidebarMinimize: false,
+  fullScreen: false,
   user: '',
   selected_event: '',
   register_data: '',

@@ -9,7 +9,11 @@
         >
           <use xlink:href="@/assets/svg/minimize.svg#minimize"></use>
         </svg>
-        <svg class="ms-4 pointer" style="width: 30px; height: 30px">
+        <svg
+          class="ms-4 pointer"
+          style="width: 30px; height: 30px"
+          @click="$store.commit('set', ['fullScreen', !maximize])"
+        >
           <use xlink:href="@/assets/svg/maximize.svg#max"></use>
         </svg>
       </div>
@@ -20,26 +24,49 @@
         </div>
       </div>
       <div class="col-md-4 d-flex align-items-center third-col">
-        <b-icon icon="bell-fill" class="me-4"> </b-icon>
-        <b-icon icon="chat-left-fill" class="me-4"></b-icon>
+        <div class="notifications-tray">
+          <div class="notif">
+            <svg
+              style="width: 30px; height: 22px"
+              @click="showMessages = !showMessages, showNotifications = false"
+            >
+              <use xlink:href="@/assets/svg/bell.svg#bell"></use>
+            </svg>
+            <Messages
+              v-if="showMessages"
+              @hide-dropdown="showMessages = false"
+            />
+          </div>
+          <div class="notif">
+            <svg
+              style="width: 30px; height: 22px"
+              @click="showNotifications = !showNotifications, showMessages = false"
+            >
+              <use xlink:href="@/assets/svg/message.svg#message"></use>
+            </svg>
+            <Notifications v-if="showNotifications" />
+          </div>
+        </div>
         <b-dropdown variant="link" toggle-class="text-decoration-none" no-caret>
           <template #button-content>
             <div class="d-flex align-items-center">
               <b-avatar
                 variant="info"
-                v-if="getUser.user_type =='agent'"
-                :src="ImageUrl+'agent/'+getUser.agent.image" 
+                v-if="getUser.user_type == 'agent'"
+                :src="ImageUrl + 'agent/' + getUser.agent.image"
                 class="me-3"
               ></b-avatar>
-                <b-avatar
+              <b-avatar
                 variant="info"
                 v-else
-                :src="ImageUrl+'consumer/'+getUser.consumer.image" 
+                :src="ImageUrl + 'consumer/' + getUser.consumer.image"
                 class="me-3"
               ></b-avatar>
 
-              <h5 class="username" v-if="getUser.user_type =='agent'" >{{getUser.agent.first_name}}</h5>
-              <h5 class="username" v-else>{{getUser.consumer.first_name}}</h5>
+              <h5 class="username" v-if="getUser.user_type == 'agent'">
+                {{ getUser.agent.first_name }}
+              </h5>
+              <h5 class="username" v-else>{{ getUser.consumer.first_name }}</h5>
               <b-icon
                 icon="caret-down-fill"
                 variant="dark"
@@ -55,7 +82,11 @@
             <b-icon icon="credit-card" class="me-2 icon"></b-icon>
             <span class="route-link">I.D Card</span>
           </router-link> -->
-          <router-link class="dropdown-link" v-if="getUser.user_type =='agent'"  to="/messaging">
+          <router-link
+            class="dropdown-link"
+            v-if="getUser.user_type == 'agent'"
+            to="/messaging"
+          >
             <b-icon icon="envelope" class="me-2 icon"></b-icon>
             <span class="route-link">Inbox</span>
           </router-link>
@@ -63,12 +94,20 @@
             <b-icon icon="gear" class="me-2 icon"></b-icon>
             <span class="route-link">Setting</span>
           </router-link>
-          <router-link class="dropdown-link"  to=""
-            @click.native="sendTo('https://nagia.com.gh/terms-of-service/')">
+          <router-link
+            class="dropdown-link"
+            to=""
+            @click.native="sendTo('https://nagia.com.gh/terms-of-service/')"
+          >
             <b-icon icon="lock" class="me-2 icon"></b-icon>
             <span class="route-link">Legal Terms</span>
           </router-link>
-          <router-link class="dropdown-link" @click="logout" to="" @click.native="logout" >
+          <router-link
+            class="dropdown-link"
+            @click="logout"
+            to=""
+            @click.native="logout"
+          >
             <img src="@/assets/icons/logout.png" class="me-2" />
             <span class="route-link">Logout</span>
           </router-link>
@@ -78,14 +117,27 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
+import Messages from "@/components/dropdowns/Messages";
+import Notifications from "@/components/dropdowns/Notifications";
 export default {
+  components: { Messages, Notifications },
+  data() {
+    return {
+      showMessages: false,
+      showNotifications: false,
+    };
+  },
   methods: {
     minSidebar() {
       this.$emit("minimize-sidebar");
     },
-   
-     async logout(value) {
+    // minimizeSide(){
+    //   this.$store.commit('set', ['sidebarMinimize', !minimize])
+    //   this.$store.commit('set', ['fullScreen', !maximize])
+    // },
+
+    async logout(value) {
       let vm = this;
       await axios
         .post(`/logout`, this.getToken)
@@ -106,7 +158,7 @@ export default {
             });
             localStorage.removeItem("token");
             localStorage.clear();
-            window.location.href = process.env.VUE_APP_URL
+            window.location.href = process.env.VUE_APP_URL;
           }
         })
         .catch((error) => {
@@ -114,17 +166,20 @@ export default {
         });
     },
     sendTo(url) {
-      window.open(url,'_blank');
+      window.open(url, "_blank");
     },
   },
   computed: {
-    ...mapGetters(['getUser']),
+    ...mapGetters(["getUser"]),
     minimize() {
       return this.$store.state.sidebarMinimize;
     },
-      ImageUrl(){
-      return process.env.VUE_APP_IMAGE_URL
-    }
+    maximize() {
+      return this.$store.state.fullScreen;
+    },
+    ImageUrl() {
+      return process.env.VUE_APP_IMAGE_URL;
+    },
   },
 };
 </script>
