@@ -108,6 +108,7 @@
           <div class="general-links self-resources">
             <router-link
               to="#"
+               @click.native="redirectSpportUrl(x.link)"
               tag="div"
               class="option pointer"
               v-for="(x, xIndex) in support"
@@ -116,6 +117,7 @@
             >
               <div
                 class="option-icon"
+                 
                 :style="{
                   background:
                     'linear-gradient(202deg, ' +
@@ -179,14 +181,14 @@ export default {
           icon: "faq",
           link: "faqs",
         },
-        {
-          title: "I.D Card",
-          desc: "Access",
-          c1: "rgba(240,245,93,1)",
-          c2: "rgba(249,108,214,1)",
-          icon: "id",
-          link: "id",
-        },
+        // {
+        //   title: "I.D Card",
+        //   desc: "Access",
+        //   c1: "rgba(240,245,93,1)",
+        //   c2: "rgba(249,108,214,1)",
+        //   icon: "id",
+        //   link: "id",
+        // },
         {
           title: "Terms of Services",
           desc: "Access",
@@ -195,14 +197,14 @@ export default {
           icon: "terms",
           link: "https://nagia.com.gh/terms-of-service/",
         },
-        {
-          title: "Refrence Library",
-          desc: "Access",
-          c1: "rgba(228,107,215,1)",
-          c2: "rgba(253,96,175,1)",
-          icon: "refrence",
-          link: "faqs",
-        },
+        // {
+        //   title: "Refrence Library",
+        //   desc: "Access",
+        //   c1: "rgba(228,107,215,1)",
+        //   c2: "rgba(253,96,175,1)",
+        //   icon: "refrence",
+        //   link: "faqs",
+        // },
         {
           title: "useful link",
           desc: "Access",
@@ -219,7 +221,7 @@ export default {
           c1: "rgba(156,86,254,1)",
           c2: "rgba(225,108,219,1)",
           icon: "message2",
-          link: "/blog",
+          link: "/complaints",
         },
         {
           title: "verify an agent",
@@ -227,7 +229,7 @@ export default {
           c1: "rgba(244,135,99,1)",
           c2: "rgba(252,160,64,1)",
           icon: "user",
-          link: "/blog",
+          link: "/verify-an-angent",
           class: "d-none",
         },
         {
@@ -236,7 +238,7 @@ export default {
           c1: "rgba(36,191,182,1)",
           c2: "rgba(65,229,149,1)",
           icon: "support",
-          link: "/blog",
+          link: "/support",
         },
       ],
     };
@@ -249,6 +251,9 @@ export default {
         window.open(newUrl, "_blank");
       }
       // window.location.href = newUrl;
+    },
+    redirectSpportUrl(url) {
+       this.$router.push({ path: url });
     },
   },
 };

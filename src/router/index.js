@@ -82,7 +82,7 @@ const routes = [
           },
           {
             path: "edit-profile",
-            name: "EditProfileAgent",
+            name: "EditProfile",
             components: {
               accountdetails: EditProfileAgent,
             },

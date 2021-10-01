@@ -36,7 +36,32 @@ export default {
     del(x) {
       this.messages.splice(x, 1);
     },
+    async getMyNotifications(){
+      const vm = this;
+    //   vm.$store.commit("SET_SPINNER", true);
+      await axios
+        .get(process.env.VUE_APP_API_URL+vm.$store.state.user.user_type+"/all-notification/")
+        .then((response) => {
+          console.log('data::',response.data.data);
+          vm.$store.commit("SET_SPINNER", false);
+      
+          vm.notifications= response.data.data;      
+        })
+        .catch((errors) => {
+          console.log(errors)
+           if(errors.response)
+          this.$toast.error(errors.response.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+        });
+    }
   },
+  mounted(){
+    this.getMyNotifications();
+  } 
 };
 </script>
 <style lang="scss">

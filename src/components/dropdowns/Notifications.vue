@@ -13,11 +13,11 @@
           <b-avatar class="av-success" icon="check2" size="50px"></b-avatar>
         </div>
         <div class="center-cotent">
-          <h5 class="username">henry nelson {{ notification }}</h5>
+          <h5 class="username"> {{ notification .title}}</h5>
           <p class="notification">
-            Congratulation! Miguel Accepted your Proposal
+            {{notification.message}}
           </p>
-          <p class="time">02 Hours ago</p>
+          <p class="time">{{notification.time}}}</p>
         </div>
         <div class="delete">
           <b-icon icon="x" @click="del(x)"></b-icon>
@@ -30,14 +30,39 @@
 export default {
   data() {
     return {
-      notifications: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      notifications: [],
     };
   },
   methods: {
     del(x) {
       this.notifications.splice(x, 1);
     },
+   async getMyNotifications(){
+      const vm = this;
+    //   vm.$store.commit("SET_SPINNER", true);
+      await axios
+        .get(process.env.VUE_APP_API_URL+vm.$store.state.user.user_type+"/all-notification/")
+        .then((response) => {
+          console.log('data::',response.data.data);
+          vm.$store.commit("SET_SPINNER", false);
+      
+          vm.notifications= response.data.data;      
+        })
+        .catch((errors) => {
+          console.log(errors)
+           if(errors.response)
+          this.$toast.error(errors.response.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+        });
+    }
   },
+  mounted(){
+    this.getMyNotifications();
+  } 
 };
 </script>
 <style lang="scss">

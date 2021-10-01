@@ -7,7 +7,7 @@
       <h2 class="c-blue fw-9">How can we help you?</h2>
       <h5 class="mt-3 c-blue fw-6">
         Choose any option from <br />
-        accordion pannel
+        Accordion Pannel
       </h5>
     </div>
   </div>
