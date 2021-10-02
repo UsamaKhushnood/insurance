@@ -206,7 +206,7 @@ export default {
         .post(
           process.env.VUE_APP_API_URL +
             vm.$store.state.user.user_type +
-            "/send-message/",
+            "/send-message",
           { message: this.message }
         )
         .then((response) => {

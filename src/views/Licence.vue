@@ -19,7 +19,7 @@
           <div class="invoices" v-for="(x, xIndex) in invoices" :key="xIndex">
             <div class="invoice">
               <div class="pdf-icon">
-                <img src="@/assets/icons/pdf.png" width="30px" />
+                <img  :src="myImage" width="30px" />
               </div>
               <a
                 href="#"
@@ -87,7 +87,7 @@
           <div class="nagia-membership-banner mt-5">
             <div class="row align-items-center banner-header">
               <div class="col col-md-4">
-                <img src="@/assets/logo.png" class="logo" width="100px" />
+                <img   :src="myImage" class="logo" width="100px" />
               </div>
               <div class="col col-md-8 text-center">
                 <h2>Nagia Membership</h2>
@@ -126,8 +126,26 @@
 import CheckStatus from "@/components/licence/CheckStatus";
 import RenewLicence from "@/components/licence/RenewLicence";
 import axios from "axios";
+import { mapGetters } from 'vuex';
+
 export default {
   components: { CheckStatus, RenewLicence },
+  computed:{
+    ...mapGetters(['getUser']),
+    ImageUrl() {
+    return process.env.VUE_APP_IMAGE_URL;
+    },
+    myImage(){
+      let url ='';
+      console.log(typeof(this.getUser.agent));
+      if(this.getUser.user_type == 'agent'){
+        url  =  typeof(this.getUser.agent.image) !== 'undefined' || this.getUser.agent.image !== null ?  this.ImageUrl+'agent/'+this.getUser.agent.image : 'https://placekitten.com/300/300';
+      }else{
+      return  typeof(this.getUser.consumer.image) !== 'undefined' || this.getUser.consumer.image !== null ?  this.ImageUrl+'consumer/'+this.getUser.consumer.image : 'https://placekitten.com/300/300';
+      }
+      return url;
+    }
+  },
   data() {
     return {
       invoices: [],

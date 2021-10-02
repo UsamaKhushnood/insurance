@@ -2,6 +2,7 @@
   <div>
     <b-modal
       id="renew-licence"
+      ref="renew_licence"
       size="lg"
       class="box-shadow"
       hide-footer
@@ -72,9 +73,9 @@
                 <svg>
                   <use xlink:href="@/assets/svg/arrow-back.svg#back"></use>
                 </svg>
-                <span>Back</span>
+                <span  @click="close()">Back</span>
               </button>
-              <button class="pay-now-btn" v-b-modal.payment-successful @click="renewPlan">Pay Now</button>
+              <button class="pay-now-btn"  @click="renewPlan">Pay Now</button>
               <ConfirmationModal />
             </div>
           </div>
@@ -85,8 +86,10 @@
 </template>
 <script>
 import axios from "axios"
+import $ from "jquery"
 import ConfirmationModal from './ConfirmationModal.vue'
 export default {
+  name:'RenewLicence',
   components: {ConfirmationModal},
   data() {
     return {
@@ -141,6 +144,7 @@ export default {
                 icon: true,
                 rtl: false,
               });
+              // v-b-modal.payment-successful
               vm.status =true
               window.open(response.data.data.redirect,'_self');
             //  window.open(response.data.data.redirect,'_blank');
@@ -164,6 +168,9 @@ export default {
               rtl: false,
             });
         });
+    },
+    close(){
+      this.$refs.renew_licence.hide();
     },
     confirmExit() {
         if (isAnyTaskInProgress) {

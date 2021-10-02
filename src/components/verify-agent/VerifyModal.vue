@@ -13,9 +13,11 @@
       <div class="verify-agent-modal">
         <div class="user-avatar">
           <b-avatar
-            :src="ImageUrl+this.$store.state.user.user_type +'/'+this.$store.state.user.consumer.image"
+            :src="UserImage"
             size="8rem"
           ></b-avatar>
+
+
         </div>
         <div class="status-modal-body">
           <div class="username">
@@ -24,7 +26,7 @@
           </div>
           <div class="identification-code">
             <h5 class="c-blue fw-7" v-if="getUser.user_type =='agent'">
-              Agent Unique Identification code: {{getUser.agent.nagia_id}}
+            Agent Unique Identification code: {{getUser.agent.nagia_id}}
             </h5>
           </div>
           <!-- <button class="btn-blue br-5" @click="status = !status">
@@ -62,6 +64,7 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
+  name:'verifyModal',
   props:['message'],
   data() {
     return {
@@ -72,10 +75,19 @@ export default {
     ...mapGetters(["getModelStatus",'getUser']),
     myStatus(){
       return this.getModelStatus
-    }
-  },
+    },
   ImageUrl() {
     return process.env.VUE_APP_IMAGE_URL;
+  },
+  UserImage(){
+    let url ='';
+    if(this.getUser.user_type =='consumer'){
+      url = this.ImageUrl+this.getUser.user_type +'/'+this.getUser.consumer.image
+    }else{
+      url = this.ImageUrl+this.getUser.user_type +'/'+this.getUser.agent.image
+    }
+return url;
+  }
   },
 };
 </script>

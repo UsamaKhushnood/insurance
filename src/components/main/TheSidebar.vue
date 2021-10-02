@@ -32,7 +32,7 @@
             <img class="route-icon" src="@/assets/icons/chat.png" />
             <h5 class="route-name">messaging</h5>
           </router-link>
-          <router-link to="/documentations" v-show="getUser.user_type =='agent'"  tag="li">
+          <router-link to="/documentations"   tag="li">
             <img class="route-icon" src="@/assets/icons/chat.png" />
             <h5 class="route-name">NAGIA Documentations</h5>
           </router-link>

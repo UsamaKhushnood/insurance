@@ -13,13 +13,13 @@
       <div class="check-status-modal">
         <div class="user-avatar">
           <b-avatar
-            src="https://placekitten.com/300/300"
+            :src="myImage"
             size="8rem"
           ></b-avatar>
         </div>
         <div class="status-modal-body">
           <div class="username">
-            <h1 class="fw-9">Janet Yaa Owsusu</h1>
+            <h1 class="fw-9">{{this.getUser.agent.first_name}}</h1>
           </div>
           <div class="identification-code">
             <h5 class="c-blue fw-7">
@@ -52,17 +52,42 @@
           <button class="btn-yellow btn-hover-blue br-5 w-50" v-b-modal.renew-licence>
             Renew Now
           </button>
+          <router-link to="complaints">
           <button class="btn-blue btn-hover-yellow br-5 w-50">
             Complaint
           </button>
+          </router-link>
         </div>
       </div>
     </b-modal>
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 export default {
   props:['status'],
+    computed:{
+     ...mapGetters(['getUser']),
+       ImageUrl() {
+      return process.env.VUE_APP_IMAGE_URL;
+    },
+      isDisabled() {
+        return this.show == true ? true : false; 
+      },
+      myImage(){
+        // alert(typeof(this.getUser.agent.image))
+        let url ='';
+        console.log(typeof(this.getUser.agent));
+        if(this.getUser.user_type == 'agent'){
+         url  =  typeof(this.getUser.agent.image) !== 'undefined' || this.getUser.agent.image !== null ?  this.ImageUrl+'agent/'+this.getUser.agent.image : 'https://placekitten.com/300/300';
+        }else{
+        return  typeof(this.getUser.consumer.image) !== 'undefined' || this.getUser.consumer.image !== null ?  this.ImageUrl+'consumer/'+this.getUser.consumer.image : 'https://placekitten.com/300/300';
+
+        }
+        // return 1;
+        return url;
+      }
+  },
   // data() {
   //   return {
   //     status: true,
