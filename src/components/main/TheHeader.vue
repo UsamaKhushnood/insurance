@@ -30,7 +30,7 @@
               style="width: 30px; height: 22px"
               @click="showMessages = !showMessages, showNotifications = false"
             >
-              <use xlink:href="@/assets/svg/bell.svg#bell"></use>
+            <use xlink:href="@/assets/svg/message.svg#message"></use>
             </svg>
             <Messages
               v-if="showMessages"
@@ -41,8 +41,8 @@
             <svg
               style="width: 30px; height: 22px"
               @click="showNotifications = !showNotifications, showMessages = false"
-            >
-              <use xlink:href="@/assets/svg/message.svg#message"></use>
+            >  <use xlink:href="@/assets/svg/bell.svg#bell"></use>
+              
             </svg>
             <Notifications v-if="showNotifications" />
           </div>

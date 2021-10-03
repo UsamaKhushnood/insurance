@@ -41,7 +41,7 @@ export default {
       const vm = this;
     //   vm.$store.commit("SET_SPINNER", true);
       await axios
-        .get(process.env.VUE_APP_API_URL+vm.$store.state.user.user_type+"/all-notification/")
+        .get(process.env.VUE_APP_API_URL+vm.$store.state.user.user_type+"/all-notification")
         .then((response) => {
           console.log('data::',response.data.data);
           vm.$store.commit("SET_SPINNER", false);

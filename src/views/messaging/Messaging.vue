@@ -123,7 +123,7 @@ export default {
             if (
               (values[key].sender == vm.getUser.agent.firebase_uid &&
                 values[key].reciever == rec.firebase_uid) ||
-              values[key].sender.toString() == rec.firebase_uid.toString()
+              values[key].sender.toString() == rec.firebase_uid.toString() && rec.firebase_uid
             ) {
               console.log(key, values[key]);
               allConversion.push(values[key]);

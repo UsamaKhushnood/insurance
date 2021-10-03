@@ -9,14 +9,14 @@
                      <img class="event-img" :src="ImageUrl+'event/'+event.image" />
               </div>
               <div class="event-body">
-                <h6 class="c-blue f-18 fw-9">Football Match NAGIA vs NIC</h6>
+                <h6 class="c-blue f-18 fw-9">{{event.title}}</h6>
                 <div class="event-time fw-6">
                   <b-icon icon="clock" class="me-2 c-yellow"></b-icon>
-                  03-09-2021
+                   {{ moment(event.created_at).fromNow() }}
                 </div>
                 <div class="event-location fw-6">
                   <b-icon icon="geo-alt-fill" class="me-2 c-yellow"></b-icon>
-                  Afua Sutherland Park
+                  {{event.location}}
                 </div>
                 <button class="view-event-btn btn-yellow btn-block mt-3" @click="move('event-details/' + event.id,event)">
                   View Details
@@ -34,6 +34,7 @@
 </template>
 <script>
 import axios from 'axios'
+import moment from 'moment';
 import UpcomingMeetings from '@/components/events/UpcomingMeetings'
 import { mapGetters } from 'vuex';
 export default {
@@ -49,6 +50,7 @@ export default {
   },
   data() {
     return {
+      moment: moment,
       events: [
         // { img: require("../../assets/images/event1.png") },
         // { img: require("../../assets/images/event2.png") },

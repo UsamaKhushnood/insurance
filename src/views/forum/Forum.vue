@@ -49,7 +49,9 @@
         <div class="gotoOnlineStore">
           <div class="ad box-shadow">
             <img src="@/assets/images/online-shopping.png" />
+            <router-link to="" @click.native="redirectUrl()">
             <button class="btn-yellow gotostorebtn">Go To Online Store</button>
+          </router-link>
           </div>
         </div>
       </div>
@@ -60,7 +62,13 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  methods:{
+    redirectUrl(){
+      window.open('https://nagia.com.gh/sh', "_blank")
+    }
+  }
+};
 </script>
 <style lang="scss">
 .forum {
