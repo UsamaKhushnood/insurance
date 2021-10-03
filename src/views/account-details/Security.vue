@@ -124,6 +124,7 @@ export default {
 </script>
 <style lang="scss">
 .membership-plans {
+
   .plan {
     background: #fff;
     padding: 20px;
@@ -169,5 +170,9 @@ export default {
 label {
   margin-left: 10px;
   cursor: pointer;
-}
+}  
+
+.Security input#input-1{
+    background: #fff !important;
+  }
 </style>
