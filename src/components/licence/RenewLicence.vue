@@ -112,7 +112,13 @@ export default {
     },
      async renewPlan() {
       const vm = this;
-      vm.$store.commit("SET_SPINNER", true);
+      // vm.$store.commit("SET_SPINNER", true);
+      vm.$toast.success('please wait your request is in Processs', {
+              position: "top-right",
+              closeButton: "button",
+              icon: true,
+              rtl: false,
+            });
       await axios
         .post(
           process.env.VUE_APP_API_URL +

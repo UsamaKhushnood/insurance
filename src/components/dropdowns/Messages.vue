@@ -26,11 +26,20 @@
   </div>
 </template>
 <script>
+import db from "../../../db";
+import { mapGetters } from "vuex";
+import _ from "lodash";
 export default {
   data() {
     return {
-      messages: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      messages: [],
     };
+  },
+   computed: {
+    ...mapGetters(["getEvent", "getUser", "getReceiver"]),
+    ImageUrl() {
+      return process.env.VUE_APP_IMAGE_URL;
+    }
   },
   methods: {
     del(x) {
@@ -39,24 +48,14 @@ export default {
     async getMyNotifications(){
       const vm = this;
     //   vm.$store.commit("SET_SPINNER", true);
-      await axios
-        .get(process.env.VUE_APP_API_URL+vm.$store.state.user.user_type+"/all-notification/")
-        .then((response) => {
-          console.log('data::',response.data.data);
-          vm.$store.commit("SET_SPINNER", false);
-      
-          vm.notifications= response.data.data;      
-        })
-        .catch((errors) => {
-          console.log(errors)
-           if(errors.response)
-          this.$toast.error(errors.response.message, {
-            position: "top-right",
-            closeButton: "button",
-            icon: true,
-            rtl: false,
-          });
-        });
+    alert(1)
+    const query = db.database().ref("Conversation/"+this.getUser.agent.firebase_uid).child("/Chat").orderByKey().limitToLast(1);
+console.log('query',query)
+    query.once("value").then((snapshot) => {
+      snapshot.forEach((message) => {
+        console.log(message.val().message.msg);
+      });
+    })
     }
   },
   mounted(){

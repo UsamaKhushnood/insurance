@@ -1,6 +1,6 @@
 <template>
   <div class="notifications-dropdown">
-    <div class="notifications">
+    <div class="notifications" v-if="notifications">
       <div
         class="single-notification"
         v-for="(notification, x) in notifications"
@@ -17,7 +17,7 @@
           <p class="notification">
             {{notification.message}}
           </p>
-          <p class="time">{{notification.time}}}</p>
+          <p class="time">{{notification.time}}</p>
         </div>
         <div class="delete">
           <b-icon icon="x" @click="del(x)"></b-icon>

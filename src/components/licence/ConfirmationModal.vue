@@ -66,7 +66,7 @@ export default {
   },
   methods:{
     closeModal(){
-      $('#payment-successful___BV_modal_header_').hide()
+      $('#licence___BV_modal_outer_').hide()
     }
   }
 

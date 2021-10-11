@@ -7,6 +7,7 @@
         <input
           type="text"
           placeholder="Subject of your topic"
+          v-model="title"
           class="title-field"
         />
         <p class="feild-helper-text">
@@ -14,23 +15,33 @@
           possible.
         </p>
         <h6 class="feild-label topic-body">Topic Body</h6>
-        <VueEditor />
+        <VueEditor v-model="description" />
         <div class="row">
           <div class="col-md-3">
             <h6 class="feild-label topic-body">Category</h6>
-            <b-form-select
-              :options="['option', 'option2', 'option3']"
+            <!-- <b-form-select
+              :options="[]"
               value="option"
-              class="field-category"
-            ></b-form-select>
+             
+            ></b-form-select> -->
+            <b-form-group >
+          <v-select
+          v-model="category"
+          item-text="name"
+          placeholder="Select Category"
+          :getOptionLabel="data => data.name"
+          :clearable="false"
+          :options="doptions"
+        ></v-select>
+            </b-form-group>
           </div>
           <div class="col-md-9">
             <h6 class="feild-label topic-body">Sub Category</h6>
-            <b-form-tags input-id="tags-basic" class="field-tags"></b-form-tags>
+            <b-form-tags input-id="tags-basic" v-model="tags" class="field-tags"></b-form-tags>
           </div>
         </div>
         <div class="cpd mt-4">
-          <button class="create-post-btn">
+          <button class="create-post-btn" @click.prevent="addTopic()">
             <i class="fa fa-paper-plane me-2"></i>
             Create Post
           </button>
@@ -43,6 +54,94 @@
 import { VueEditor } from "vue2-editor/dist/vue2-editor.core.js";
 export default {
   components: { VueEditor },
+   data() {
+    return {
+      category: '',
+      title: '',
+      description: '',
+      tags: '',
+      doptions: [],
+    };
+  },
+  methods: {
+    del(x) {
+      this.messages.splice(x, 1);
+    },
+    async getOptions(){
+      const vm = this;
+    //   vm.$store.commit("SET_SPINNER", true);
+      await axios
+        .get(process.env.VUE_APP_API_URL+vm.$store.state.user.user_type+"/topic-categories")
+        .then((response) => {
+          console.log('data::',response.data.data);
+          vm.$store.commit("SET_SPINNER", false);
+      
+          vm.doptions= response.data.data;      
+        })
+        .catch((errors) => {
+          console.log(errors)
+           if(errors.response)
+          this.$toast.error(errors.response.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+        });
+    },
+      async addTopic(){
+        alert()
+      const vm = this;
+    //   vm.$store.commit("SET_SPINNER", true);
+    var data ={
+      title:this.title,
+      category:this.tags.toString(),
+      description:this.description,
+      topic_category_id:this.category.id,
+    }
+      await axios
+        .post(process.env.VUE_APP_API_URL+vm.$store.state.user.user_type+"/topics",data)
+        .then((response) => {
+          console.log('data::',response.data.data);
+          vm.$store.commit("SET_SPINNER", false);
+         if(response.data.status == false){
+          vm.$toast.error(response.data.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+          vm.title ='';
+          vm.tags ='';
+          vm.description ='';
+          vm.topic_category_id ='';
+              vm.$store.commit('SET_SPINNER',false);
+          }else{
+              vm.$store.commit('SET_SPINNER',false);
+            vm.$toast.success(response.data.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+          }
+          // vm.doptions= response.data.data;      
+        })
+        .catch((errors) => {
+          console.log(errors)
+           if(errors.response)
+          this.$toast.error(errors.response.message, {
+            position: "top-right",
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+        });
+    }
+  },
+  mounted(){
+    this.getOptions();
+  } 
 };
 </script>
 <style lang="scss">
