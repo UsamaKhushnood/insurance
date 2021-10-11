@@ -2,7 +2,7 @@
   <div class="messages-dropdown">
     <div class="Mheader" @click="$emit('hide-dropdown')">
       <h5>Messages</h5>
-      <router-link to="/messaging" tag="h5" >View All</router-link>
+      <router-link to="/messaging" tag="h5">View All</router-link>
     </div>
     <div class="messages">
       <div class="single-message" v-for="(message, x) in messages" :key="x">
@@ -22,6 +22,9 @@
           <b-icon icon="x" @click="del(x)"></b-icon>
         </div>
       </div>
+      <div class="no-messages" v-if="messages.length == 0">
+        <h5>No Messages</h5>
+      </div>
     </div>
   </div>
 </template>
@@ -35,32 +38,37 @@ export default {
       messages: [],
     };
   },
-   computed: {
+  computed: {
     ...mapGetters(["getEvent", "getUser", "getReceiver"]),
     ImageUrl() {
       return process.env.VUE_APP_IMAGE_URL;
-    }
+    },
   },
   methods: {
     del(x) {
       this.messages.splice(x, 1);
     },
-    async getMyNotifications(){
+    async getMyNotifications() {
       const vm = this;
-    //   vm.$store.commit("SET_SPINNER", true);
-    alert(1)
-    const query = db.database().ref("Conversation/"+this.getUser.agent.firebase_uid).child("/Chat").orderByKey().limitToLast(1);
-console.log('query',query)
-    query.once("value").then((snapshot) => {
-      snapshot.forEach((message) => {
-        console.log(message.val().message.msg);
+      //   vm.$store.commit("SET_SPINNER", true);
+      alert(1);
+      const query = db
+        .database()
+        .ref("Conversation/" + this.getUser.agent.firebase_uid)
+        .child("/Chat")
+        .orderByKey()
+        .limitToLast(1);
+      console.log("query", query);
+      query.once("value").then((snapshot) => {
+        snapshot.forEach((message) => {
+          console.log(message.val().message.msg);
+        });
       });
-    })
-    }
+    },
   },
-  mounted(){
+  mounted() {
     this.getMyNotifications();
-  } 
+  },
 };
 </script>
 <style lang="scss">
@@ -71,6 +79,10 @@ console.log('query',query)
   right: 0;
   top: 40px;
   z-index: 999;
+  .no-messages {
+    padding: 20px;
+    text-align: center;
+  }
   .messages {
     max-height: 447px;
     overflow: auto;
